@@ -1,0 +1,26 @@
+{
+  "name": "littlejumboapp",
+  "version": "1.0.0",
+  "description": "README",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/adityahurry/littlejumboapp.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/adityahurry/littlejumboapp/issues"
+  },
+  "homepage": "https://github.com/adityahurry/littlejumboapp#readme",
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "express": "^4.14.0",
+    "mongodb": "^2.2.10",
+    "mongoose": "^4.6.2"
+  }
+}
