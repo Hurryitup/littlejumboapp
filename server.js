@@ -1,7 +1,7 @@
 var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
-var eventSchema = require('./eventSchema');
+var eventSchema = require('./event_model');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true}));
 
