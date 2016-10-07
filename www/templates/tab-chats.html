@@ -1,26 +1,37 @@
-<ion-view view-title="Events">
+
+<!-- removed view-title="Events" - wasnt displaying -->
+
+<ion-view title="Events">
   <ion-content>
     <ion-list>
       <!-- Removed item-avatar from ion-item-->
-      <ion-item class="item-remove-animate item-icon-right" ng-repeat="chat in chats" type="item-text-wrap" href="#/tab/chats/{{chat.id}}">
-        <!-- <img ng-src="{{chat.face}}"> -->
+      <ion-item class="item-remove-animate item-icon-right" ng-repeat="event in events" type="item-text-wrap" href="#/tab/chats/{{chat.id}}">
         <div class="row">
           <div class="col">
-            <p>{{chat.time}}</p>
-            <p>{{chat.location}}</p>
+            <h4 class="balanced">{{event.time}}</h4>
+            <h6>{{event.location}}<h6>
           </div>
-          <div class="col">
-            <h2>{{chat.name}}</h2>
-            <p>{{chat.lastText}}</p>
+          <div class="col col-67">
+            <h3>{{event.name}}</h3>
+            <h6 class="positive">{{event.lastText}}</h6>
           </div>
         </div>
-        <i class="icon ion-chevron-right icon-accessory"></i>
-        
+        <i class="icon ion-chevron-down icon-accessory"></i>
 
-        <ion-option-button class="button-assertive" ng-click="remove(chat)">
+        <ion-option-button class="button-assertive" ng-click="remove(event)">
           Delete
         </ion-option-button>
       </ion-item>
     </ion-list>
   </ion-content>
 </ion-view>
+
+<style>
+h6 {
+  font-weight: 200;
+}
+.col {
+  text-align: left;
+}
+ 
+</style>

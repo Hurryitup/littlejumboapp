@@ -1,52 +1,56 @@
 angular.module('starter.services', [])
 
-.factory('Chats', function() {
+.factory('Events', function() {
   // Might use a resource here that returns a JSON array
 
   // Some fake testing data
-  var chats = [{
+  var events = [{
     id: 0,
-    name: 'Europe to 1815',
-    lastText: 'Proctor',
+    name: 'Orientation',
+    lastText: 'Join us for breakfast!',
     time: '12:00-1:00',
-    location: 'Halligan'
+    location: 'Halligan',
   }, {
     id: 1,
-    name: 'Web Programming',
-    lastText: 'Ming Chow',
+    name: 'Attend a class (Session 1)',
+    lastText: 'Choose one class to attend.',
     time: '1:00-2:00',
-    location: 'Cousins Gym'
+    location: 'Dowling Hall',
+    events: [{name: 'History'}, {name: 'English'}, {name: 'Chinese'}]
   }, {
     id: 2,
-    name: 'Algorithms',
-    lastText: 'Greg Aloupis',
+    name: 'Attend a class (Session 2)',
+    lastText: 'Choose one class to attend.',
     time: '2:00-3:00',
-    location: 'Hill Hall'
+    location: '',
+    events: [{name: 'History'}, {name: 'English'}, {name: 'Chinese'}]
   }, {
     id: 3,
-    name: 'Chinese Philosophy',
-    lastText: 'Ning Ma',
+    name: 'Attend a class (Session 3)',
+    lastText: 'Choose one class to attend.',
     time: '3:00-4:00',
-    location: 'Olin'
+    location: '',
+    events: [{name: 'History'}, {name: 'English'}, {name: 'Chinese'}]
   }, {
     id: 4,
-    name: 'Journey of the Hero',
-    lastText: 'M.C.B.',
+    name: 'Attend a class (Session 3.2)',
+    lastText: 'Choose one class to attend.',
     time: '4:00-5:00',
-    location: 'Halligan'
+    location: '',
+    events: [{name: 'History'}, {name: 'English'}, {name: 'Chinese'}]
   }];
 
   return {
     all: function() {
-      return chats;
+      return events;
     },
-    remove: function(chat) {
-      chats.splice(chats.indexOf(chat), 1);
+    remove: function(event) {
+      events.splice(events.indexOf(event), 1);
     },
-    get: function(chatId) {
-      for (var i = 0; i < chats.length; i++) {
-        if (chats[i].id === parseInt(chatId)) {
-          return chats[i];
+    get: function(eventId) {
+      for (var i = 0; i < events.length; i++) {
+        if (events[i].id === parseInt(eventId)) {
+          return events[i];
         }
       }
       return null;
