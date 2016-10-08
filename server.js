@@ -1,7 +1,6 @@
 var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
-var eventSchema = require('./event_model');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true}));
 
@@ -18,6 +17,14 @@ var db = MongoClient.connect(mongoUri, function(error, databaseConenction) {
         console.log(error);
     }
 });
+
+var StdEvent = require('./models/std_event');
+var CompEvent = require('./models/comp_event');
+var VisitingDay = require('./models/visiting_day');
+
+
+
+
 
 /*Sample requests (not functional or good)
 app.get('/update',  function (req, res) {
