@@ -10,7 +10,11 @@ angular.module('starter.controllers', [])
   //
   //$scope.$on('$ionicView.enter', function(e) {
   //});
-  $scope.events = Events.all();
+
+  Events.get().success(function(response) {
+    console.log('response', response);
+    $scope.events = response;
+  });
 }])
 
 .controller('ChatDetailCtrl', function($scope, $stateParams, Events) {
