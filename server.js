@@ -5,6 +5,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true}));
 
 app.use(express.static(__dirname));
+app.set('view engine', 'pug');
 var mongo = require('mongodb');
 var mongoose = require('mongoose');
 var mongoUri = process.env.MOGOLAB_URI || process.env.MONGODB_URI || process.env.MONGOHQ_URL || 'mongodb://localhost/littlejumboapp';
@@ -24,6 +25,10 @@ var VisitingDay = require('./models/visiting_day');
 
 
 
+
+app.get('/', function (req, res) {
+    res.render("index",{title: "Hey", message: "test"});
+});
 
 
 /*Sample requests (not functional or good)
