@@ -11,7 +11,7 @@
   <ion-content>
     <ion-list>
         <div ng-repeat="event in events">
-          <ion-item delegate-handle="item" class="item-stable"
+          <ion-item delegate-handle="{{event.id}}" class="item-stable"
                     ng-click="toggleGroup(event)"
                     ng-class="{active: isGroupShown(event)}">
 	      <div class="row"> 

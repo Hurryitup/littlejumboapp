@@ -2,7 +2,7 @@ angular.module('starter.controllers', [])
 
 .controller('DashCtrl', function($scope) {})
 
-.controller('EventsCtrl', ['$scope', '$ionicPopup', 'Events', function($scope, $ionicPopup, Events) {
+.controller('EventsCtrl', ['$scope', '$ionicPopup', '$ionicScrollDelegate', 'Events', function($scope, $ionicPopup, $ionicScrollDelegate, Events) {
   // With the new view caching in Ionic, Controllers are only called
   // when they are recreated or on app start, instead of every page change.
   // To listen for when this page is active (for example, to refresh data),
@@ -38,6 +38,7 @@ angular.module('starter.controllers', [])
   };
 
   $scope.showAlert = function(event) {
+    $ionicScrollDelegate.$getByHandle(event.id.toString()).scrollTop();
        if (event.type == 'composite') 
          return;
        var alertPopup = $ionicPopup.alert({
