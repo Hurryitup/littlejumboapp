@@ -2,7 +2,7 @@ angular.module('starter.controllers', [])
 
 .controller('DashCtrl', function($scope) {})
 
-.controller('EventsCtrl', ['$scope', 'Events', function($scope, Events) {
+.controller('EventsCtrl', ['$scope', '$ionicPopup', 'Events', function($scope, $ionicPopup, Events) {
   // With the new view caching in Ionic, Controllers are only called
   // when they are recreated or on app start, instead of every page change.
   // To listen for when this page is active (for example, to refresh data),
@@ -20,7 +20,6 @@ angular.module('starter.controllers', [])
       $scope.events = data;
       console.log('$scope.events: %o', $scope.events);    
   });
-  $scope.groups = [];
   /*
    * if given group is the selected group, deselect it
    * else, select the given group
@@ -38,10 +37,12 @@ angular.module('starter.controllers', [])
     }
   };
 
-  $scope.showAlert = function() {
+  $scope.showAlert = function(event) {
+       if (event.type == 'composite') 
+         return;
        var alertPopup = $ionicPopup.alert({
-              title: 'Don\'t eat that!',
-                   template: 'It might taste good'
+              title: event.title,
+              content: event.location + "<br><br>" + event.description 
       });
   }
 }])
