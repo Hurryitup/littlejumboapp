@@ -21,16 +21,6 @@ angular.module('starter.controllers', [])
       console.log('$scope.events: %o', $scope.events);    
   });
   $scope.groups = [];
-  for (var i=0; i<10; i++) {
-    $scope.groups[i] = {
-      name: i,
-      items: []
-    };
-    for (var j=0; j<3; j++) {
-      $scope.groups[i].items.push(i + '-' + j);
-    }
-  }
-  
   /*
    * if given group is the selected group, deselect it
    * else, select the given group
@@ -48,7 +38,12 @@ angular.module('starter.controllers', [])
     }
   };
 
-
+  $scope.showAlert = function() {
+       var alertPopup = $ionicPopup.alert({
+              title: 'Don\'t eat that!',
+                   template: 'It might taste good'
+      });
+  }
 }])
 
 .controller('ChatDetailCtrl', function($scope, $stateParams, Events) {
