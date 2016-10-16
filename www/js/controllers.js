@@ -11,14 +11,20 @@ angular.module('starter.controllers', [])
   //$scope.$on('$ionicView.enter', function(e) {
   //});
 
-  Events.get().success(function(response) {
-    console.log('response', response);
+  Events.getPromise().success(function(response) {
     $scope.events = response;
+  }).then(function (data) {
+    Events.store(data);
   });
+
+
+  Events.store($scope.events);
 }])
 
 .controller('ChatDetailCtrl', function($scope, $stateParams, Events) {
-  $scope.event = Events.get($stateParams.eventId);
+  $scope.events = Events.events;
+  console.log("CHDC");
+  console.log($scope.events);
 })
 
 .controller('AccountCtrl', function($scope) {

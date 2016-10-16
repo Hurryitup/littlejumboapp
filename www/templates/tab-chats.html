@@ -3,7 +3,7 @@
   <ion-content>
     <ion-list>
       <!-- Removed item-avatar from ion-item href="#/tab/chats/{{event.id}}-->
-      <ion-item class="item-remove-animate item-icon-right" ng-repeat="event in events" type="item-text-wrap">
+      <ion-item class="item-remove-animate item-icon-right" href="#/tab/events/{{event.id}}" ng-repeat="event in events" type="item-text-wrap">
         <div class="row">
           <div class="col">
             <h4 class="balanced">{{event.time_start}}</h4>
