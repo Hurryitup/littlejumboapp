@@ -1,35 +1,66 @@
 <!-- removed view-title="Events" - wasnt displaying -->
+<head>
+  <link rel="stylesheet" type="text/css" href="/css/style.css">
+    <link href="//code.ionicframework.com/nightly/css/ionic.css" rel="stylesheet">
+    <script src="//code.ionicframework.com/nightly/js/ionic.bundle.js"></script>
+</head>
+
 <ion-view title="Events">
   <ion-content>
     <ion-list>
-      <!-- Removed item-avatar from ion-item href="#/tab/chats/{{event.id}}-->
-      <ion-item class="item-remove-animate item-icon-right" href="#/tab/events/{{event.id}}" ng-repeat="event in events" type="item-text-wrap">
-        <div class="row">
-          <div class="col">
-            <h4 class="balanced">{{event.time_start}}</h4>
-            <h6>{{event.location}}<h6>
-          </div>
-          <div class="col col-67">
-            <h3>{{event.title}}</h3>
-            <h6 class="positive">{{event.subtitle}}</h6>
-          </div>
+        <div ng-repeat="event in events">
+          <ion-item delegate-handle="item" class="item-stable"
+                    ng-click="toggleGroup(event)"
+                    ng-class="{active: isGroupShown(event)}">
+              <!-- <i class="icon" ng-class="isGroupShown(event) ? 'ion-minus' : 'ion-plus'"></i> -->
+	      <div class="row"> 
+		<div class="col col-33"> 
+		  <h4 class="balanced">{{event.time_start}} - {{event.time_end}}</h4> 
+		  <h6>{{event.location}}</h6> 
+		</div> 
+		<div class="col col-67"> 
+		  <h3>{{event.title}}</h3> 
+                  <h6 class="positive">{{event.subtitle}} &nbsp;<i ng-if="event.subevents" class="icon" ng-class="(isGroupShown(event)) ? 'ion-chevron-up' : 'ion-chevron-down' "></i></h6>
+		</div> 
+	      </div> 
+          </ion-item>
+          <ion-item class="item-accordion"
+                    ng-repeat="subevent in event.subevents"
+                    ng-show="isGroupShown(event)">
+            <div class="row">
+              <div class="col col-10">
+                <i class="icon" ng-class="ion-ios-circle-filled"></i>
+              </div>
+              <div class="col col-67">
+                <h6 class="class-title">{{subevent.title}}<br/>
+                {{subevent.location}}<br/>
+                {{subevent.professor}}</h6>
+                 <ion-icon name="star-outline"></ion-icon>
+              </div>
+              <div class="col col-20">
+              </div>
+            </div>
+          </ion-item>
         </div>
-        <i class="icon ion-chevron-down icon-accessory"></i>
+      <!-- Removed item-avatar from ion-item href="#/tab/chats/{{event.id}} -->
+      <!-- <ion-item class="item-remove-animate item-icon-right" -->  
+      <!--   href="#/tab/events/{{event.id}}" ng-repeat="event in events" -->  
+      <!--   type="item-text-wrap"> --> 
+        <!-- <div class="row"> --> 
+        <!--   <div class="col"> --> 
+        <!--     <h4 class="balanced">{{event.time_start}}</h4> --> 
+        <!--     <h6>{{event.location}}</h6> --> 
+        <!--   </div> --> 
+        <!--   <div class="col col-67"> --> 
+        <!--     <h3>{{event.title}}</h3> --> 
+        <!--     <h6 class="positive">{{event.subtitle}}</h6> --> 
+        <!--   </div> --> 
+        <!-- </div> --> 
+        <!-- <i class="icon ion-chevron-down icon-accessory"></i> --> 
 
-        <!-- <ion-option-button class="button-assertive" ng-click="remove(event)"> -->
-        <!--   Delete -->
-        <!-- </ion-option-button> -->
-      </ion-item>
+      <!--   <ion-option-button class="button-assertive" ng-click="remove(event)"> --> 
+      <!--     Delete --> 
+      <!--   </ion-option-button> --> 
     </ion-list>
   </ion-content>
 </ion-view>
-
-<style>
-h6 {
-  font-weight: 200;
-}
-.col {
-  text-align: left;
-}
- 
-</style>
