@@ -1,2 +1,25 @@
 /* Empty. Add your own CSS if you like */
 
+h6 {
+  font-weight: 400;
+  color: red;
+}
+.col {
+  text-align: left;
+}
+
+
+
+.list .item.item-accordion {
+  line-height: 38px !important;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+  transition: 0.09s all linear !important;
+}
+.list .item.item-accordion.ng-hide {
+  line-height: 0px !important;
+}
+.list .item.item-accordion.ng-hide-add,
+.list .item.item-accordion.ng-hide-remove {
+  display: block !important;
+}

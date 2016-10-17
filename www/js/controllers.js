@@ -11,18 +11,14 @@ angular.module('starter.controllers', [])
   //$scope.$on('$ionicView.enter', function(e) {
   //});
 
-  // Events.getPromise().success(function(response) {
-  //   $scope.events = response;
-  // }).then(function (data) {
-  //   Events.store(data);
-  // });
+
   Events.get(function(data) {
       $scope.events = data;
       console.log('$scope.events: %o', $scope.events);    
   });
+
   /*
-   * if given group is the selected group, deselect it
-   * else, select the given group
+   * Make dynamic accordian list
    */
   $scope.toggleGroup = function(group) {
     if ($scope.isGroupShown(group)) {
@@ -37,8 +33,11 @@ angular.module('starter.controllers', [])
     }
   };
 
+  /*
+   * Display class information pop-up
+   */
   $scope.showAlert = function(event) {
-    $ionicScrollDelegate.$getByHandle(event.id.toString()).scrollTop();
+    // $ionicScrollDelegate.$getByHandle(event.id.toString()).scrollTop();
        if (event.type == 'composite') 
          return;
        var alertPopup = $ionicPopup.alert({
