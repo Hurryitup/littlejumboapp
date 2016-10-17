@@ -14,35 +14,29 @@
         <ion-item class="item-stable" ng-click="toggleGroup(event)" ng-class="{active: isGroupShown(event)}">
           <div class="row"> 
             <div class="col col-33"> 
-              <h4 class="balanced">{{event.time_start}} - {{event.time_end}}</h4> 
-              <h6>{{event.location}}</h6> 
+              <span class="row responsive-sm item-text-wrap">
+                <h6 id="event_time" class="balanced">{{event.time_start}} - {{event.time_end}}</h6> 
+                <h6>{{event.location}}</h6>
+              </span>
             </div> 
-            <div class="col col-67" ng-click="showAlert(event)"> 
-              <h3>{{event.title}}</h3> 
-              <h6 class="positive">{{event.subtitle}} &nbsp;<i ng-if="event.subevents" class="icon" ng-class="(isGroupShown(event)) ? 'ion-chevron-up' : 'ion-chevron-down' "></i></h6>
-              <i class="icon" ng-class="ion-ios-star-outline"></i>
-            </div> 
+            <div class="col col-50" ng-click="showAlert(event)"> 
+              <span class="row responsive-sm item-text-wrap">
+                <h3>{{event.title}}</h3> 
+                <h6 class="positive">{{event.subtitle}} &nbsp;<i ng-if="event.subevents" class="icon" 
+                    ng-class="(isGroupShown(event)) ? 'ion-chevron-up' : 'ion-chevron-down' "></i></h6>
+              </span>
+            </div>
+            <span ng-if="event.type == 'standalone'" class="item-icon-right"><i class="icon ion-android-star-outline  icon-accessory"></i></span>
           </div> 
         </ion-item>
         <ion-item class="item-accordion"
                   ng-repeat="subevent in event.subevents"
                   ng-show="isGroupShown(event)">
-          <div class="row">
-            <div class="col col-10">
-              <i class="icon ion-ios-circle-filled"></i>
-            </div>
-            <div class="col-67" ng-click="showAlert(subevent)">
-              <h6 class="class-title">{{subevent.title}}<br/>
+            <span  ng-click="showAlert(subevent)">
+              <h6 id="class_list_title" class="class-title">{{subevent.title}}<br/>
                 {{subevent.location}}<br/>
-                {{subevent.professor}}</h6>
-              <!-- <ion-icon ios="ios-star-outline" md="md-star-outline"></ion-icon> -->
-            </div>
-            <div class="col col-10">
-              <p><i class="icon ion-ios-star-outline"></i></p>
-            </div>
-            <!-- <div class="col col-20"> -->
-            <!-- </div> -->
-          </div>
+                {{subevent.professor}}</h6> </span>
+            <span class="item-icon-right"><i class="icon ion-android-star-outline  icon-accessory"></i></span>
         </ion-item>
       </div>
     </ion-list>

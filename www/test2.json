@@ -5,7 +5,7 @@
     "description": "",
     "time_start": "11:00",
     "time_end":  "1:30 pm",
-    "location": null,
+    "location": "Olin 204",
     "professor": null,
     "baloon_color": null,
     "subevents": null
@@ -13,7 +13,7 @@
 
     {"id":"2",
     "type": "composite",
-    "title": "Attend a class, block 1",
+    "title": "Classes: block 1",
     "subtitle": "Pick a class",
     "description": "",
     "time_start": "2:00",
@@ -78,7 +78,7 @@
     "description": "",
     "time_start": "11:00",
     "time_end":  "1:30 pm",
-    "location": null,
+    "location": "Dowling 745A",
     "professor": null,
     "baloon_color": null,
     "subevents": null

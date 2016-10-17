@@ -7,13 +7,25 @@ h6 {
   text-align: left;
 }
 
+#event_time {
+  font-weight: 600;
+}
+
+#class_list_title {
+  padding-top: 25px;
+
+}
+
+/* .ion-item-right { */
+/*   font-weight: 800; */
+/* } */
 
 
 .list .item.item-accordion {
-  line-height: 38px !important;
-  padding-top: 0 !important;
-  padding-bottom: 0 !important;
-  transition: 0.09s all linear !important;
+  line-height: 25px;
+  padding-top: 0;
+  padding-bottom: 0;
+  transition: 0.09s all linear;
 }
 .list .item.item-accordion.ng-hide {
   line-height: 0px !important;
