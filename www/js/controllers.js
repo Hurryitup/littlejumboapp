@@ -33,6 +33,11 @@ angular.module('starter.controllers', [])
     }
   };
 
+  $scope.addFavorite = function(event) {
+    console.log("FAVING: ", event);
+    console.log(document);
+  }
+
   /*
    * Display class information pop-up
    */

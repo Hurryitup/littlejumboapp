@@ -11,14 +11,19 @@ h6 {
   font-weight: 600;
 }
 
-#class_list_title {
-  padding-top: 25px;
-
+#subevent_title {
+  font-weight: 500;
 }
 
-/* .ion-item-right { */
-/*   font-weight: 800; */
-/* } */
+#class_list_title {
+  padding-top: 25px;
+  white-space: normal;
+}
+
+
+.ion-item-right {
+  font-size: 80px;
+}
 
 
 .list .item.item-accordion {
