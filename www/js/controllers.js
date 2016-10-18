@@ -2,7 +2,9 @@ angular.module('starter.controllers', [])
 
 .controller('DashCtrl', function($scope) {})
 
-.controller('EventsCtrl', ['$scope', '$ionicPopup', '$ionicScrollDelegate', 'Events', function($scope, $ionicPopup, $ionicScrollDelegate, Events) {
+.controller('EventsCtrl', 
+            ['$scope', '$ionicPopup', '$ionicScrollDelegate', 'Events', 'Favorites', 
+             function($scope, $ionicPopup, $ionicScrollDelegate, Events, Favorites) {
   // With the new view caching in Ionic, Controllers are only called
   // when they are recreated or on app start, instead of every page change.
   // To listen for when this page is active (for example, to refresh data),
@@ -10,16 +12,13 @@ angular.module('starter.controllers', [])
   //
   //$scope.$on('$ionicView.enter', function(e) {
   //});
-
-
+  
   Events.get(function(data) {
       $scope.events = data;
       console.log('$scope.events: %o', $scope.events);    
   });
 
-  /*
-   * Make dynamic accordian list
-   */
+  // Make dynamic accordian list
   $scope.toggleGroup = function(group) {
     if ($scope.isGroupShown(group)) {
       $scope.shownGroup = null;
@@ -33,16 +32,30 @@ angular.module('starter.controllers', [])
     }
   };
 
-  $scope.addFavorite = function(event) {
-    console.log("FAVING: ", event);
+  // On star click
+  $scope.toggleFavorite = function(event, event_id) {
+    html_id = "fav_icon_" + event_id;
+    console.log(html_id);
     console.log(document);
+    if (Favorites.has(event)) {
+      // remove, unmark star
+      document.getElementById(html_id).className = "icon ion-android-star-outline icon-accessory";
+      Favorites.remove(event);
+    } else {
+      // add, mark star
+      document.getElementById(html_id).className = "icon ion-android-star icon-accessory";
+      Favorites.add(event);
+    }
+
+    console.log("FAVING: ", event);
+    console.log(Favorites.get());
+    // console.log(Favorites.favorites);
+    // console.log(favs);
   }
 
-  /*
-   * Display class information pop-up
-   */
+  // Display event info pop-up
   $scope.showAlert = function(event) {
-    // $ionicScrollDelegate.$getByHandle(event.id.toString()).scrollTop();
+    // $ionicScrollDelegate.$getByHandle(event.id.toString()).scrollTop(); __NOT WORKING__
        if (event.type == 'composite') 
          return;
        var alertPopup = $ionicPopup.alert({
@@ -52,6 +65,7 @@ angular.module('starter.controllers', [])
   }
 }])
 
+// Leftover from demo app - might revert to full screen event details page, so keeping it for now
 .controller('ChatDetailCtrl', function($scope, $stateParams, Events) {
   console.log($stateParams.eventId);
   $scope.event = Events.getEvent($stateParams.eventId);

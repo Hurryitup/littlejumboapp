@@ -20,4 +20,25 @@ angular.module('starter.services', [])
       }
     }
   };
-}]);
+}])
+  
+.factory('Favorites', function() {
+  var favorites = new Set();
+
+  return {
+    get: function() {
+      return favorites;
+    },
+    add: function(event) {
+      favorites.add(event);
+      return true;
+    },
+    remove: function(event) {
+      favorites.delete(event);
+      return true;
+    },
+    has: function(event) {
+      return favorites.has(event);
+    }
+  }
+});
