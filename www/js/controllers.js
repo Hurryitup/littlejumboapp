@@ -5,17 +5,11 @@ angular.module('starter.controllers', [])
 .controller('EventsCtrl', 
             ['$scope', '$ionicPopup', '$ionicScrollDelegate', 'Events', 'Favorites', 
              function($scope, $ionicPopup, $ionicScrollDelegate, Events, Favorites) {
-  // With the new view caching in Ionic, Controllers are only called
-  // when they are recreated or on app start, instead of every page change.
-  // To listen for when this page is active (for example, to refresh data),
-  // listen for the $ionicView.enter event:
-  //
-  //$scope.$on('$ionicView.enter', function(e) {
-  //});
-  
+
+  // Makes http request if data is not already downloaded
   Events.get(function(data) {
       $scope.events = data;
-      console.log('$scope.events: %o', $scope.events);    
+      // console.log('$scope.events: %o', $scope.events);    
   });
 
   // Make dynamic accordian list
@@ -32,30 +26,25 @@ angular.module('starter.controllers', [])
     }
   };
 
-  // On star click
+  // On star click - change in data and html
   $scope.toggleFavorite = function(event, event_id) {
     html_id = "fav_icon_" + event_id;
-    console.log(html_id);
-    console.log(document);
+    // console.log(html_id);
+    // console.log(document);
     if (Favorites.has(event)) {
-      // remove, unmark star
       document.getElementById(html_id).className = "icon ion-android-star-outline icon-accessory";
       Favorites.remove(event);
     } else {
-      // add, mark star
       document.getElementById(html_id).className = "icon ion-android-star icon-accessory";
       Favorites.add(event);
     }
-
-    console.log("FAVING: ", event);
-    console.log(Favorites.get());
-    // console.log(Favorites.favorites);
-    // console.log(favs);
+    // console.log("FAVING: ", event);
+    // console.log(Favorites.get());
   }
 
   // Display event info pop-up
   $scope.showAlert = function(event) {
-    // $ionicScrollDelegate.$getByHandle(event.id.toString()).scrollTop(); __NOT WORKING__
+    // $ionicScrollDelegate.$getByHandle(event.id.toString()).scrollTop(); ***NOT WORKING***
        if (event.type == 'composite') 
          return;
        var alertPopup = $ionicPopup.alert({
@@ -67,11 +56,12 @@ angular.module('starter.controllers', [])
 
 // Leftover from demo app - might revert to full screen event details page, so keeping it for now
 .controller('ChatDetailCtrl', function($scope, $stateParams, Events) {
-  console.log($stateParams.eventId);
+  // console.log($stateParams.eventId);
   $scope.event = Events.getEvent($stateParams.eventId);
-  console.log($scope.event);
+  // console.log($scope.event);
 })
 
+// Third page controler - name leftover form demo app, currently favorites list
 .controller('AccountCtrl', function($scope, Favorites) {
   $scope.$on('$ionicView.enter', function() {
     $scope.favs = Array.from(Favorites.get());

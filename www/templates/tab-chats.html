@@ -1,12 +1,3 @@
-<!-- removed view-title="Events" - wasnt displaying -->
-<!-- <head> -->
-<!--   <link href="http://code.ionicframework.com/nightly/css/ionic.css" rel="stylesheet"> -->
-<!--   <script src="http://code.ionicframework.com/nightly/js/ionic.bundle.js"></script> -->
-<!--   <link href="//code.ionicframework.com/nightly/css/ionic.css" rel="stylesheet"> -->
-<!--   <script src="//code.ionicframework.com/nightly/js/ionic.bundle.js"></script> -->
-  <!-- <link rel="stylesheet" type="text/css" href="/css/style.css"> -->
-<!-- </head> -->
-
 <ion-view title="Events">
   <ion-nav-title>
     Events
@@ -15,33 +6,44 @@
     <ion-list>
       <div ng-repeat="event in events">
         <ion-item class="item-stable" 
-                  ng-click="toggleGroup(event)" ng-class="{active: isGroupShown(event)}">
+                  ng-click="toggleGroup(event)" 
+                  ng-class="{active: isGroupShown(event)}">
           <div class="row"> 
             <div class="col col-33"> 
               <span class="row responsive-sm item-text-wrap">
-                <h6 id="event_time" class="balanced">{{event.time_start}} - {{event.time_end}}</h6> 
+                <h6 id="event_time" 
+                class="balanced">{{event.time_start}} - {{event.time_end}}</h6> 
                 <h6>{{event.location}}</h6>
               </span>
             </div> 
             <div class="col col-50" ng-click="showAlert(event)"> 
               <span class="row responsive-sm item-text-wrap">
                 <h3>{{event.title}}</h3> 
-                <h6 class="positive">{{event.subtitle}} &nbsp;<i ng-if="event.subevents" class="icon" 
-                    ng-class="(isGroupShown(event)) ? 'ion-chevron-up' : 'ion-chevron-down' "></i></h6>
+                <h6 class="positive">{{event.subtitle}} &nbsp;
+                  <i ng-if="event.subevents" class="icon" 
+                     ng-class="(isGroupShown(event)) ? 'ion-chevron-up' : 'ion-chevron-down' "></i>
+                </h6>
               </span>
             </div>
             <span ng-if="event.type == 'standalone'" ng-click="toggleFavorite(event, event.id)" 
-                  class="item-icon-right"><i id="fav_icon_{{event.id}}" class="icon ion-android-star-outline  icon-accessory"></i></span>
+                  class="item-icon-right">
+              <i id="fav_icon_{{event.id}}" class="icon ion-android-star-outline  icon-accessory"></i>
+            </span>
           </div> 
         </ion-item>
         <ion-item class="item-accordion" 
                   ng-repeat="subevent in event.subevents"
                   ng-show="isGroupShown(event)">
-            <span  ng-click="showAlert(subevent)">
-              <h6 id="class_list_title" class="class-title"><span id="subevent_title">{{subevent.title}}</span><br/><br/>
-                {{subevent.location}}<br/>
-                {{subevent.professor}}</h6> </span>
-            <span ng-click="toggleFavorite(subevent, subevent.id)" class="item-icon-right"><i id="fav_icon_{{subevent.id}}" class="icon ion-android-star-outline icon-accessory"></i></span>
+          <span  ng-click="showAlert(subevent)">
+            <h6 id="class_list_title" class="class-title">
+              <span id="subevent_title">{{subevent.title}}</span><br/><br/>
+              {{subevent.location}}<br/>
+              {{subevent.professor}}
+            </h6>
+          </span>
+          <span ng-click="toggleFavorite(subevent, subevent.id)" class="item-icon-right">
+            <i id="fav_icon_{{subevent.id}}" class="icon ion-android-star-outline icon-accessory"></i>
+          </span>
         </ion-item>
       </div>
     </ion-list>
