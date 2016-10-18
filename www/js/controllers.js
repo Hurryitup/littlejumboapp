@@ -72,8 +72,10 @@ angular.module('starter.controllers', [])
   console.log($scope.event);
 })
 
-.controller('AccountCtrl', function($scope) {
-  $scope.settings = {
-    enableFriends: true
-  };
+.controller('AccountCtrl', function($scope, Favorites) {
+  $scope.$on('$ionicView.enter', function() {
+    $scope.favs = Array.from(Favorites.get());
+    console.log("GettingFavsList: ", $scope.favs);
+  });
 });
+
