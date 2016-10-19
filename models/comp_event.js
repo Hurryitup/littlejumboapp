@@ -1,20 +1,24 @@
 var mongoose = require('mongoose');
-var Schema = mongoose.Schema
-var schema = new Schema({
-    title: String,
-    description: String,
-    time: {
-        start: Date,
-        end: Date
-    },
-    last_updated:
-    {
-        field: String,
-        time: Date,
-        author: String
-    },
-    event_list: [{type: Schema.Types.ObjectId, ref: 'StandardEvent'}]
+var Schema = mongoose.Schema;
+
+var timeSchema = new Schema({
+    start: {type: Date, required: true},
+    end: {type: Date, required: true}
+});
+var lastUpdatedSchema = new Schema({
+    field: {type: String, required: true},
+    time: {type: Date, required: true},
+    author: {type: String, required: true}
 });
 
-module.exports = mongoose.model('CompositeEvent', schema);
+
+var compEventSchema = new Schema({
+    title: {type: String, required: true},
+    description: {type: String, required: true},
+    time: {type: timeSchema, required: true},
+    last_updated: {type: lastUpdatedSchema, required: true},
+    event_list: [{type: Schema.Types.ObjectId, ref: 'StandardEvent', required: true}]
+});
+
+module.exports = mongoose.model('CompositeEvent', compEventSchema);
 
