@@ -17,7 +17,7 @@ var compEventSchema = new Schema({
     description: {type: String, required: true},
     time: {type: timeSchema, required: true},
     last_updated: {type: lastUpdatedSchema, required: true},
-    event_list: [{type: Schema.Types.ObjectId, ref: 'StandardEvent', required: true}]
+    event_list: [{type: Schema.Types.ObjectId, ref: 'StandaloneEvent', required: true}]
 });
 
 module.exports = mongoose.model('CompositeEvent', compEventSchema);
