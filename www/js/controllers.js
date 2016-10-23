@@ -1,6 +1,6 @@
 angular.module('starter.controllers', [])
 
-.controller('DashCtrl', function($scope) {})
+.controller('MapCtrl', function($scope) {})
 
 .controller('EventsCtrl', 
             ['$scope', '$ionicPopup', '$ionicScrollDelegate', 'Events', 'Favorites', 
@@ -55,14 +55,14 @@ angular.module('starter.controllers', [])
 }])
 
 // Leftover from demo app - might revert to full screen event details page, so keeping it for now
-.controller('ChatDetailCtrl', function($scope, $stateParams, Events) {
+.controller('EventDetailCtrl', function($scope, $stateParams, Events) {
   // console.log($stateParams.eventId);
   $scope.event = Events.getEvent($stateParams.eventId);
   // console.log($scope.event);
 })
 
 // Third page controler - name leftover form demo app, currently favorites list
-.controller('AccountCtrl', function($scope, Favorites) {
+.controller('FavoritesCtrl', function($scope, Favorites) {
   $scope.$on('$ionicView.enter', function() {
     $scope.favs = Array.from(Favorites.get());
     console.log("GettingFavsList: ", $scope.favs);

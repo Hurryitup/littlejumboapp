@@ -46,7 +46,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
       url: '/events',
       views: {
         'tab-events': {
-          templateUrl: 'templates/tab-chats.html',
+          templateUrl: 'templates/tab-events.html',
           controller: 'EventsCtrl'
         }
       }
@@ -56,28 +56,28 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
       url: '/events/:eventId',
       views: {
         'tab-events': {
-          templateUrl: 'templates/chat-detail.html',
-          controller: 'ChatDetailCtrl'
+          templateUrl: 'templates/event-detail.html',
+          controller: 'EventDetailCtrl'
         }
       }
     })
 
-  .state('tab.dash', {
-    url: '/dash',
+  .state('tab.map', {
+    url: '/map',
     views: {
-      'tab-dash': {
-        templateUrl: 'templates/tab-dash.html',
-        controller: 'DashCtrl'
+      'tab-map': {
+        templateUrl: 'templates/tab-map.html',
+        controller: 'MapCtrl'
       }
     }
   })
 
-  .state('tab.account', {
-    url: '/account',
+  .state('tab.favorites', {
+    url: '/favorites',
     views: {
-      'tab-account': {
-        templateUrl: 'templates/tab-account.html',
-        controller: 'AccountCtrl'
+      'tab-favorites': {
+        templateUrl: 'templates/tab-favorites.html',
+        controller: 'FavoritesCtrl'
       }
     }
   });
