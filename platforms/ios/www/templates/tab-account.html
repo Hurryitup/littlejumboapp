@@ -1,9 +1,11 @@
-<ion-view view-title="Account">
+<head>
+</head>
+<ion-view view-title="Favorites">
   <ion-content>
     <ion-list>
-    <ion-toggle  ng-model="settings.enableFriends">
-        Enable Friends
-    </ion-toggle>
+      <ion-item ng-repeat="event in favs">
+        {{event.title}}
+      </ion-item>
     </ion-list>
   </ion-content>
 </ion-view>

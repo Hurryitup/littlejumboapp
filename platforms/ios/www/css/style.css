@@ -2,19 +2,35 @@
 
 h6 {
   font-weight: 400;
-  color: red;
 }
 .col {
   text-align: left;
 }
 
+#event_time {
+  font-weight: 600;
+}
+
+#subevent_title {
+  font-weight: 500;
+}
+
+#class_list_title {
+  padding-top: 25px;
+  white-space: normal;
+}
+
+
+.ion-item-right {
+  font-size: 80px;
+}
 
 
 .list .item.item-accordion {
-  line-height: 38px !important;
-  padding-top: 0 !important;
-  padding-bottom: 0 !important;
-  transition: 0.09s all linear !important;
+  line-height: 25px;
+  padding-top: 0;
+  padding-bottom: 0;
+  transition: 0.09s all linear;
 }
 .list .item.item-accordion.ng-hide {
   line-height: 0px !important;
