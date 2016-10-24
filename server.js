@@ -4,7 +4,7 @@ var bodyParser = require('body-parser');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true}));
 
-app.use(express.static(__dirname));
+app.use(express.static(__dirname + '/views'));
 app.set('view engine', 'pug');
 var mongo = require('mongodb');
 var mongoose = require('mongoose');
@@ -30,6 +30,10 @@ var VDay = require('./models/visiting_day');
 
 app.get('/', function (req, res) {
     res.render("index",{title: "Hey", message: "test"});
+});
+
+app.get('/forms', function (req, res) {
+    res.render("form",{title: "Hey7", message: "test"});
 });
 
 /*should be abstracted to a module but I will leave in here for now*/
