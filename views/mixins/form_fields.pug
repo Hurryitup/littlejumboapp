@@ -7,6 +7,7 @@ mixin form_fields(schema)
       });
 
     if value.enum
+      label(for=field)= field_readable
       each option in value.enum
         .radio
           label
@@ -31,4 +32,4 @@ mixin form_fields(schema)
       .form-group
         label(for=field)= field_readable
         .input-group.bootstrap-timepicker.timepicker
-          input.form-control(data-provide='timepicker')
+        input.form-control(data-provide='timepicker')

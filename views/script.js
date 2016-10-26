@@ -1,3 +1,6 @@
 $(function() {
-    $('.colorpicker-component').colorpicker();
+    $('.colorpicker-component').colorpicker({
+          color: "red",
+          format: "hex"
+           });
 });
