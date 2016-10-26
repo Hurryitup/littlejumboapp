@@ -1,102 +1,67 @@
 var express = require('express');
-var app = express();
 var bodyParser = require('body-parser');
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true}));
-
-app.use(express.static(__dirname + '/views'));
-app.set('view engine', 'pug');
-var mongo = require('mongodb');
 var mongoose = require('mongoose');
-var mongoUri = process.env.MOGOLAB_URI || process.env.MONGODB_URI || process.env.MONGOHQ_URL || 'mongodb://localhost/littlejumboapp';
-var MongoClient = require('mongodb').MongoClient, format = require('util').format;
-var ObjectID = require('mongodb').ObjectID;
-var db = MongoClient.connect(mongoUri, function(error, databaseConenction) {
-    if (databaseConenction != null) {
-            db = databaseConenction;
-    } else {
-        console.log(error);
-    }
-});
+
+var api = require('./routes/api');
+var backend = require('./routes/backend');
+
+var app = express();
+
+app.set('json spaces', 2);
+app.locals.pretty = true;
+
+app.set('views', './views');
+app.set('view engine', 'pug');
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+
+app.use(express.static('./public'));
+
+app.use('/api', api);
+app.use('/backend', backend);
+
+var mongoUri = process.env.MLAB_URI || process.env.MONGODB_URI || process.env.MONGOHQ_URL || 'mongodb://default:Windoze8@ds039404.mlab.com:39404/passport' || 'mongodb://localhost/littlejumboapp';
+
 mongoose.connect(mongoUri);
 
-var Schema = mongoose.Schema;
-var VirtualType = mongoose.VirtualType;
-var StdEvent = require('./models/std_event');
-var CompEvent = require('./models/comp_event');
-var VDay = require('./models/visiting_day');
-
-
-
-app.get('/', function (req, res) {
-    res.render("index",{title: "Hey", message: "test"});
+app.use(function(req, res, next) {
+  var err = new Error('Not Found');
+  err.status = 404;
+  next(err);
 });
 
-app.get('/forms', function (req, res) {
-    res.render("form",{title: "Hey7", message: "test"});
+app.use(function(err, req, res, next) {
+  if (err.status == 404) {
+    res.status(404).send('Not found');
+  }
+  else {
+    next(err);
+  }
 });
 
-/*should be abstracted to a module but I will leave in here for now*/
+// error handlers
 
-/* Description: Function flattenSchema takes in an Object that is in the format
- * of a Schema.tree and returns the object with fields as strings or nested
- * flattened schemas. Works recursively
- */
-function flattenSchema( schema) {
-    for (var key in schema) {
-        if (key[0] == '_') {
-            delete schema[key]
-        } else if (schema[key].type) {
-            if (schema[key].type instanceof Schema) {
-                schema[key].type = flattenSchema(schema[key].type.tree);
-            } else if (schema[key].type.name) {
-                schema[key].type = schema[key].type.name;
-            } else if (schema[key].type instanceof VirtualType) {
-                delete schema[key];
-            }
-        } else if (schema[key].name) {
-            schema[key] = schema[key].name;
-        }  else if (schema[key] instanceof VirtualType) {
-                delete schema[key];
-        }
-                
-    }
-    return schema;
+// development error handler
+// will print stacktrace
+if (app.get('env') === 'development') {
+  app.use(function(err, req, res, next) {
+    res.status(err.status || 500);
+    res.render('error', {
+      message: err.message,
+      error: err
+    });
+  });
 }
 
-
-
-app.get('/getSchema', function (req, res) {
-    var Model  = mongoose.model(req.query.model);
-//    console.log(Model.schema.tree);
-    schemaTree = Model.schema.tree;
-    schemaTree = flattenSchema(schemaTree);
-    console.log(schemaTree);
-    return res.send(schemaTree);
+// production error handler
+// no stacktraces leaked to user
+app.use(function(err, req, res, next) {
+  res.status(err.status || 500);
+  res.render('error', {
+    message: err.message,
+    error: {}
+  });
 });
-
-
-
-app.get('/listVdays', function (req, res) {
-    VDay.find().lean().exec(function (err, days) {
-        if (err) 
-            return res.status(500).send("Database Error");
-        return res.send(days);
-        });
-});
-
-app.get('/vday', function (req, res) {
-    var vday_id = req.query.id;
-    VDay
-        .findById(vday_id)
-        .populate('comp_event_list std_event_list')
-        .exec(function (err, doc) {
-            if (err)
-                return res.status(500).send("Database Error");
-            return res.send(doc.toJSON()); 
-        });
-});
-
 
 app.listen(process.env.PORT || 5000);
-

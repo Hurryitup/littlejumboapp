@@ -1,0 +1,15 @@
+h1 {
+    color: blue;
+}
+
+p {
+    color: red;
+}
+
+.event {
+    padding: 10pt;
+    color: #6e6e64;
+    background-color: #f2f2f2;
+    width: 500px;
+    border-radius: 25px;
+}
