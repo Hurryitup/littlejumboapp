@@ -50,7 +50,7 @@
     "cordova-plugin-geolocation": {
         "source": {
             "type": "registry",
-            "id": "cordova-plugin-geolocation"
+            "id": "cordova-plugin-geolocation@0.3.10"
         },
         "is_top_level": true,
         "variables": {}

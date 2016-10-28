@@ -63,9 +63,12 @@ angular.module('starter.controllers', [])
     // console.log(Favorites.get());
   }
 
+  // put into the map ctrl
   $scope.makeMarker = function(location) {
       console.log("hello");
+      alertPopup.close();
       var newLatLng; 
+      // call getter from factory
       newLatLng = new google.maps.LatLng(42.4084, -71.1163);
       var marker = new google.maps.Marker({
         map: $scope.user.map,
@@ -89,14 +92,15 @@ angular.module('starter.controllers', [])
          return;
        var alertPopup = $ionicPopup.alert({
               title: event.title,
-              content: "<a href=\"#/tab/dash\" ng-click=\"makeMarker(halligan)\">" + event.location + "</a><br><br>" + event.description 
+              // factory set lat/lng
+              content: "<a href=\"#/tab/dash\" ngclick=\"makeMarker(\"halligan\")\">" + event.location + "</a><br><br>" + event.description 
       });
   }
 
-  $scope.map = function() {
-          console.log("hello");
-          $state.go('tab.dash');
-        };
+  // $scope.map = function() {
+  //         console.log("hello");
+  //         $state.go('tab.dash');
+  //       };
 
 }])
 
