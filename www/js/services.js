@@ -4,6 +4,7 @@ angular.module('starter.services', [])
   var data;
   return {
     get: function (callback) {
+      console.log("Running Get");
       if (data) {
 	callback(data);
       } else {

@@ -9,25 +9,24 @@
                   ng-click="toggleGroup(event)" 
                   ng-class="{active: isGroupShown(event)}">
           <div class="row"> 
-            <div class="col col-33"> 
+            <div class="col-40 left_column"> 
               <span class="row responsive-sm item-text-wrap">
-                <h6 id="event_time" 
-                class="balanced">{{event.time_start}} - {{event.time_end}}</h6> 
-                <h6>{{event.location}}</h6>
+                <p class="time">{{event.time_start}} - {{event.time_end}}</p>
+                <p class="location">{{event.location}}</p>
               </span>
             </div> 
-            <div class="col col-50" ng-click="showAlert(event)"> 
+            <div class="col col-50 right_column" ng-click="showAlert(event)"> 
               <span class="row responsive-sm item-text-wrap">
-                <h3>{{event.title}}</h3> 
-                <h6 class="positive">{{event.subtitle}} &nbsp;
+                <h3 class="title">{{event.title}}</h3> 
+                <p ng-class="{'expandable': event.subevents}">{{event.subtitle}} &nbsp;
                   <i ng-if="event.subevents" class="icon" 
                      ng-class="(isGroupShown(event)) ? 'ion-chevron-up' : 'ion-chevron-down' "></i>
-                </h6>
+                </p>
               </span>
             </div>
             <span ng-if="event.type == 'standalone'" ng-click="toggleFavorite(event, event.id)" 
                   class="item-icon-right">
-              <i id="fav_icon_{{event.id}}" class="icon ion-android-star-outline  icon-accessory"></i>
+              <i id="fav_icon_{{event.id}}" class="icon ion-android-star-outline  icon-accessory star"></i>
             </span>
           </div> 
         </ion-item>
@@ -42,7 +41,7 @@
             </h6>
           </span>
           <span ng-click="toggleFavorite(subevent, subevent.id)" class="item-icon-right">
-            <i id="fav_icon_{{subevent.id}}" class="icon ion-android-star-outline icon-accessory"></i>
+            <i id="fav_icon_{{subevent.id}}" class="icon ion-android-star-outline icon-accessory star"></i>
           </span>
         </ion-item>
       </div>

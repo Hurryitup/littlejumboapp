@@ -1,0 +1,38 @@
+.list .item.item-accordion {
+  line-height: 25px;
+  padding-top: 0;
+  padding-bottom: 0;
+  transition: 0.09s all linear;
+}
+.list .item.item-accordion.ng-hide {
+  line-height: 0px !important;
+}
+.list .item.item-accordion.ng-hide-add,
+.list .item.item-accordion.ng-hide-remove {
+  display: block !important;
+}
+
+.time {
+    color: $balanced !important;
+    font-size: 13px !important; 
+}
+
+.left_column {
+}
+
+.right_column {
+    padding-left: 0px !important;
+}
+
+.star {
+    color: $positive !important;
+    font-size: 20px !important;
+}
+
+.expandable {
+    color: $positivelight !important;
+}
+
+.non_expandable {
+    color: $dark !important;
+}

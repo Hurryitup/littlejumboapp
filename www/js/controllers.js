@@ -7,22 +7,36 @@ angular.module('starter.controllers', [])
              function($scope, $ionicPopup, $ionicScrollDelegate, Events, Favorites) {
 
   // Makes http request if data is not already downloaded
-  Events.get(function(data) {
-      $scope.events = data;
-      // console.log('$scope.events: %o', $scope.events);    
+  console.log("Event controller running");
+  $scope.$on('$ionicView.enter', function() {
+    Events.get(function(data) {
+        $scope.events = data;
+        // console.log('$scope.events: %o', $scope.events);    
+    });
   });
 
   // Make dynamic accordian list
   $scope.toggleGroup = function(group) {
+    console.log("togling");
     if ($scope.isGroupShown(group)) {
       $scope.shownGroup = null;
     } else {
       $scope.shownGroup = group;
     }
   };
+
+  $scope.isComposite = function(e) {
+    console.log("checking Composite");
+    if (e.subevents != null) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+
   $scope.isGroupShown = function(group) {
     if ($scope.shownGroup === group && $scope.shownGroup.subevents) {
-	return true;
+    	return true;
     }
   };
 
