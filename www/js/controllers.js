@@ -1,7 +1,7 @@
 angular.module('starter.controllers', [])
 
 .controller('MapCtrl', function($scope, $state, location /*, $cordovaGeolocation */) {
-  var options = {timeout: 10000, enableHighAccuracy: true};
+    var options = {timeout: 10000, enableHighAccuracy: true};
  
     var latLng = new google.maps.LatLng(42.4075, -71.1190);
  
@@ -13,19 +13,17 @@ angular.module('starter.controllers', [])
  
     $scope.map = new google.maps.Map(document.getElementById("map"), mapOptions);
     
-    makeMarker
-
-    
     $scope.makeMarker = function() {
       console.log("hello");
       //alertPopup.close();
+      var loc = location.getProperty();
       var newLatLng; 
       // call getter from factory
-      newLatLng = new google.maps.LatLng(42.4084, -71.1163);
+      newLatLng = new google.maps.LatLng(loc.lat, loc.lng);
       var marker = new google.maps.Marker({
-        map: $scope.user.map,
+        map: $scope.map,
         animation: google.maps.Animation.DROP,
-        position: latLng
+        position: newLatLng
       });      
      
       var infoWindow = new google.maps.InfoWindow({
@@ -33,9 +31,10 @@ angular.module('starter.controllers', [])
       });
      
       google.maps.event.addListener(marker, 'click', function () {
-          infoWindow.open($scope.user.map, marker);
+          infoWindow.open($scope.map, marker);
       });
-  }
+    }
+    $scope.makeMarker();
 })
 
 .controller('EventsCtrl',
@@ -86,7 +85,7 @@ angular.module('starter.controllers', [])
        var alertPopup = $ionicPopup.alert({
               title: event.title,
               // factory set lat/lng
-              content: "<a href=\"#/tab/map\" ng-click='location.setProperty("+ event.lat + "," + event.lng) + "'>" + event.location + "</a><br><br>" + event.description 
+              content: "<a href=\"#/tab/map\" ng-click='location.setProperty("+ event.lat + "," + event.lng + ")'>" + event.location + "</a><br><br>" + event.description 
       });
   }
 }])

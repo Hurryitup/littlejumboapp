@@ -30,6 +30,8 @@
         "time_start": "22:06",
         "time_end":  "23:06 pm",
         "location": "Haligan 208",
+        "lat": 42.4075,
+        "lng": -71.1190,
         "professor": "Proctor",
         "baloon_color": "red",
         "subevents": null

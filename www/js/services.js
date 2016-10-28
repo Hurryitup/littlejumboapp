@@ -16,7 +16,7 @@ angular.module('starter.services', [])
         return location;
         }
     };
-});
+})
 
 .factory('Events', ['$http', function($http) {
   var data;
