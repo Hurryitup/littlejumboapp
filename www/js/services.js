@@ -1,5 +1,9 @@
 angular.module('starter.services', [])
 
+.service('User', function (){
+  return {};
+})
+
 .factory('Events', ['$http', function($http) {
   var data;
   return {

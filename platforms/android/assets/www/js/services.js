@@ -8,7 +8,7 @@ angular.module('starter.services', [])
 	callback(data);
       } else {
 	console.log("HTTP_RQ");
-	$http.get('http://45.55.189.20/test2.json').success(function(d) {
+	$http.get('test2.json').success(function(d) {
 	  callback(data = d);
 	});
       }
@@ -20,4 +20,25 @@ angular.module('starter.services', [])
       }
     }
   };
-}]);
+}])
+  
+.factory('Favorites', function() {
+  var favorites = new Set();
+
+  return {
+    get: function() {
+      return favorites;
+    },
+    add: function(event) {
+      favorites.add(event);
+      return true;
+    },
+    remove: function(event) {
+      favorites.delete(event);
+      return true;
+    },
+    has: function(event) {
+      return favorites.has(event);
+    }
+  }
+});
