@@ -1,11 +1,5 @@
 angular.module('starter.controllers', [])
 
-.service('User', function (){
-  return {};
-})
-
-.controller('DashCtrl', function($scope) {})
-
 .controller('MapCtrl', function($scope, $state, User /*, $cordovaGeolocation */) {
   $scope.user = User;
   var options = {timeout: 10000, enableHighAccuracy: true};
@@ -63,10 +57,12 @@ angular.module('starter.controllers', [])
     // console.log(Favorites.get());
   }
 
-  $scope.makeMarker = function(location) {
+  // put into the map ctrl
+  $scope.makeMarker = function() {
       console.log("hello");
       alertPopup.close();
       var newLatLng; 
+      // call getter from factory
       newLatLng = new google.maps.LatLng(42.4084, -71.1163);
       var marker = new google.maps.Marker({
         map: $scope.user.map,
@@ -75,7 +71,7 @@ angular.module('starter.controllers', [])
       });      
      
       var infoWindow = new google.maps.InfoWindow({
-          content: location
+          content: "yo"
       });
      
       google.maps.event.addListener(marker, 'click', function () {
@@ -90,7 +86,8 @@ angular.module('starter.controllers', [])
          return;
        var alertPopup = $ionicPopup.alert({
               title: event.title,
-              content: "<a href=\"#/tab/dash\" ngclick=\"makeMarker(\"halligan\")\">" + event.location + "</a><br><br>" + event.description 
+              // factory set lat/lng
+              content: "<a href=\"#/tab/map\" ngclick='makeMarker()'>" + event.location + "</a><br><br>" + event.description 
       });
   }
 
@@ -102,14 +99,14 @@ angular.module('starter.controllers', [])
 }])
 
 // Leftover from demo app - might revert to full screen event details page, so keeping it for now
-.controller('ChatDetailCtrl', function($scope, $stateParams, Events) {
+.controller('EventDetailCtrl', function($scope, $stateParams, Events) {
   // console.log($stateParams.eventId);
   $scope.event = Events.getEvent($stateParams.eventId);
   // console.log($scope.event);
 })
 
 // Third page controler - name leftover form demo app, currently favorites list
-.controller('AccountCtrl', function($scope, Favorites) {
+.controller('FavoritesCtrl', function($scope, Favorites) {
   $scope.$on('$ionicView.enter', function() {
     $scope.favs = Array.from(Favorites.get());
     console.log("GettingFavsList: ", $scope.favs);

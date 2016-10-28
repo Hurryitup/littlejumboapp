@@ -1,9 +1,7 @@
 angular.module('starter.controllers', [])
 
-.controller('MapCtrl', function($scope, $state, User /*, $cordovaGeolocation */) {
-  $scope.user = User;
+.controller('MapCtrl', function($scope, $state, location /*, $cordovaGeolocation */) {
   var options = {timeout: 10000, enableHighAccuracy: true};
- 
  
     var latLng = new google.maps.LatLng(42.4075, -71.1190);
  
@@ -13,13 +11,36 @@ angular.module('starter.controllers', [])
       mapTypeId: google.maps.MapTypeId.ROADMAP
     };
  
-    $scope.user.map = new google.maps.Map(document.getElementById("map"), mapOptions);
- 
+    $scope.map = new google.maps.Map(document.getElementById("map"), mapOptions);
+    
+    makeMarker
+
+    
+    $scope.makeMarker = function() {
+      console.log("hello");
+      //alertPopup.close();
+      var newLatLng; 
+      // call getter from factory
+      newLatLng = new google.maps.LatLng(42.4084, -71.1163);
+      var marker = new google.maps.Marker({
+        map: $scope.user.map,
+        animation: google.maps.Animation.DROP,
+        position: latLng
+      });      
+     
+      var infoWindow = new google.maps.InfoWindow({
+          content: "yo"
+      });
+     
+      google.maps.event.addListener(marker, 'click', function () {
+          infoWindow.open($scope.user.map, marker);
+      });
+  }
 })
 
 .controller('EventsCtrl',
-            ['$scope', '$ionicPopup', '$ionicScrollDelegate', 'Events', 'Favorites', 
-             function($scope, $ionicPopup, $ionicScrollDelegate, Events, Favorites, User) {
+            ['$scope', '$ionicPopup', '$ionicScrollDelegate', 'Events', 'Favorites', 'location',
+             function($scope, $ionicPopup, $ionicScrollDelegate, Events, Favorites, location) {
 
   // Makes http request if data is not already downloaded
   Events.get(function(data) {
@@ -57,28 +78,6 @@ angular.module('starter.controllers', [])
     // console.log(Favorites.get());
   }
 
-  // put into the map ctrl
-  $scope.makeMarker = function(location) {
-      console.log("hello");
-      alertPopup.close();
-      var newLatLng; 
-      // call getter from factory
-      newLatLng = new google.maps.LatLng(42.4084, -71.1163);
-      var marker = new google.maps.Marker({
-        map: $scope.user.map,
-        animation: google.maps.Animation.DROP,
-        position: latLng
-      });      
-     
-      var infoWindow = new google.maps.InfoWindow({
-          content: location
-      });
-     
-      google.maps.event.addListener(marker, 'click', function () {
-          infoWindow.open($scope.user.map, marker);
-      });
-  }
-
   // Display event info pop-up
   $scope.showAlert = function(event) {
     // $ionicScrollDelegate.$getByHandle(event.id.toString()).scrollTop(); ***NOT WORKING***
@@ -87,15 +86,9 @@ angular.module('starter.controllers', [])
        var alertPopup = $ionicPopup.alert({
               title: event.title,
               // factory set lat/lng
-              content: "<a href=\"#/tab/map\" ngclick=\"makeMarker(\"halligan\")\">" + event.location + "</a><br><br>" + event.description 
+              content: "<a href=\"#/tab/map\" ng-click='location.setProperty("+ event.lat + "," + event.lng) + "'>" + event.location + "</a><br><br>" + event.description 
       });
   }
-
-  // $scope.map = function() {
-  //         console.log("hello");
-  //         $state.go('tab.dash');
-  //       };
-
 }])
 
 // Leftover from demo app - might revert to full screen event details page, so keeping it for now
