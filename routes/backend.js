@@ -47,4 +47,10 @@ router.get('/standalone_events/new', function(req, res) {
     res.render('form', { schema: schemaTree });
 });
 
+router.get('/composite_events/new', function(req, res) {
+    var Model = mongoose.model('CompositeEvent');
+    var schemaTree = flattenSchema(Model.schema.tree);
+    res.render('form', { schema: schemaTree });
+});
+
 module.exports = router;

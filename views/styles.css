@@ -5,4 +5,6 @@
     width: 500px;
     border-radius: 25px;
 }
-textarea { resize:vertical; }
+textarea {
+    resize: vertical;
+}

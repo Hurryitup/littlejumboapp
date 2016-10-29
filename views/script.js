@@ -1,6 +1,6 @@
 $(function() {
     $('.colorpicker-component').colorpicker({
-          color: "red",
-          format: "hex"
-           });
+        color: "red",
+        format: "hex"
+    });
 });

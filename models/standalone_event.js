@@ -1,26 +1,6 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
-/*
-var timeSchema = new Schema({
-    start: {type: Date, required: true},
-    end: {type: Date, required: true}
-});
-*/
-/*
-var lastUpdatedSchema = new Schema({
-    field: {type: String, required: true},
-    time: {type: Date, required: true},
-    author: {type: String, required: true}
-});
-*/
-/*
-var locationSchema = new Schema({
-    name: {type: String, required: true},
-    address: {type: String, required: true}
-});
-*/
-
 var StandaloneEvent = new Schema({
     title: {
         type: String,
@@ -42,10 +22,10 @@ var StandaloneEvent = new Schema({
         type: String,
         required: true
     },
-    // student_or_parent: DISCUSS
-    eligibility: {
+    audience: {
         type: String,
-        enum: ['Student', 'Parent']
+        required: true,
+        enum: ['Student', 'Parent', 'All']
     },
     balloon_color: {
         type: String

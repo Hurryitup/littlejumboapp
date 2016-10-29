@@ -31,5 +31,5 @@ mixin form_fields(schema)
     else if value.type == 'Date'
       .form-group
         label(for=field)= field_readable
-        .input-group.bootstrap-timepicker.timepicker
+        //- .input-group.bootstrap-timepicker.timepicker
         input.form-control(data-provide='timepicker')
