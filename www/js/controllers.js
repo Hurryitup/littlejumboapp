@@ -17,6 +17,7 @@ angular.module('starter.controllers', [])
       console.log("hello");
       //alertPopup.close();
       var loc = location.getProperty();
+      console.log("the lat is " + loc.lat);
       var newLatLng; 
       // call getter from factory
       newLatLng = new google.maps.LatLng(loc.lat, loc.lng);
@@ -84,8 +85,7 @@ angular.module('starter.controllers', [])
          return;
        var alertPopup = $ionicPopup.alert({
               title: event.title,
-              // factory set lat/lng
-              content: "<a href=\"#/tab/map\" ng-click='location.setProperty("+ event.lat + "," + event.lng + ")'>" + event.location + "</a><br><br>" + event.description 
+              content: "<a href=\"#/tab/map\" ng-click='location.setProperty("+ event.subevents[0].lat + "," + event.subevents[0].lng + ")'>" + event.location + "</a><br><br>" + event.description 
       });
   }
 }])

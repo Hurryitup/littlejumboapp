@@ -6,6 +6,8 @@
     "time_start": "11:00",
     "time_end":  "1:30 pm",
     "location": "Olin 204",
+    "lat": 42.4075,
+    "lng": -71.1190,
     "professor": null,
     "baloon_color": null,
     "subevents": null
@@ -19,6 +21,8 @@
     "time_start": "2:00",
     "time_end":  "3:00 pm",
     "location": null,
+    "lat": 42.4075,
+    "lng": -71.1190,
     "professor": null,
     "baloon_color": null,
     "subevents": [
@@ -44,6 +48,8 @@
         "time_start": "22:06",
         "time_end":  "23:06",
         "location": "Breaker 228",
+        "lat": 42.4075,
+        "lng": -71.1190,
         "professor": "NingMa",
         "baloon_color": "red",
         "subevents": null
@@ -56,6 +62,8 @@
         "time_start": "22:06",
         "time_end":  "23:06",
         "location": "Pearson 104",
+        "lat": 42.4075,
+        "lng": -71.1190,
         "professor": "Greg Aloupis",
         "baloon_color": "blue",
         "subevents": null
@@ -68,6 +76,8 @@
         "time_start": "22:06",
         "time_end":  "23:06",
         "location": "Anderson 208",
+        "lat": 42.4075,
+        "lng": -71.1190,
         "professor": "Ming",
         "baloon_color": "yellow",
         "subevents": null
@@ -81,6 +91,8 @@
     "time_start": "11:00",
     "time_end":  "1:30 pm",
     "location": "Dowling 745A",
+    "lat": 42.4075,
+    "lng": -71.1190,
     "professor": null,
     "baloon_color": null,
     "subevents": null
