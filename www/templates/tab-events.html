@@ -34,7 +34,7 @@
         <ion-item class="item-accordion" 
                   ng-repeat="subevent in event.subevents"
                   ng-show="isGroupShown(event)">
-          <span  ng-click="showAlert(subevent)">
+          <span ng-click="showAlert(subevent)">
             <h6 id="class_list_title" class="class-title">
               <span id="subevent_title">{{subevent.title}}</span><br/><br/>
               {{subevent.location}}<br/>

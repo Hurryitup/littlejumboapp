@@ -78,7 +78,6 @@ angular.module('starter.controllers', [])
     // console.log(Favorites.get());
   }
 
-  // Display event info pop-up
   $scope.showAlert = function(event) {
     // $ionicScrollDelegate.$getByHandle(event.id.toString()).scrollTop(); ***NOT WORKING***
        if (event.type == 'composite') 
@@ -89,7 +88,7 @@ angular.module('starter.controllers', [])
        // location.setProperty(42.4075, 71.1190); when called like this it works!!
        var alertPopup = $ionicPopup.alert({
               title: event.title,
-              content: "<a href=\"#/tab/map\" ng-click='location.setProperty("+ 42.4075 + "," + -71.1190 + ")'>" + event.location + "</a><br><br>" + event.description 
+              content: "<a href=\"#/tab/map\" ng-click='location.setProperty("+ event. + "," + -71.1190 + ")'>" + event.location + "</a><br><br>" + event.description 
       });
   }
 }])
