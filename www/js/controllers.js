@@ -13,14 +13,12 @@ angular.module('starter.controllers', [])
  
     $scope.map = new google.maps.Map(document.getElementById("map"), mapOptions);
     
+    var loc = location.getProperty();
     $scope.makeMarker = function() {
       console.log("hello");
-      //alertPopup.close();
-      var loc = location.getProperty();
       console.log("the lat is " + loc.lat);   //currently undefined
       var newLatLng;
-      //hard coded vals to see if makeMarker works -> it does!
-      newLatLng = new google.maps.LatLng(42.4066456, -71.1192478);//loc.lat, loc.lng);
+      newLatLng = new google.maps.LatLng(loc.lat, loc.lng);
       var marker = new google.maps.Marker({
         map: $scope.map,
         animation: google.maps.Animation.DROP,
@@ -28,19 +26,22 @@ angular.module('starter.controllers', [])
       });      
      
       var infoWindow = new google.maps.InfoWindow({
-          content: "yo"
+          content: loc.building
       });
      
       google.maps.event.addListener(marker, 'click', function () {
           infoWindow.open($scope.map, marker);
       });
+      loc.wasCalled = false;
     }
-    $scope.makeMarker();
+    if (loc.wasCalled == true) {
+      $scope.makeMarker();
+    }
 })
 
 .controller('EventsCtrl',
-            ['$scope', '$ionicPopup', '$ionicScrollDelegate', 'Events', 'Favorites', 'location',
-             function($scope, $ionicPopup, $ionicScrollDelegate, Events, Favorites, location) {
+            ['$scope', '$state', '$ionicPopup', '$ionicScrollDelegate', 'Events', 'Favorites', 'location',
+             function($scope, $state, $ionicPopup, $ionicScrollDelegate, Events, Favorites, location) {
 
   // Makes http request if data is not already downloaded
   Events.get(function(data) {
@@ -77,7 +78,7 @@ angular.module('starter.controllers', [])
     // console.log("FAVING: ", event);
     // console.log(Favorites.get());
   }
-
+  var alertPopup;
   // Display event info pop-up
   $scope.showAlert = function(event) {
     // $ionicScrollDelegate.$getByHandle(event.id.toString()).scrollTop(); ***NOT WORKING***
@@ -86,12 +87,23 @@ angular.module('starter.controllers', [])
        console.log("trying to create alert popup"); 
        // when calling ng-click should be calling it on something like event.subevents[0].lat/.lng
        // but setProperty never gets called! why?
-       // location.setProperty(42.4075, 71.1190); when called like this it works!!
-       var alertPopup = $ionicPopup.alert({
+       //"<a href=\"#/tab/map\" ng-click=''>"
+       //location.setProperty(event.lat, event.lng, event.location, true);
+       console.log(event.lat);
+       alertPopup = $ionicPopup.alert({
               title: event.title,
-              content: "<a href=\"#/tab/map\" ng-click='location.setProperty("+ 42.4075 + "," + -71.1190 + ")'>" + event.location + "</a><br><br>" + event.description 
+              scope: $scope,
+              content: "<button ng-click='goToMap(" + event.lat + "," + event.lng + ")'>" + event.location + "</button><br><br>" + event.description 
       });
   }
+
+  $scope.goToMap = function(lat, lng) {
+    console.log("inside goToMap");
+      alertPopup.close();
+      location.setProperty(lat, lng, "", true);
+      $state.go("tab.map");
+  }
+
 }])
 
 // Leftover from demo app - might revert to full screen event details page, so keeping it for now
