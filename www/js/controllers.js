@@ -1,42 +1,63 @@
 angular.module('starter.controllers', [])
 
-.controller('MapCtrl', function($scope) {})
+.controller('MapCtrl', function($scope, $state, location /*, $cordovaGeolocation */) {
+    var options = {timeout: 10000, enableHighAccuracy: true};
+ 
+    var latLng = new google.maps.LatLng(42.4075, -71.1190);
+ 
+    var mapOptions = {
+      center: latLng,
+      zoom: 17,
+      mapTypeId: google.maps.MapTypeId.ROADMAP
+    };
+ 
+    $scope.map = new google.maps.Map(document.getElementById("map"), mapOptions);
+    
+    $scope.makeMarker = function() {
+      console.log("hello");
+      //alertPopup.close();
+      var loc = location.getProperty();
+      var newLatLng; 
+      // call getter from factory
+      newLatLng = new google.maps.LatLng(loc.lat, loc.lng);
+      var marker = new google.maps.Marker({
+        map: $scope.map,
+        animation: google.maps.Animation.DROP,
+        position: newLatLng
+      });      
+     
+      var infoWindow = new google.maps.InfoWindow({
+          content: "yo"
+      });
+     
+      google.maps.event.addListener(marker, 'click', function () {
+          infoWindow.open($scope.map, marker);
+      });
+    }
+    $scope.makeMarker();
+})
 
-.controller('EventsCtrl', 
-            ['$scope', '$ionicPopup', '$ionicScrollDelegate', 'Events', 'Favorites', 
-             function($scope, $ionicPopup, $ionicScrollDelegate, Events, Favorites) {
+.controller('EventsCtrl',
+            ['$scope', '$ionicPopup', '$ionicScrollDelegate', 'Events', 'Favorites', 'location',
+             function($scope, $ionicPopup, $ionicScrollDelegate, Events, Favorites, location) {
 
   // Makes http request if data is not already downloaded
-  console.log("Event controller running");
-  $scope.$on('$ionicView.enter', function() {
-    Events.get(function(data) {
-        $scope.events = data;
-        // console.log('$scope.events: %o', $scope.events);    
-    });
+  Events.get(function(data) {
+      $scope.events = data;
+      // console.log('$scope.events: %o', $scope.events);    
   });
 
   // Make dynamic accordian list
   $scope.toggleGroup = function(group) {
-    console.log("togling");
     if ($scope.isGroupShown(group)) {
       $scope.shownGroup = null;
     } else {
       $scope.shownGroup = group;
     }
   };
-
-  $scope.isComposite = function(e) {
-    console.log("checking Composite");
-    if (e.subevents != null) {
-      return true;
-    } else {
-      return false;
-    }
-  };
-
   $scope.isGroupShown = function(group) {
     if ($scope.shownGroup === group && $scope.shownGroup.subevents) {
-    	return true;
+  return true;
     }
   };
 
@@ -63,7 +84,8 @@ angular.module('starter.controllers', [])
          return;
        var alertPopup = $ionicPopup.alert({
               title: event.title,
-              content: event.location + "<br><br>" + event.description 
+              // factory set lat/lng
+              content: "<a href=\"#/tab/map\" ng-click='location.setProperty("+ event.lat + "," + event.lng + ")'>" + event.location + "</a><br><br>" + event.description 
       });
   }
 }])

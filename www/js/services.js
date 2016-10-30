@@ -1,5 +1,23 @@
 angular.module('starter.services', [])
 
+.service('User', function (){
+  return {};
+})
+
+.factory('location', function(){
+    var location = {};
+
+    return {
+        setProperty: function(latitude, longitude){
+        location.lat = latitude;
+        location.lng = longitude;
+    },
+        getProperty: function(){
+        return location;
+        }
+    };
+})
+
 .factory('Events', ['$http', function($http) {
   var data;
   return {

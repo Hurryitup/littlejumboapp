@@ -1,5 +1,5 @@
 {
-  "name": "Little Jumbo App",
+  "name": "myApp",
   "app_id": "0e9fdcb1",
   "gulpStartupTasks": [
     "sass",
@@ -7,6 +7,7 @@
   ],
   "watchPatterns": [
     "www/**/*",
-    "!www/lib/**/*"
+    "!www/lib/**/*",
+    "!www/**/*.map"
   ]
 }

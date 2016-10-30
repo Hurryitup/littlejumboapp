@@ -24,6 +24,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
   });
 })
 
+
 .config(function($stateProvider, $urlRouterProvider) {
 
   // Ionic uses AngularUI Router which uses the concept of states
@@ -41,46 +42,48 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
 
   // Each tab has its own nav history stack:
 
-  .state('tab.dash', {
-    url: '/dash',
-    views: {
-      'tab-dash': {
-        templateUrl: 'templates/tab-dash.html',
-        controller: 'DashCtrl'
-      }
-    }
-  })
 
   .state('tab.events', {
       url: '/events',
       views: {
         'tab-events': {
-          templateUrl: 'templates/tab-chats.html',
+          templateUrl: 'templates/tab-events.html',
           controller: 'EventsCtrl'
         }
       }
     })
+
     .state('tab.event-detail', {
       url: '/events/:eventId',
       views: {
         'tab-events': {
-          templateUrl: 'templates/chat-detail.html',
-          controller: 'ChatDetailCtrl'
+          templateUrl: 'templates/event-detail.html',
+          controller: 'EventDetailCtrl'
         }
       }
     })
 
-  .state('tab.account', {
-    url: '/account',
+  .state('tab.map', {
+    url: '/map',
     views: {
-      'tab-account': {
-        templateUrl: 'templates/tab-account.html',
-        controller: 'AccountCtrl'
+      'tab-map': {
+        templateUrl: 'templates/tab-map.html',
+        controller: 'MapCtrl'
+      }
+    }
+  })
+
+  .state('tab.favorites', {
+    url: '/favorites',
+    views: {
+      'tab-favorites': {
+        templateUrl: 'templates/tab-favorites.html',
+        controller: 'FavoritesCtrl'
       }
     }
   });
 
   // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/tab/dash');
+  $urlRouterProvider.otherwise('/tab/events');
 
 });
