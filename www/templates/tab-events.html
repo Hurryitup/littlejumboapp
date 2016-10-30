@@ -33,13 +33,13 @@
         <ion-item class="item-accordion" 
                   ng-repeat="subevent in event.subevents"
                   ng-show="isGroupShown(event)">
-          <span  ng-click="showAlert(subevent)">
-            <h6 id="class_list_title" class="class-title">
-              <span id="subevent_title">{{subevent.title}}</span><br/><br/>
-              {{subevent.location}}<br/>
-              {{subevent.professor}} 
-            </h6>
-          </span>
+          <div  ng-click="showAlert(subevent)">
+            <p class="subevent_item">
+              <div class="subevent_title">{{subevent.title}}</div>
+              <div class="subevent_location">{{subevent.location}}</div>
+              <div class="subevent_professor">{{subevent.professor}} </div>
+            </p>
+          </div>
           <span ng-click="toggleFavorite(subevent, subevent.id)" class="item-icon-right">
             <i id="fav_icon_{{subevent.id}}" class="icon ion-android-star-outline icon-accessory star"></i>
           </span>
