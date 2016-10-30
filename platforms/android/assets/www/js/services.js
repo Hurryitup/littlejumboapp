@@ -7,12 +7,14 @@ angular.module('starter.services', [])
 .factory('location', function(){
     var location = {};
 
-    return {
+    return {      //this never gets called?!
         setProperty: function(latitude, longitude){
+        console.log("We in setProperty! and lat is:" + latitude);
         location.lat = latitude;
         location.lng = longitude;
     },
         getProperty: function(){
+        console.log("In getProperty! and lat is" + location.lat);
         return location;
         }
     };
