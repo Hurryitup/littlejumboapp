@@ -67,10 +67,10 @@ angular.module('starter.controllers', [])
     // console.log(html_id);
     // console.log(document);
     if (Favorites.has(event)) {
-      document.getElementById(html_id).className = "icon ion-android-star-outline icon-accessory";
+      document.getElementById(html_id).className = "icon ion-android-star-outline icon-accessory star";
       Favorites.remove(event);
     } else {
-      document.getElementById(html_id).className = "icon ion-android-star icon-accessory";
+      document.getElementById(html_id).className = "icon ion-android-star icon-accessory star";
       Favorites.add(event);
     }
     // console.log("FAVING: ", event);
