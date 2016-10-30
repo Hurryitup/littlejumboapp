@@ -8,11 +8,13 @@ angular.module('starter.services', [])
     var location = {};
 
     return {      //this never gets called?!
-        setProperty: function(latitude, longitude){
+        setProperty: function(latitude, longitude, building, wasCalled){
         console.log("We in setProperty! and lat is:" + latitude);
         location.lat = latitude;
         location.lng = longitude;
-    },
+        location.building = building;
+        location.wasCalled = wasCalled;
+        },
         getProperty: function(){
         console.log("In getProperty! and lat is" + location.lat);
         return location;
