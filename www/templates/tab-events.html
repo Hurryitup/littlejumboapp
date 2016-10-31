@@ -1,8 +1,17 @@
-<ion-view title="Events">
-  <ion-nav-title>
-    Events
-  </ion-nav-title>
-  <ion-content>
+<ion-view view-title="SubTabs">
+<ion-pane>
+<ion-tabs class="tabs-top tabs-assertive subtabs" ng-click="refreshFavorites()">
+
+
+<ion-tab title="ALL" href="#/subtab/all">
+<ion-nav-view name="subtab-all">
+<ion-content>
+
+<!-- <ion-view title="Events"> -->
+<!--   <ion-nav-title> -->
+<!--     Events -->
+<!--   </ion-nav-title> -->
+<!--   <ion-content> -->
     <ion-list>
       <div ng-repeat="event in events">
         <ion-item class="item-stable" 
@@ -47,4 +56,23 @@
       </div>
     </ion-list>
   </ion-content>
+</ion-nav-view>
+</ion-tab>
+
+<ion-tab title="FAVORITES" href="#/subtab/favorites">
+  <ion-nav-view name="subtab-favorites">
+    <ion-content>
+      <ion-list>
+        <ion-item ng-repeat="event in favs">
+          {{event.title}}
+        </ion-item>
+      </ion-list>
+    </ion-content>
+
+  </ion-nav-view>
+</ion-tab>
+
+</ion-tabs>
+</ion-pane>
 </ion-view>
+

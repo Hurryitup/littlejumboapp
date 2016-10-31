@@ -55,8 +55,12 @@ angular.module('starter.controllers', [])
   };
   $scope.isGroupShown = function(group) {
     if ($scope.shownGroup === group && $scope.shownGroup.subevents) {
-  return true;
+      return true;
     }
+  };
+
+  $scope.refreshFavorites = function() {
+    $scope.favs = Array.from(Favorites.get());
   };
 
   // On star click - change in data and html
