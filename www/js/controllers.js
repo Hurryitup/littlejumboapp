@@ -83,7 +83,9 @@ angular.module('starter.controllers', [])
        var alertPopup = $ionicPopup.alert({
               title: event.title,
               // factory set lat/lng
-              content: "<a href=\"#/tab/map\" ng-click='location.setProperty("+ event.lat + "," + event.lng + ")'>" + event.location + "</a><br><br>" + event.description 
+              content: "<a href=\"#/tab/map\" ng-click='location.setProperty("+ event.lat + "," + event.lng + ")'>" + event.location + "</a><br><br>" + event.description ,
+              buttons: [{text: 'CLOSE',
+                         type: 'button-positive'}]
       });
   }
 }])
