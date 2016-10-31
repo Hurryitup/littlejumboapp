@@ -23,17 +23,15 @@ angular.module('starter.services', [])
   return {
     get: function (callback) {
       if (data) {
-	callback(data);
+      	callback(data);
       } else {
-	console.log("HTTP_RQ");
-	$http.get('test2.json').success(function(d) {
-	  callback(data = d);
-	});
+      	$http.get('test2.json').success(function(d) {
+      	  callback(d);
+      	});
       }
     },
     getEvent: function(id) {
       if (data) {
-        console.log("GETEVENT");
         return data[id - 1];
       }
     }
