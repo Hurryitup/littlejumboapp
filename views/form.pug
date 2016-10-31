@@ -3,6 +3,10 @@ extends layout
 include mixins/form_fields
 
 block content
-  h1 A Form
-  .event 
-    +form_fields(schema)
+	.container
+		.row
+			.col-md-6.col-md-offset-3
+				form.add-data-form(method='POST', action=action, onsubmit='return submitForm(this)')
+					legend= 'Add ' + form_name
+					+form_fields(schema)
+					button.btn.btn-primary Submit

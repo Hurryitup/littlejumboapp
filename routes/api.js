@@ -19,9 +19,21 @@ router.get('/visiting_days', function(req, res) {
     });
 });
 
+// TODO
+router.post('/visiting_days', function(req, res) {
+    res.json(req.body);
+});
+router.post('/composite_events', function(req, res) {
+    res.json(req.body);
+});
+router.post('/standalone_events', function(req, res) {
+    res.json(req.body);
+});
+
 router.get('/visiting_days/:id', function(req, res) {
     var vday_id = req.params.id;
-    VisitingDay.findById(vday_id).populate('composite_events standalone_events')
+    var populate = req.query.populate.replace(',', ' ');
+    VisitingDay.findById(vday_id).populate(populate)
     .exec(function (err, day) {
         if (err) {
             console.log(err);
@@ -33,5 +45,4 @@ router.get('/visiting_days/:id', function(req, res) {
     });
 });
 
-// add 
 module.exports = router;

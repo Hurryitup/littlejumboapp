@@ -24,7 +24,8 @@
         "require": false,
         "process": false,
         "console": false,
-        "module": false
+        "module": false,
+        "$": false
     },
 
     // == Enforcing Options ===============================================

@@ -38,19 +38,31 @@ function flattenSchema(schema) {
 router.get('/visiting_days/new', function(req, res) {
     var Model = mongoose.model('VisitingDay');
     var schemaTree = flattenSchema(Model.schema.tree);
-    res.render('form', { schema: schemaTree });
+    res.render('form', {
+        schema: schemaTree,
+        action: '/api/visiting_days',
+        form_name: 'Visiting Day'
+    });
 });
 
 router.get('/standalone_events/new', function(req, res) {
     var Model = mongoose.model('StandaloneEvent');
     var schemaTree = flattenSchema(Model.schema.tree);
-    res.render('form', { schema: schemaTree });
+    res.render('form', {
+        schema: schemaTree,
+        action: '/api/standalone_events',
+        form_name: 'Standalone Event'
+    });
 });
 
 router.get('/composite_events/new', function(req, res) {
     var Model = mongoose.model('CompositeEvent');
     var schemaTree = flattenSchema(Model.schema.tree);
-    res.render('form', { schema: schemaTree });
+    res.render('form', {
+        schema: schemaTree,
+        action: '/api/composite_events',
+        form_name: 'Composite Event'
+    });
 });
 
 module.exports = router;

@@ -21,7 +21,7 @@ app.use(express.static('./public'));
 app.use('/api', api);
 app.use('/backend', backend);
 
-var mongoUri = process.env.MLAB_URI || process.env.MONGODB_URI || process.env.MONGOHQ_URL || 'mongodb://default:Windoze8@ds039404.mlab.com:39404/passport' || 'mongodb://localhost/littlejumboapp';
+var mongoUri = process.env.MLAB_URI || process.env.MONGODB_URI || process.env.MONGOHQ_URL || 'mongodb://localhost/littlejumboapp';
 
 mongoose.connect(mongoUri);
 

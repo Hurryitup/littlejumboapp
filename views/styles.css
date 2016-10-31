@@ -1,10 +1,9 @@
-.event {
-    padding: 10pt;
-    color: #6e6e64;
+.add-data-form {
+    padding: 16px;
     background-color: #f2f2f2;
-    width: 500px;
-    border-radius: 25px;
+    border-radius: 12px;
 }
+
 textarea {
     resize: vertical;
 }

@@ -21,7 +21,7 @@ mixin form_fields(schema)
       .form-group
         label(for=field)= field_readable
         .input-group.colorpicker-component
-          input.form-control(type='text', value='#3af')
+          input.form-control(name=field, type='text', value='#3af')
           span.input-group-addon
             i
     else if value.type == 'String'
@@ -32,4 +32,5 @@ mixin form_fields(schema)
       .form-group
         label(for=field)= field_readable
         //- .input-group.bootstrap-timepicker.timepicker
-        input.form-control(data-provide='timepicker')
+        input.form-control(type='text', data-mirror=field, data-format='Date')
+        input(type='hidden', name=field, id=field, data-format='Date')
