@@ -9834,6 +9834,12 @@ a.button {
   font-size: 300px !important;
   color: white !important; }
 
+.fav_item {
+  line-height: 15px !important;
+  font-size: 12px !important;
+  padding: 15px !important;
+  padding-top: 0px !important; }
+
 .time {
   color: #21b573 !important;
   font-size: 14px !important; }

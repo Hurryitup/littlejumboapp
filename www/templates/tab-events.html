@@ -63,8 +63,14 @@
   <ion-nav-view name="subtab-favorites">
     <ion-content>
       <ion-list>
-        <ion-item ng-repeat="event in favs">
-          {{event.title}}
+        <ion-item class="fav_item" ng-repeat="event in favs">
+          <div  ng-click="showAlert(event)">
+            <p class="subevent_item">
+              <div ng-if="event.title" class="subevent_title">{{event.title}}</div>
+              <div ng-if="event.location" class="subevent_location">{{event.location}}</div>
+              <div ng-if="event.professor" class="subevent_professor">{{event.professor}} </div>
+            </p>
+          </div>
         </ion-item>
       </ion-list>
     </ion-content>
