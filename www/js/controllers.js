@@ -14,7 +14,6 @@ angular.module('starter.controllers', [])
     $scope.map = new google.maps.Map(document.getElementById("map"), mapOptions);
     
     $scope.makeMarker = function() {
-      console.log("hello");
       //alertPopup.close();
       var loc = location.getProperty();
       var newLatLng; 
@@ -44,7 +43,6 @@ angular.module('starter.controllers', [])
   // Makes http request if data is not already downloaded
   Events.get(function(data) {
       $scope.events = data;
-      // console.log('$scope.events: %o', $scope.events);    
   });
 
   // Make dynamic accordian list
@@ -64,8 +62,6 @@ angular.module('starter.controllers', [])
   // On star click - change in data and html
   $scope.toggleFavorite = function(event, event_id) {
     html_id = "fav_icon_" + event_id;
-    // console.log(html_id);
-    // console.log(document);
     if (Favorites.has(event)) {
       document.getElementById(html_id).className = "icon ion-android-star-outline icon-accessory star";
       Favorites.remove(event);
@@ -73,8 +69,6 @@ angular.module('starter.controllers', [])
       document.getElementById(html_id).className = "icon ion-android-star icon-accessory star";
       Favorites.add(event);
     }
-    // console.log("FAVING: ", event);
-    // console.log(Favorites.get());
   }
 
   // Display event info pop-up
@@ -92,16 +86,13 @@ angular.module('starter.controllers', [])
 
 // Leftover from demo app - might revert to full screen event details page, so keeping it for now
 .controller('EventDetailCtrl', function($scope, $stateParams, Events) {
-  // console.log($stateParams.eventId);
   $scope.event = Events.getEvent($stateParams.eventId);
-  // console.log($scope.event);
 })
 
 // Third page controler - name leftover form demo app, currently favorites list
 .controller('FavoritesCtrl', function($scope, Favorites) {
   $scope.$on('$ionicView.enter', function() {
     $scope.favs = Array.from(Favorites.get());
-    console.log("GettingFavsList: ", $scope.favs);
   });
 });
 

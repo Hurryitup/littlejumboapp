@@ -9,7 +9,7 @@
                   ng-click="toggleGroup(event)" 
                   ng-class="{active: isGroupShown(event)}">
           <div class="row"> 
-            <div class="col-40 left_column"> 
+            <div class="col-40 left_column" ng-click="showAlert(event)"> 
               <div class="row responsive-sm item-text-wrap">
                 <p class="time">{{event.time_start}} - {{event.time_end}}</p>
                 <p class="location">{{event.location}}</p>
