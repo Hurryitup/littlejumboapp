@@ -25,14 +25,14 @@ angular.module('starter.services', [])
       if (data) {
       	callback(data);
       } else {
-      	$http.get('test2.json').success(function(d) {
+      	$http.get('test4.json').success(function(d) {
       	  callback(d);
       	});
       }
     },
-    getEvent: function(id) {
+    getEvent: function(i) {
       if (data) {
-        return data[id - 1];
+        return data[i];
       }
     }
   };

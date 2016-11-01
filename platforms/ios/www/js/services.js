@@ -1,21 +1,37 @@
 angular.module('starter.services', [])
 
+.service('User', function (){
+  return {};
+})
+
+.factory('location', function(){
+    var location = {};
+
+    return {
+        setProperty: function(latitude, longitude){
+        location.lat = latitude;
+        location.lng = longitude;
+    },
+        getProperty: function(){
+        return location;
+        }
+    };
+})
+
 .factory('Events', ['$http', function($http) {
   var data;
   return {
     get: function (callback) {
       if (data) {
-	callback(data);
+      	callback(data);
       } else {
-	console.log("HTTP_RQ");
-	$http.get('test2.json').success(function(d) {
-	  callback(data = d);
-	});
+      	$http.get('test2.json').success(function(d) {
+      	  callback(d);
+      	});
       }
     },
     getEvent: function(id) {
       if (data) {
-        console.log("GETEVENT");
         return data[id - 1];
       }
     }
