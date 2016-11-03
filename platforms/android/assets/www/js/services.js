@@ -31,7 +31,7 @@ angular.module('starter.services', [])
       } else {
 	console.log("HTTP_RQ");
 
-      	$http.get('test3.json').success(function(d) {
+      	$http.get('test2.json').success(function(d) {
       	  callback(d);
       	});
       }

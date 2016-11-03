@@ -1,25 +1,62 @@
-angular.module('starter.controllers', [])
+angular.module('starter.controllers', ['ngCordova'])
 
-.controller('MapCtrl', function($scope, $state, location /*, $cordovaGeolocation */) {
+.controller('MapCtrl', function($scope, $state, location, $cordovaGeolocation) {
     var options = {timeout: 10000, enableHighAccuracy: true};
  
     var latLng = new google.maps.LatLng(42.4075, -71.1190);
  
-    var mapOptions = {
-      center: latLng,
-      zoom: 16,
-      mapTypeId: google.maps.MapTypeId.ROADMAP
+    var posOptions = {
+            enableHighAccuracy: true,
+            timeout: 20000,
+            maximumAge: 0
     };
  
-    $scope.map = new google.maps.Map(document.getElementById("map"), mapOptions);
+   var userMarker;
+   $scope.makeUserMarker = function(userLatLng) {
+      //userMarker.setMap();
+      userMarker = new google.maps.Marker({
+        map: $scope.map,
+        animation: google.maps.Animation.DROP,
+        position: userLatLng
+      });      
+     
+      var infoWindow = new google.maps.InfoWindow({
+          content: "You are here!"
+      });
+     
+      google.maps.event.addListener(userMarker, 'click', function () {
+          infoWindow.open($scope.map, userMarker);
+      });
+    }
+
+    $cordovaGeolocation.getCurrentPosition(posOptions).then(function (position) {
+        var userlat  = position.coords.latitude;
+        var userlong = position.coords.longitude;
+         
+        var userLatLng = new google.maps.LatLng(userlat, userlong);
+         
+        
+        var mapOptions = {
+            center: latLng,
+            zoom: 16,
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        };          
+         
+        var map = new google.maps.Map(document.getElementById("map"), mapOptions);          
+        $scope.map = map;    
+        $scope.makeUserMarker(userLatLng);       
+      }, function(err) {
+          console.log(err);
+      });
+ 
+    
+    //$scope.map = new google.maps.Map(document.getElementById("map"), mapOptions);
     
     var loc = location.getProperty();
     var marker;
     $scope.makeMarker = function() {
       if(marker != null)
         marker.setMap(null);
-      console.log("insidemakemarker");
-      console.log("the lat is " + loc.lat);   //currently undefined
       var newLatLng;
       newLatLng = new google.maps.LatLng(loc.lat, loc.lng);
       $scope.map.setCenter(newLatLng);
