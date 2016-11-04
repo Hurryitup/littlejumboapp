@@ -9888,6 +9888,9 @@ a.button {
   height: 106%;
   margin: -10px; }
 
+#iw-container {
+  border-radius: 10px 10px 10px 10px; }
+
 .tab-item {
   font-family: "Karla", sans-serif; }
 

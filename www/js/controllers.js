@@ -12,6 +12,7 @@ angular.module('starter.controllers', ['ngCordova'])
     };
  
    var userMarker;
+   var infoWindow = new google.maps.InfoWindow();
    $scope.makeUserMarker = function(userLatLng) {
       //userMarker.setMap();
       userMarker = new google.maps.Marker({
@@ -19,12 +20,9 @@ angular.module('starter.controllers', ['ngCordova'])
         animation: google.maps.Animation.DROP,
         position: userLatLng
       });      
-     
-      var infoWindow = new google.maps.InfoWindow({
-          content: "You are here!"
-      });
-     
+          
       google.maps.event.addListener(userMarker, 'click', function () {
+          infoWindow.setContent('<div id="iw-container">"You are here!"</div>');   
           infoWindow.open($scope.map, userMarker);
       });
     }
@@ -34,8 +32,7 @@ angular.module('starter.controllers', ['ngCordova'])
         var userlong = position.coords.longitude;
          
         var userLatLng = new google.maps.LatLng(userlat, userlong);
-         
-        
+              
         var mapOptions = {
             center: latLng,
             zoom: 16,
@@ -44,7 +41,10 @@ angular.module('starter.controllers', ['ngCordova'])
          
         var map = new google.maps.Map(document.getElementById("map"), mapOptions);          
         $scope.map = map;    
-        $scope.makeUserMarker(userLatLng);       
+        $scope.makeUserMarker(userLatLng);
+        google.maps.event.addListener(map, 'click', function() {
+          infowindow.close();
+        });    
       }, function(err) {
           console.log(err);
       });
@@ -55,6 +55,7 @@ angular.module('starter.controllers', ['ngCordova'])
     var loc = location.getProperty();
     var marker;
     $scope.makeMarker = function() {
+      infoWindow.close();
       if(marker != null)
         marker.setMap(null);
       var newLatLng;
@@ -65,12 +66,9 @@ angular.module('starter.controllers', ['ngCordova'])
         animation: google.maps.Animation.DROP,
         position: newLatLng
       });      
-     
-      var infoWindow = new google.maps.InfoWindow({
-          content: loc.building
-      });
-     
+        
       google.maps.event.addListener(marker, 'click', function () {
+          infoWindow.setContent("<strong>"+loc.building+"</strong></br> Address of building");
           infoWindow.open($scope.map, marker);
       });
       loc.wasCalled = false;
