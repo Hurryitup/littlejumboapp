@@ -9844,6 +9844,12 @@ a.button {
   color: #21b573 !important;
   font-size: 14px !important; }
 
+.list {
+  margin-bottom: 49px !important; }
+
+.platform-ios .list {
+  padding-bottom: 49px !important; }
+
 .location {
   color: #444 !important;
   font-size: 14px !important; }

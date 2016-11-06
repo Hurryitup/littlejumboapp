@@ -5,7 +5,7 @@
       <ion-tab title="ALL" href="#/subtab/all">
         <ion-nav-view name="subtab-all" delegate-handle="scrollview">
           <ion-content delegate-handle="scrollview">
-            <ion-list>
+            <ion-list class="the_list">
               <div ng-repeat="event in events" >
                 <ion-item class="item-stable" 
                           ng-click="toggleGroup(event)" 
@@ -37,11 +37,11 @@
                           ng-repeat="subevent in event.subevents"
                           ng-show="isGroupShown(event)">
                   <div  ng-click="showAlert(subevent)">
-                    <p class="subevent_item">
-                    <div class="subevent_title">{{subevent.title}}</div>
-                    <div class="subevent_location">{{subevent.location}}</div>
-                    <div class="subevent_professor">{{subevent.professor}} </div>
-                    </p>
+                    <div class="subevent_item">
+                    <p class="subevent_title">{{subevent.title}}</p>
+                    <p class="subevent_location">{{subevent.location}}</p>
+                    <p class="subevent_professor">{{subevent.professor}} </p>
+                    </div>
                   </div>
                   <span ng-click="toggleFavorite(subevent, subevent.id)" class="item-icon-right">
                     <i id="fav_icon_{{subevent.id}}" class="icon ion-android-star-outline icon-accessory star"></i>
@@ -59,11 +59,11 @@
             <ion-list>
               <ion-item class="fav_item" ng-repeat="event in favs">
                 <div  ng-click="showAlert(event)">
-                  <p class="subevent_item">
-                  <div ng-if="event.title" class="subevent_title">{{event.title}}</div>
-                  <div ng-if="event.location" class="subevent_location">{{event.location}}</div>
-                  <div ng-if="event.professor" class="subevent_professor">{{event.professor}} </div>
-                  </p>
+                  <div class="subevent_item">
+                  <p ng-if="event.title" class="subevent_title">{{event.title}}</p>
+                  <p ng-if="event.location" class="subevent_location">{{event.location}}</p>
+                  <p ng-if="event.professor" class="subevent_professor">{{event.professor}} </p>
+                  </div>
                 </div>
               </ion-item>
             </ion-list>

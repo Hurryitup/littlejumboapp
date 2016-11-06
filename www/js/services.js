@@ -25,7 +25,7 @@ angular.module('starter.services', [])
       if (data) {
       	callback(data);
       } else {
-      	$http.get('test4.json').success(function(d) {
+      	$http.get('test2.json').success(function(d) {
       	  callback(d);
       	});
       }

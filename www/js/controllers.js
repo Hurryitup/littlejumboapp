@@ -62,10 +62,10 @@ angular.module('starter.controllers', [])
         } else if ($scope.isGroupShown(group)) {
           $scope.shownGroup = null;
         } else {
-          $scope.shownGroup = group;
           setTimeout(function () {
             $scope.jumptoEvent(group);
-          }, 0130);
+          }, 0090);
+          $scope.shownGroup = group;
         }
       };
       $scope.isGroupShown = function(group) {

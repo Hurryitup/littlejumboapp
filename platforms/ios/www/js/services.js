@@ -30,9 +30,9 @@ angular.module('starter.services', [])
       	});
       }
     },
-    getEvent: function(id) {
+    getEvent: function(i) {
       if (data) {
-        return data[id - 1];
+        return data[i];
       }
     }
   };
