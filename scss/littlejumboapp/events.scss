@@ -75,3 +75,14 @@
   font-size: 12px !important;
   color: $subtitlecolor !important;
 }
+
+.locationButton {
+   font-family: $font-family-base;
+   background:none !important;
+   border:none; 
+   padding:0 !important;
+   cursor: pointer;
+   color: blue;
+   cursor: pointer;
+   text-decoration: underline;
+}

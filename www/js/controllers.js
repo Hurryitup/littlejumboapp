@@ -57,6 +57,7 @@ angular.module('starter.controllers', ['ngCordova'])
         var map = new google.maps.Map(document.getElementById("map"), mapOptions);          
         $scope.map = map;    
         $scope.makeUserMarker(userLatLng);
+        //$scope.makeMarker();
         google.maps.event.addListener(map, 'click', function() {
           infoBubble.close();
         });    
@@ -145,7 +146,7 @@ angular.module('starter.controllers', ['ngCordova'])
        alertPopup = $ionicPopup.alert({
               title: event.title,
               scope: $scope,
-              content: "<button ng-click='goToMap(" + event.lat + "," + event.lng + ", \"" + event.location +  "\")'>" + event.location + "</button><br><br>" + event.description 
+              content: "<button class='locationButton' ng-click='goToMap(" + event.lat + "," + event.lng + ", \"" + event.location +  "\")'>" + event.location + "</button><br><br>" + event.description 
       });
   }
 

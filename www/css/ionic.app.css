@@ -9880,6 +9880,16 @@ a.button {
   font-size: 12px !important;
   color: #4d4d4e !important; }
 
+.locationButton {
+  font-family: "Karla", sans-serif;
+  background: none !important;
+  border: none;
+  padding: 0 !important;
+  cursor: pointer;
+  color: blue;
+  cursor: pointer;
+  text-decoration: underline; }
+
 .scroll {
   height: 100%; }
 
