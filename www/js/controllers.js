@@ -64,7 +64,7 @@ angular.module('starter.controllers', [])
         } else {
           setTimeout(function () {
             $scope.jumptoEvent(group);
-          }, 0090);
+          }, 0160);
           $scope.shownGroup = group;
         }
       };
