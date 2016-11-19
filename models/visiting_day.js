@@ -17,12 +17,10 @@ var VisitingDay = new Schema({
     composite_events: [{
     	type: Schema.Types.ObjectId,
     	ref: 'CompositeEvent',
-    	required: true
     }],
     standalone_events: [{
     	type: Schema.Types.ObjectId,
     	ref: 'StandaloneEvent',
-    	required: true
     }]
 });
 
