@@ -19,15 +19,74 @@ router.get('/visiting_days', function(req, res) {
     });
 });
 
-// TODO
+/*
+ * Routes recieves a post containing all the visting day information
+ * the list of composite and/or standalone events may be empty
+ * responds with the newly created document
+ */
 router.post('/visiting_days', function(req, res) {
-    res.json(req.body);
+    var vday = req.body;
+    if (!vday.version) vday.version = -1;
+    VisitingDay.create(vday, function (err, doc) {
+        if (!err) {
+            res.json(doc);
+        } else {
+            console.log(err)
+            res.sendStatus(500);
+        }
+    });
 });
+
 router.post('/composite_events', function(req, res) {
-    res.json(req.body);
+    var ce = req.body;
+    var p_id = req.body.parent_id;
+    var Parent = mongoose.Model(req.body.parent_model);
+    delete ce.parent_id;
+    delete ce.parent_model;
+
+    
+    CompositeEvent.create(ce, function (err, doc) {
+        if (!err) {
+            Parent.findByIdAndUpdate(p_id, function (err2, p_doc) {
+                if (!err2) {
+                    p_doc.composite_events.push(doc.id)
+                    res.json(doc);
+                } else {
+                    console.log(err2);
+                    res.sendStatus(500);
+                }
+            });
+        } else {
+            console.log(err);
+            res.sendStatus(500);
+        }
+    });
+   
+    
 });
 router.post('/standalone_events', function(req, res) {
-    res.json(req.body);
+    var se = req.body;
+    var p_id = req.body.parent_id;
+    var Parent = mongoose.Model(req.body.parent_model);
+    delete se.parent_id;
+    delete se.parent_model;
+
+    StandaloneEvent.create(se, function (err, doc) {
+        if (!err) {
+            Parent.findByIdAndUpdate(p_id, function (err2, p_doc) {
+                if (!err2) {
+                    p_doc.standalone_events.push(doc.id)
+                    res.json(doc);
+                } else {
+                    console.log(err2);
+                    res.sendStatus(500);
+                }
+            });
+        } else {
+            console.log(err);
+            res.sendStatus(500);
+        }
+    });
 });
 
 router.get('/visiting_days/:id', function(req, res) {
