@@ -26,10 +26,9 @@ var CompositeEvent = new Schema({
         type: Date,
         required: true
     },
-    event_list: [{
+    standalone_events: [{
         type: Schema.Types.ObjectId,
         ref: 'StandaloneEvent',
-        required: true
     }]
 });
 
