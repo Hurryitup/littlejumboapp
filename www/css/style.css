@@ -18,6 +18,7 @@ h6 {
   text-align: left;
 }
 
+
 .larger {
   font-size: 25px !important;
   padding-right: 10px;
@@ -84,4 +85,13 @@ h6 {
 .list .item.item-accordion.ng-hide-add,
 .list .item.item-accordion.ng-hide-remove {
   display: block !important;
+}
+
+.goToMap { 
+  background:none!important;
+     border:none; 
+     padding:0!important;
+     font: inherit;
+     border-bottom:1px solid #444; 
+     cursor: pointer;
 }

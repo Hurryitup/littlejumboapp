@@ -9880,6 +9880,15 @@ a.button {
   font-size: 12px !important;
   color: #4d4d4e !important; }
 
+button {
+  background: none !important;
+  border: none;
+  padding: 0 !important;
+  font: inherit;
+  border-bottom: 1px solid #3366BB;
+  cursor: pointer;
+  color: #3366BB; }
+
 .scroll {
   height: 100%; }
 
