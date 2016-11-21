@@ -37,7 +37,7 @@ function flattenSchema(schema) {
 }
 
 router.get('/visiting_days', function(req, res) {
-    VisitingDay.find().lean()
+    VisitingDay.find().populate("standalone_events composite_events")
     .exec(function(err, days) {
         if (err) {
             console.log(err);
