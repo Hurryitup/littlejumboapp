@@ -7,3 +7,8 @@
 textarea {
     resize: vertical;
 }
+
+.btn-space {
+    margin-right: 5px;
+    width: 78px
+}

@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var mongoose = require('mongoose');
+var VisitingDay = require('../models/visiting_day');
 
 /* DUPLICATE FUNCTION PLEASE MODULARIZE */
 /*should be abstracted to a module but I will leave in here for now*/
@@ -34,6 +35,21 @@ function flattenSchema(schema) {
 
     return schema;
 }
+
+router.get('/visiting_days', function(req, res) {
+    VisitingDay.find().lean()
+    .exec(function(err, days) {
+        if (err) {
+            console.log(err);
+            res.status(500).send('Database Error');
+        }
+        else {
+            res.render('visiting_days', {
+                days : days
+            });
+        }
+    });
+});
 
 router.get('/visiting_days/new', function(req, res) {
     var Model = mongoose.model('VisitingDay');
