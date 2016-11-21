@@ -3,7 +3,7 @@ var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 
 var api = require('./routes/api');
-var backend = require('./routes/backend');
+var backoffice = require('./routes/backoffice');
 
 var app = express();
 
@@ -19,7 +19,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static('./public'));
 
 app.use('/api', api);
-app.use('/backend', backend);
+app.use('/backoffice', backoffice);
 
 var mongoUri = process.env.MLAB_URI || process.env.MONGODB_URI || process.env.MONGOHQ_URL || 'mongodb://localhost/littlejumboapp';
 
