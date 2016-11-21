@@ -133,4 +133,22 @@ router.get('/delete_item', function (req, res) {
     
 });
 
+router.get('/publish', function (req, res) {
+    if (req.query.id) {
+        VisitingDay.id(req.query.id)
+        .exec(function (err, doc) {
+            if (!err) {
+                doc.version *= -1;
+                doc.save(function (err, saved) {
+                    return res.json(saved);
+                });
+            } else {
+                return res.sendStatus(500);
+            }
+        });
+    } else {
+        return res.sendStatus(400);
+    }
+});
+
 module.exports = router;
