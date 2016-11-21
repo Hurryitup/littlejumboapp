@@ -37,20 +37,28 @@ router.post('/visiting_days', function(req, res) {
     });
 });
 
+
 router.post('/composite_events', function(req, res) {
     var ce = req.body;
     var p_id = req.body.parent_id;
-    var Parent = mongoose.Model(req.body.parent_model);
+    var Parent = mongoose.model(req.body.parent_model);
     delete ce.parent_id;
     delete ce.parent_model;
 
     
     CompositeEvent.create(ce, function (err, doc) {
         if (!err) {
-            Parent.findByIdAndUpdate(p_id, function (err2, p_doc) {
+            Parent.findById(p_id, function (err2, p_doc) {
                 if (!err2) {
-                    p_doc.composite_events.push(doc.id)
-                    res.json(doc);
+                    p_doc.composite_events.push(doc.id);
+                    p_doc.save(function (err3, saved) {
+                        if (!err3) 
+                            return res.json(doc);
+                        else {
+                            console.log (err3);
+                            return res.sendStatus(500);
+                        }
+                    });
                 } else {
                     console.log(err2);
                     res.sendStatus(500);
@@ -67,7 +75,7 @@ router.post('/composite_events', function(req, res) {
 router.post('/standalone_events', function(req, res) {
     var se = req.body;
     var p_id = req.body.parent_id;
-    var Parent = mongoose.Model(req.body.parent_model);
+    var Parent = mongoose.model(req.body.parent_model);
     delete se.parent_id;
     delete se.parent_model;
 
@@ -102,6 +110,20 @@ router.get('/visiting_days/:id', function(req, res) {
             res.json(day); 
         }
     });
+});
+
+router.get('/delete_item', function (req, res) {
+    var Model = mongoose.model(req.query.model);
+    var id = req.query.id;
+    Model.findByIdAndRemove(id, function (err, success) {
+        if (!err) {
+            return res.sendStatus(200);
+        } else {
+            console.log(err)
+            return res.sendStatus(500);
+        }
+    });
+    
 });
 
 module.exports = router;

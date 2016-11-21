@@ -41,7 +41,9 @@ router.get('/visiting_days/new', function(req, res) {
     res.render('form', {
         schema: schemaTree,
         action: '/api/visiting_days',
-        form_name: 'Visiting Day'
+        form_name: 'Visiting Day',
+        parent_model : req.query.parent_model,
+        parent_id : req.query.parent_id,
     });
 });
 
@@ -51,7 +53,9 @@ router.get('/standalone_events/new', function(req, res) {
     res.render('form', {
         schema: schemaTree,
         action: '/api/standalone_events',
-        form_name: 'Standalone Event'
+        form_name: 'Standalone Event',
+        parent_model : req.query.parent_model,
+        parent_id : req.query.parent_id,
     });
 });
 
@@ -61,7 +65,9 @@ router.get('/composite_events/new', function(req, res) {
     res.render('form', {
         schema: schemaTree,
         action: '/api/composite_events',
-        form_name: 'Composite Event'
+        form_name: 'Composite Event',
+        parent_model : req.query.parent_model,
+        parent_id : req.query.parent_id,
     });
 });
 

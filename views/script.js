@@ -15,7 +15,7 @@ $(function() {
     });
 });
 
-function submitForm(form) {
+function submitForm(formName, form) {
     var formData = $(form).serializeArray().reduce(function(obj, item) {
         obj[item.name] = item.value;
         return obj;
@@ -28,6 +28,12 @@ function submitForm(form) {
     }
 
     $.post(form.action, formData, function(response) {
+        var success = $('#successModal');
+        var parent_model = formName.replace(/\s+/g, '');
+        var parent_id = response._id;
+        var qs = "?parent_model=" + parent_model + "&parent_id=" + parent_id;
+        success.find('a').attr('href', function (i, val) { return val + qs});
+        success.modal('show');
         console.log(response);
     });
 
