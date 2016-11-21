@@ -1,0 +1,31 @@
+extends layout
+
+block content
+	.container
+		.row
+			.col-md-6.col-md-offset-0
+				h1 Visiting Days
+				- var hasContent = days.length > 0
+				if hasContent
+					each value, day in days
+						.alert.alert-info
+							strong #{value.name}
+							button.btn.btn-danger.pull-right(type='button') 
+								i.glyphicon.glyphicon-trash
+							button.btn.btn-default.btn-space.pull-right(type='button') Edit
+							-function prettyDate(dateString){
+							-var date = new Date(dateString);
+							-var d = date.getDate();
+							-var monthNames = [ "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" ];
+							-var m = monthNames[date.getMonth()];
+							-var y = date.getFullYear();
+							-return d+' '+m+' '+y;
+							-}
+							p #{prettyDate(value.date)}
+							p #{value._id}   #{value.__v}
+							if value.__v >= 0
+								input(type='checkbox', checked, data-toggle='toggle', data-on='Published', data-off='Unpublished')
+							else
+								input(type='checkbox', data-toggle='toggle', data-on='Published', data-off='Unpublished')
+				else
+					h1 Add some cool Visiting Days!
