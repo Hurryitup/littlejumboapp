@@ -10,9 +10,6 @@ block content
 					each value, day in days
 						.alert.alert-info
 							strong #{value.name}
-							button.btn.btn-danger.pull-right(type='button') 
-								i.glyphicon.glyphicon-trash
-							button.btn.btn-default.btn-space.pull-right(type='button') Edit
 							-function prettyDate(dateString){
 							-var date = new Date(dateString);
 							-var d = date.getDate();
@@ -23,6 +20,10 @@ block content
 							-}
 							p #{prettyDate(value.date)}
 							p #{value._id}   #{value.__v}
+							form(method='POST', action='/api/delete_item', onsubmit="return deleteItem('" +"Visiting Day"+ "', this)")
+								button.btn.btn-danger.btn-primary.pull-right(type='button')
+									i.glyphicon.glyphicon-trash
+							button.btn.btn-default.btn-space.pull-right(type='button') Edit
 							if value.__v >= 0
 								input(type='checkbox', checked, data-toggle='toggle', data-on='Published', data-off='Unpublished')
 							else

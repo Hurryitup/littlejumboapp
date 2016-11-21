@@ -6,7 +6,21 @@ block content
 	.container
 		.row
 			.col-md-6.col-md-offset-3
-				form.add-data-form(method='POST', action=action, onsubmit='return submitForm(this)')
+				form.add-data-form(method='POST', action=action, onsubmit="return submitForm('" +form_name+ "', this)")
 					legend= 'Add ' + form_name
 					+form_fields(schema)
+					input(type="hidden" name="parent_model" value=parent_model)
+					input(type="hidden" name="parent_id" value=parent_id)
 					button.btn.btn-primary Submit
+	div.modal.fade(tabindex="-1" role="dialog" id="successModal")
+		div.modal-dialog(role="document")
+			div.modal-content
+				div.modal-header
+					button(type="button" class="close" data-dismiss="modal")
+					h3.modal-title="Submission successful"
+				div.modal-body
+					p="Select a next step below"
+				div.modal-footer
+					a.btn.btn-default(role="button" href="/backend/composite_events/new")="Add a Composite Event"
+					a.btn.btn-default(role="button" href="/backend/standalone_events/new")="Add a Standalone Event"
+					a.btn.btn-primary(role="button" href="/backend/visiting_days/new")="Finish"

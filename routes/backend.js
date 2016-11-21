@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var mongoose = require('mongoose');
+var VisitingDay = require('../models/visiting_day');
 
 /* DUPLICATE FUNCTION PLEASE MODULARIZE */
 /*should be abstracted to a module but I will leave in here for now*/
@@ -35,13 +36,30 @@ function flattenSchema(schema) {
     return schema;
 }
 
+router.get('/visiting_days', function(req, res) {
+    VisitingDay.find().lean()
+    .exec(function(err, days) {
+        if (err) {
+            console.log(err);
+            res.status(500).send('Database Error');
+        }
+        else {
+            res.render('visiting_days', {
+                days : days
+            });
+        }
+    });
+});
+
 router.get('/visiting_days/new', function(req, res) {
     var Model = mongoose.model('VisitingDay');
     var schemaTree = flattenSchema(Model.schema.tree);
     res.render('form', {
         schema: schemaTree,
         action: '/api/visiting_days',
-        form_name: 'Visiting Day'
+        form_name: 'Visiting Day',
+        parent_model : req.query.parent_model,
+        parent_id : req.query.parent_id,
     });
 });
 
@@ -51,7 +69,9 @@ router.get('/standalone_events/new', function(req, res) {
     res.render('form', {
         schema: schemaTree,
         action: '/api/standalone_events',
-        form_name: 'Standalone Event'
+        form_name: 'Standalone Event',
+        parent_model : req.query.parent_model,
+        parent_id : req.query.parent_id,
     });
 });
 
@@ -61,7 +81,9 @@ router.get('/composite_events/new', function(req, res) {
     res.render('form', {
         schema: schemaTree,
         action: '/api/composite_events',
-        form_name: 'Composite Event'
+        form_name: 'Composite Event',
+        parent_model : req.query.parent_model,
+        parent_id : req.query.parent_id,
     });
 });
 
