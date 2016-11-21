@@ -81,10 +81,17 @@ router.post('/standalone_events', function(req, res) {
 
     StandaloneEvent.create(se, function (err, doc) {
         if (!err) {
-            Parent.findByIdAndUpdate(p_id, function (err2, p_doc) {
+            Parent.findById(p_id, function (err2, p_doc) {
                 if (!err2) {
-                    p_doc.standalone_events.push(doc.id)
-                    res.json(doc);
+                    p_doc.standalone_events.push(doc.id);
+                    p_doc.save(function (err3, saved) {
+                        if (!err3) 
+                            return res.json(doc);
+                        else {
+                            console.log (err3);
+                            return res.sendStatus(500);
+                        }
+                    });
                 } else {
                     console.log(err2);
                     res.sendStatus(500);
