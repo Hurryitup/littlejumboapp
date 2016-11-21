@@ -2,7 +2,6 @@ angular.module('starter.controllers', ['ngCordova'])
 
 .controller('MapCtrl', function($scope, $state, location, $cordovaGeolocation) {
     var options = {timeout: 10000, enableHighAccuracy: true};
- 
     var latLng = new google.maps.LatLng(42.4075, -71.1190);
  
     var posOptions = {
@@ -20,8 +19,36 @@ angular.module('starter.controllers', ['ngCordova'])
         $scope.map = map;
  
    var userMarker;
-   var infoWindow = new google.maps.InfoWindow();
-   var userLatLng;
+   var infoBubble = new InfoBubble({
+          map: $scope.map,
+          shadowStyle: 1,
+          padding: 1,
+          borderRadius: 4,
+          arrowSize: 10,
+          borderWidth: 1,
+          borderColor: '#ffffff',
+          disableAutoPan: false,
+          hideCloseButton: true,
+          arrowPosition: 80,
+          backgroundClassName: 'phoney',
+          arrowStyle: 0,
+          minHeight: 50,
+          minWidth: 150
+        });
+   //var infoWindow = new google.maps.InfoWindow();
+   $scope.makeUserMarker = function(userLatLng) {
+      //userMarker.setMap();
+      userMarker = new google.maps.Marker({
+        map: $scope.map,
+        animation: google.maps.Animation.DROP,
+        position: userLatLng
+      });      
+          
+      google.maps.event.addListener(userMarker, 'click', function () {
+          infoBubble.setContent('<div class="bubble_content">You are here!</div>');   
+          infoBubble.open($scope.map, userMarker);
+      });
+    }
 
     $cordovaGeolocation.getCurrentPosition(posOptions).then(function (position) {
         var userlat  = position.coords.latitude;
@@ -30,8 +57,9 @@ angular.module('starter.controllers', ['ngCordova'])
         userLatLng = new google.maps.LatLng(userlat, userlong);
                   
         $scope.makeUserMarker(userLatLng);
+        //$scope.makeMarker();
         google.maps.event.addListener(map, 'click', function() {
-          infowindow.close();
+          infoBubble.close();
         });    
       }, function(err) {
           console.log(err);
@@ -60,8 +88,7 @@ angular.module('starter.controllers', ['ngCordova'])
     var loc = location.getProperty();
     var marker;
     $scope.makeMarker = function() {
-      console.log("inside make marker");
-      infoWindow.close();
+      infoBubble.close();
       if(marker != null)
         marker.setMap(null);
       var newLatLng;
@@ -73,8 +100,8 @@ angular.module('starter.controllers', ['ngCordova'])
       });      
         
       google.maps.event.addListener(marker, 'click', function () {
-          infoWindow.setContent("<strong>"+loc.building+"</strong></br>"+loc.address);
-          infoWindow.open($scope.map, marker);
+          infoBubble.setContent("<div class='bubble_content'><strong>"+loc.building+"</strong></br> Address of building</div>");
+          infoBubble.open($scope.map, marker);
       });
       loc.wasCalled = false;
       $scope.map.setCenter(newLatLng);
@@ -136,7 +163,7 @@ angular.module('starter.controllers', ['ngCordova'])
        alertPopup = $ionicPopup.alert({
               title: event.title,
               scope: $scope,
-              content: "<button class=\"goToMap\" ng-click='goToMap(" + event.lat + "," + event.lng + ", \"" + event.location + "\", \"" + event.address + "\")'>" + event.location + "</button><br><br>" + event.description 
+              content: "<button class='locationButton' ng-click='goToMap(" + event.lat + "," + event.lng + ", \"" + event.location +  "\")'>" + event.location + "</button><br><br>" + event.description 
       });
   }
 
