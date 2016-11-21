@@ -26,12 +26,12 @@ router.get('/visiting_days', function(req, res) {
  */
 router.post('/visiting_days', function(req, res) {
     var vday = req.body;
-    if (!vday.version) vday.version = -1;
+    if (!vday.version) { vday.version = -1; }
     VisitingDay.create(vday, function (err, doc) {
         if (!err) {
             res.json(doc);
         } else {
-            console.log(err)
+            console.log(err);
             res.sendStatus(500);
         }
     });
@@ -52,9 +52,9 @@ router.post('/composite_events', function(req, res) {
                 if (!err2) {
                     p_doc.composite_events.push(doc.id);
                     p_doc.save(function (err3, saved) {
-                        if (!err3) 
+                        if (!err3) {
                             return res.json(doc);
-                        else {
+                        } else {
                             console.log (err3);
                             return res.sendStatus(500);
                         }
@@ -85,9 +85,9 @@ router.post('/standalone_events', function(req, res) {
                 if (!err2) {
                     p_doc.standalone_events.push(doc.id);
                     p_doc.save(function (err3, saved) {
-                        if (!err3) 
+                        if (!err3) {
                             return res.json(doc);
-                        else {
+                        } else {
                             console.log (err3);
                             return res.sendStatus(500);
                         }
@@ -111,10 +111,9 @@ router.get('/visiting_days/:id', function(req, res) {
     .exec(function (err, day) {
         if (err) {
             console.log(err);
-            res.status(500).send('Database Error');
-        }
-        else {
-            res.json(day); 
+            return res.status(500).send('Database Error');
+        } else {
+            return res.json(day); 
         }
     });
 });
@@ -126,7 +125,7 @@ router.get('/delete_item', function (req, res) {
         if (!err) {
             return res.sendStatus(200);
         } else {
-            console.log(err)
+            console.log(err);
             return res.sendStatus(500);
         }
     });
