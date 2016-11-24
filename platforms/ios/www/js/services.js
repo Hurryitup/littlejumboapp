@@ -30,10 +30,10 @@ angular.module('starter.services', [])
       	});
       }
     },
-    getEvent: function(i) {
-      if (data) {
-        return data[i];
-      }
+    getDates: function(callback) {
+      $http.get('dates.json').success(function(d) {
+        callback(d);
+      })
     }
   };
 }])

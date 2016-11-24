@@ -15,7 +15,6 @@ $assertive:                       #ef473a !default;
 $royal:                           #886aea !default;
 $dark:                            #444 !default;
 */
-@import url("https://fonts.googleapis.com/css?family=Karla");
 /*!
   Ionicons, v2.0.1
   Created by Ben Sperry for the Ionic Framework, http://ionicons.com/
@@ -9816,11 +9815,12 @@ a.button {
   -webkit-transition-duration: 0s;
   transition-duration: 0s; }
 
+/* Accoridan list animation */
 .list .item.item-accordion {
   line-height: 15px;
   padding-top: 0;
   padding-bottom: 0;
-  transition: 0.09s all linear; }
+  transition: 0.07s all linear; }
 
 .list .item.item-accordion.ng-hide {
   line-height: 0px !important; }
@@ -9829,6 +9829,14 @@ a.button {
 .list .item.item-accordion.ng-hide-remove {
   display: block !important; }
 
+/* Date Chooser */
+.date-item {
+  height: 20px !important;
+  padding: 0px !important;
+  margin: 0px !important;
+  line-height: 20px !important; }
+
+/* Favorites */
 .subtabs {
   background-color: #54a4db !important;
   font-size: 300px !important;
@@ -9840,14 +9848,16 @@ a.button {
   padding: 15px !important;
   padding-top: 0px !important; }
 
+/* Events list
+ */
 .time {
   color: #21b573 !important;
   font-size: 14px !important; }
 
-.list {
+.event-list .list {
   margin-bottom: 49px !important; }
 
-.platform-ios .list {
+.platform-ios .event-list .list {
   padding-bottom: 49px !important; }
 
 .location {

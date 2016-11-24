@@ -19,21 +19,29 @@ angular.module('starter.services', [])
 })
 
 .factory('Events', ['$http', function($http) {
-  var data;
+  var events;
+  var dates;
   return {
-    get: function (callback) {
-      if (data) {
-      	callback(data);
+    get: function (date_id, callback) {
+      if (events && events.date_id == date_id) {
+        callback(events);
       } else {
-      	$http.get('test2.json').success(function(d) {
-      	  callback(d);
-      	});
+        $http.get(date_id +'.json').success(function(d) {
+          events = d;
+          events.date_id = date_id;
+          callback(events);
+        });
       }
-    },
+  },
     getDates: function(callback) {
-      $http.get('dates.json').success(function(d) {
-        callback(d);
-      })
+      if (dates) {
+        return dates;
+      } else {
+        $http.get('dates.json').success(function(d) {
+          dates = d;
+          callback(d);
+        })
+      }
     }
   };
 }])

@@ -44,8 +44,12 @@ angular.module('starter.controllers', [])
     ['$scope', '$ionicPopup', '$ionicScrollDelegate', '$timeout', '$ionicPosition', 'Events', 'Favorites', 'location', 
       function($scope, $ionicPopup, $ionicScrollDelegate,  $timeout, $ionicPosition, Events, Favorites, location) {
 
+        Events.getDates(function(data) {
+          $scope.dates = data;
+        });
+
         // Makes http request if data is not already downloaded
-        Events.get(function(data) {
+        Events.get(2, function(data) {
           $scope.events = data;
         });
 

@@ -36,12 +36,15 @@
   </head>
   <body ng-app="starter" class="platform-ios platform-cordova platform-webview">
     <!--
-      The nav bar that will be updated as we navigate between views.
+    The nav bar that will be updated as we navigate between views.
     -->
-    <ion-nav-bar class="bar-positive action_bar">
-      <ion-nav-back-button>
-      </ion-nav-back-button>
-    </ion-nav-bar>
+    <ion-header-bar class="bar-positive" ng-controller="NavCtrl">
+      <h1 class="title">Current Date</h1>
+      <div class="buttons">
+        <button class="button button-icon ion-chevron-down" ng-click="popover.show($event)">
+        </button>
+      </div> 
+    </ion-header-bar>
     <!--
       The views will be rendered in the <ion-nav-view> directive below
       Templates are in the /templates folder (but you could also

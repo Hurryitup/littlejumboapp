@@ -1,0 +1,8 @@
+<ion-popover-view class="date-chooser">
+  <ion-content class="date-chooser-content">
+    <ion-list ng-repeat="date in dates" class="date-chooser-list">
+      <ion-item class="date-item" ng-click="changeDate(date)">
+        {{date.name}}
+      </ion-item>
+  </ion-content>
+</ion-popover-view>
