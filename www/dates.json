@@ -1,0 +1,18 @@
+[{
+  "id": 1,
+  "event_id": 1,
+  "name": "Parents Weekend",
+  "subtitle": "November 6rd - 5th"
+},
+{
+  "id": 2,
+  "event_id": 2,
+  "name": "Jumbo Days",
+  "subtitle": "November 9rd - 5th"
+},
+{
+  "id": 3,
+  "event_id": 3,
+  "name": "Visiting Weekend 3",
+  "subtitle": "November 12rd - 5th"
+}]
