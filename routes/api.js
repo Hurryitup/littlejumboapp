@@ -6,6 +6,19 @@ var CompositeEvent = require('../models/composite_event');
 var StandaloneEvent = require('../models/standalone_event');
 var VisitingDay = require('../models/visiting_day');
 
+
+/* TODO: Clean up to own module*/
+/* TODO: Come up with better name*/
+function toModelName (m) {
+    m = m.slice (0,-1);
+    m = m.split("_");
+    m.forEach(function (i, val) {
+        this[i] = val[0].toUppercase();
+    });
+    m = m.join(" ");
+    return m;
+}
+
 router.get('/visiting_days', function(req, res) {
     VisitingDay.find().lean()
     .exec(function(err, days) {
@@ -148,6 +161,20 @@ router.get('/publish', function (req, res) {
     } else {
         return res.sendStatus(400);
     }
+});
+
+router.post("/:model/update/:id", function (req, res) {
+    var Model = mongoose.model(toModelName(req.params.model));
+    var id = req.params.id;
+    var updates = req.body;
+    Model.findByIdAndUpdate(id, updates, function (err, doc) {
+        if (!err) {
+            return res.json(doc);
+        } else {
+            console.log(err);
+            return res.sendStatus(500);
+        }
+    });
 });
 
 module.exports = router;
