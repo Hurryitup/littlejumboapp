@@ -41,11 +41,11 @@ router.get('/visiting_days', function(req, res) {
     .exec(function(err, days) {
         if (err) {
             console.log(err);
-            res.status(500).send('Database Error');
+            return res.status(500).send('Database Error');
         }
         else {
-            res.render('visiting_days', {
-                days : days
+            return res.render('visiting_days', {
+                days : days.map(function (day) { return day.toJSON()})
             });
         }
     });
