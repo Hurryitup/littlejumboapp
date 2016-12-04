@@ -21,8 +21,10 @@ angular.module('starter.services', [])
 .factory('Events', ['$http', function($http) {
   var events;
   var dates;
+  var currDateID;
   return {
     get: function (date_id, callback) {
+      currDateID = date_id;
       if (events && events.date_id == date_id) {
         callback(events);
       } else {
@@ -32,7 +34,7 @@ angular.module('starter.services', [])
           callback(events);
         });
       }
-  },
+    },
     getDates: function(callback) {
       if (dates) {
         return dates;
@@ -42,6 +44,9 @@ angular.module('starter.services', [])
           callback(d);
         })
       }
+    },
+    getCurrDateID: function() {
+      return currDateID;
     }
   };
 }])

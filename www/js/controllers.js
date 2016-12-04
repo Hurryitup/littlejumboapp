@@ -44,19 +44,30 @@ angular.module('starter.controllers', [])
     ['$scope', '$ionicPopup', '$ionicScrollDelegate', '$timeout', '$ionicPosition', 'Events', 'Favorites', 'location', 
       function($scope, $ionicPopup, $ionicScrollDelegate,  $timeout, $ionicPosition, Events, Favorites, location) {
 
-        Events.getDates(function(data) {
-          $scope.dates = data;
+        // Find first date to fetch if needed and populate list of events
+        var dateID = Events.getCurrDateID();
+        if (dateID == null) {
+          var dates = Events.getDates();
+          var date = dates[0];
+          dateID = date.event_id;
+        } 
+        Events.get(dateID, function(data) {
+          $scope.events = data;
         });
 
-        // Makes http request if data is not already downloaded
-        Events.get(2, function(data) {
-          $scope.events = data;
+        // Receive dateChanged event, repopulate event list
+        $scope.$on('dateChanged', function(event, date) {
+          console.log("felt the click");
+          Events.get(date.event_id, function(data) {
+            $scope.events = data;
+          });
         });
 
         $scope.jumptoEvent = function (event) {
           var eventPosition = $ionicPosition.position(angular.element(document.getElementById('item_' + event.id)));
           $ionicScrollDelegate.$getByHandle('scrollview').scrollTo(eventPosition.left, eventPosition.top, true);
-        }
+        };
+
         // Make dynamic accordian list
         $scope.toggleGroup = function(group) {
           if (group.type != 'composite') {
@@ -70,6 +81,7 @@ angular.module('starter.controllers', [])
             $scope.shownGroup = group;
           }
         };
+
         $scope.isGroupShown = function(group) {
           if ($scope.shownGroup === group && $scope.shownGroup.subevents) {
             return true;
@@ -90,14 +102,10 @@ angular.module('starter.controllers', [])
             document.getElementById(html_id).className = "icon ion-android-star icon-accessory star";
             Favorites.add(event);
           }
-        }
+        };
 
         // Display event info pop-up
         $scope.showAlert = function(event) {
-          // $timeout(function(){
-          //   console.log("handle_" + event.id.toString());
-          //   $ionicScrollDelegate.$getByHandle("handle_" + event.id.toString()).scrollTop(); 
-          // },10)
           if (event.type == 'composite') 
             return;
           var alertPopup = $ionicPopup.alert({
@@ -107,7 +115,7 @@ angular.module('starter.controllers', [])
             buttons: [{text: 'CLOSE',
               type: 'button-positive'}]
           });
-        }
+        };
       }])
 
   /*
@@ -119,14 +127,18 @@ angular.module('starter.controllers', [])
       $scope.dates = data;
     });
 
+    $scope.currentDate = Events.currDate
+
     // Select new date
     $scope.changeDate = function(date) {
-      console.log(date);
+      console.log("sent a click");
+      $scope.popover.hide();
+      $rootScope.$broadcast('dateChanged', date);
     }
 
     // Generate popover list
     $ionicPopover.fromTemplateUrl('templates/choose-date.html', {
-      scope: $scope,
+      scope: $scope
     }).then(function(popover) {
       $scope.popover = popover;
     });
