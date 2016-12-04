@@ -26,9 +26,7 @@ angular.module('starter.services', [])
   return {
     get: function (date, callback) {
       currDateID = date.event_id;
-      console.log("GETTINGDATE: ", date);
       currDate = date;
-      console.log("GOTDATE: ", currDate);
       if (events && events.date_id == currDateID) {
         callback(events);
       } else {
@@ -53,6 +51,7 @@ angular.module('starter.services', [])
       return currDateID;
     },
     getCurrDate: function() {
+      console.log("getting Curr Date");
       return currDate;
     }
   };

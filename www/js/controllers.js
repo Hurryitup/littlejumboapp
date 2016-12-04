@@ -41,8 +41,8 @@ angular.module('starter.controllers', [])
    *
    */
   .controller('EventsCtrl',
-    ['$scope', '$ionicPopup', '$ionicScrollDelegate', '$timeout', '$ionicPosition', 'Events', 'Favorites', 'location', 
-      function($scope, $ionicPopup, $ionicScrollDelegate,  $timeout, $ionicPosition, Events, Favorites, location) {
+    ['$scope', '$rootScope', '$ionicPopup', '$ionicScrollDelegate', '$timeout', '$ionicPosition', 'Events', 'Favorites', 'location', 
+      function($scope, $rootScope, $ionicPopup, $ionicScrollDelegate,  $timeout, $ionicPosition, Events, Favorites, location) {
 
         // Find first date to fetch if needed and populate list of events
         var dateID = Events.getCurrDateID();
@@ -58,7 +58,7 @@ angular.module('starter.controllers', [])
 
         Events.get($scope.date, function(data) {
           $scope.events = data;
-
+          $rootScope.$broadcast('gotEvents');
         });
 
         // Receive dateChanged event, repopulate event list
@@ -66,6 +66,7 @@ angular.module('starter.controllers', [])
           console.log("felt the click");
           Events.get(date, function(data) {
             $scope.events = data;
+            $rootScope.$broadcast('gotEvents');
           });
         });
 
@@ -133,9 +134,6 @@ angular.module('starter.controllers', [])
       $scope.dates = data;
     });
 
-    $scope.currentDate = Events.currDate;
-    console.log($scope.currentDate);
-
     // Select new date
     $scope.changeDate = function(date) {
       console.log("sent a click");
@@ -143,7 +141,12 @@ angular.module('starter.controllers', [])
       $rootScope.$broadcast('dateChanged', date);
     }
 
-    // Generate popover list
+    // When event list is populated, get the date and display it's name
+    $scope.$on('gotEvents', function(event) {
+      $scope.currentDate = Events.getCurrDate();
+    });
+
+    // Generate modal date chooser
     $ionicModal.fromTemplateUrl('templates/choose-date.html', {
       scope: $scope
     }).then(function(modal) {
