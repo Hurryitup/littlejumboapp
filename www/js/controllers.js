@@ -46,19 +46,25 @@ angular.module('starter.controllers', [])
 
         // Find first date to fetch if needed and populate list of events
         var dateID = Events.getCurrDateID();
+        $scope.date = null;
+
         if (dateID == null) {
           var dates = Events.getDates();
-          var date = dates[0];
-          dateID = date.event_id;
-        } 
-        Events.get(dateID, function(data) {
+          $scope.date = dates[0];
+          dateID = $scope.date.event_id;
+        } else {
+          $scope.date = Events.getCurrDate();
+        }
+
+        Events.get($scope.date, function(data) {
           $scope.events = data;
+
         });
 
         // Receive dateChanged event, repopulate event list
         $scope.$on('dateChanged', function(event, date) {
           console.log("felt the click");
-          Events.get(date.event_id, function(data) {
+          Events.get(date, function(data) {
             $scope.events = data;
           });
         });
@@ -121,26 +127,27 @@ angular.module('starter.controllers', [])
   /*
    * Navigation Controller - manages navigation bar date chooser
    */
-  .controller('NavCtrl', function($scope, $rootScope, $ionicPopover, Events) {
+  .controller('NavCtrl', function($scope, $rootScope, $ionicPopover, $ionicModal, Events) {
 
     Events.getDates(function(data) {
       $scope.dates = data;
     });
 
-    $scope.currentDate = Events.currDate
+    $scope.currentDate = Events.currDate;
+    console.log($scope.currentDate);
 
     // Select new date
     $scope.changeDate = function(date) {
       console.log("sent a click");
-      $scope.popover.hide();
+      $scope.modal.hide();
       $rootScope.$broadcast('dateChanged', date);
     }
 
     // Generate popover list
-    $ionicPopover.fromTemplateUrl('templates/choose-date.html', {
+    $ionicModal.fromTemplateUrl('templates/choose-date.html', {
       scope: $scope
-    }).then(function(popover) {
-      $scope.popover = popover;
+    }).then(function(modal) {
+      $scope.modal = modal;
     });
   })
 

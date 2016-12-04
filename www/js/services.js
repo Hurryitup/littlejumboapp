@@ -19,18 +19,22 @@ angular.module('starter.services', [])
 })
 
 .factory('Events', ['$http', function($http) {
-  var events;
-  var dates;
+  var events;  // list of events corrosponding to current date
+  var dates;   // list of possible dates
   var currDateID;
+  var currDate;
   return {
-    get: function (date_id, callback) {
-      currDateID = date_id;
-      if (events && events.date_id == date_id) {
+    get: function (date, callback) {
+      currDateID = date.event_id;
+      console.log("GETTINGDATE: ", date);
+      currDate = date;
+      console.log("GOTDATE: ", currDate);
+      if (events && events.date_id == currDateID) {
         callback(events);
       } else {
-        $http.get(date_id +'.json').success(function(d) {
+        $http.get(currDateID +'.json').success(function(d) {
           events = d;
-          events.date_id = date_id;
+          events.date_id = currDateID;
           callback(events);
         });
       }
@@ -47,6 +51,9 @@ angular.module('starter.services', [])
     },
     getCurrDateID: function() {
       return currDateID;
+    },
+    getCurrDate: function() {
+      return currDate;
     }
   };
 }])
