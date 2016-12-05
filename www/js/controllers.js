@@ -15,29 +15,12 @@ angular.module('starter.controllers', ['ngCordova'])
             mapTypeId: google.maps.MapTypeId.ROADMAP
         };          
          
-        var map = new google.maps.Map(document.getElementById("map"), mapOptions);         
-        $scope.map = map;
+    var map = new google.maps.Map(document.getElementById("map"), mapOptions);         
+    $scope.map = map;
  
    var userMarker;
-   var infoBubble = new InfoBubble({
-          map: $scope.map,
-          shadowStyle: 1,
-          padding: 1,
-          borderRadius: 4,
-          arrowSize: 10,
-          borderWidth: 1,
-          borderColor: '#ffffff',
-          disableAutoPan: false,
-          hideCloseButton: true,
-          arrowPosition: 80,
-          backgroundClassName: 'phoney',
-          arrowStyle: 0,
-          minHeight: 50,
-          minWidth: 150
-        });
-   //var infoWindow = new google.maps.InfoWindow();
+   var infoWindow = new google.maps.InfoWindow();
    $scope.makeUserMarker = function(userLatLng) {
-      //userMarker.setMap();
       userMarker = new google.maps.Marker({
         map: $scope.map,
         animation: google.maps.Animation.DROP,
@@ -45,8 +28,8 @@ angular.module('starter.controllers', ['ngCordova'])
       });      
           
       google.maps.event.addListener(userMarker, 'click', function () {
-          infoBubble.setContent('<div class="bubble_content">You are here!</div>');   
-          infoBubble.open($scope.map, userMarker);
+          infoWindow.setContent('<div class="bubble_content">You are here!</div>');   
+          infoWindow.open($scope.map, userMarker);
       });
     }
 
@@ -57,38 +40,31 @@ angular.module('starter.controllers', ['ngCordova'])
         userLatLng = new google.maps.LatLng(userlat, userlong);
                   
         $scope.makeUserMarker(userLatLng);
-        //$scope.makeMarker();
         google.maps.event.addListener(map, 'click', function() {
-          infoBubble.close();
+          infoWindow.close();
         });    
       }, function(err) {
           console.log(err);
       });
 
     $scope.makeUserMarker = function(userLatLng) {
-      //userMarker.setMap();
       userMarker = new google.maps.Marker({
         map: $scope.map,
         animation: google.maps.Animation.DROP,
         position: userLatLng,
-        icon: 'http://www.robotwoods.com/dev/misc/bluecircle.png'
+        icon: '/img/bluecircle.png'
       });      
           
       google.maps.event.addListener(userMarker, 'click', function () {
           infoWindow.setContent('<div id="iw-container">"You are here!"</div>');   
           infoWindow.open($scope.map, userMarker);
       });
-
-
     }
- 
-    
-    //$scope.map = new google.maps.Map(document.getElementById("map"), mapOptions);
     
     var loc = location.getProperty();
     var marker;
     $scope.makeMarker = function() {
-      infoBubble.close();
+      infoWindow.close();
       if(marker != null)
         marker.setMap(null);
       var newLatLng;
@@ -100,8 +76,8 @@ angular.module('starter.controllers', ['ngCordova'])
       });      
         
       google.maps.event.addListener(marker, 'click', function () {
-          infoBubble.setContent("<div class='bubble_content'><strong>"+loc.building+"</strong></br> Address of building</div>");
-          infoBubble.open($scope.map, marker);
+          infoWindow.setContent("<div class='bubble_content'><strong>"+loc.building+"</strong></br>" + loc.address + "</div>");
+          infoWindow.open($scope.map, marker);
       });
       loc.wasCalled = false;
       $scope.map.setCenter(newLatLng);
@@ -119,12 +95,10 @@ angular.module('starter.controllers', ['ngCordova'])
             ['$scope', '$state', '$ionicPopup', '$ionicScrollDelegate', 'Events', 'Favorites', 'location',
              function($scope, $state, $ionicPopup, $ionicScrollDelegate, Events, Favorites, location) {
 
-  // Makes http request if data is not already downloaded
   Events.get(function(data) {
       $scope.events = data;
   });
 
-  // Make dynamic accordian list
   $scope.toggleGroup = function(group) {
     if ($scope.isGroupShown(group)) {
       $scope.shownGroup = null;
@@ -138,7 +112,6 @@ angular.module('starter.controllers', ['ngCordova'])
     }
   };
 
-  // On star click - change in data and html
   $scope.toggleFavorite = function(event, event_id) {
     html_id = "fav_icon_" + event_id;
     if (Favorites.has(event)) {
@@ -152,27 +125,19 @@ angular.module('starter.controllers', ['ngCordova'])
   var alertPopup;
   // Display event info pop-up
   $scope.showAlert = function(event) {
-    // $ionicScrollDelegate.$getByHandle(event.id.toString()).scrollTop(); ***NOT WORKING***
        if (event.type == 'composite') 
          return;
-       // when calling ng-click should be calling it on something like event.subevents[0].lat/.lng
-       // but setProperty never gets called! why?
-       //"<a href=\"#/tab/map\" ng-click=''>"
-       //location.setProperty(event.lat, event.lng, event.location, true);
-       console.log(event.lat);
        alertPopup = $ionicPopup.alert({
               title: event.title,
               scope: $scope,
-              content: "<button class='locationButton' ng-click='goToMap(" + event.lat + "," + event.lng + ", \"" + event.location +  "\")'>" + event.location + "</button><br><br>" + event.description 
+              content: "<button class='locationButton' ng-click='goToMap(" + event.lat + "," + event.lng + ", \"" + event.location +  "\", \"" + event.address + "\")'>" + event.location + "</button><br><br>" + event.description 
       });
   }
 
   $scope.goToMap = function(lat, lng, building, address) {
-    console.log(address);
       alertPopup.close();
       location.setProperty(lat, lng, building, true, address);
       $state.go("tab.map");
-
   }
 
 }])

@@ -97,6 +97,8 @@
     "time_end":  "3:00 pm",
     "location": "Granoff, Distler Hall",
     "address": "20 Talbot Avenue, Medford, MA 02155",
+    "lat": 42.404482,
+    "lng": -71.118241,
     "professor": null,
     "baloon_color": null,
     "subevents": null
