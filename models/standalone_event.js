@@ -14,12 +14,16 @@ var StandaloneEvent = new Schema({
         type: String,
         required: true
     },
-    location_name: {
+    location_address: {
         type: String,
         required: true
     },
-    location_address: {
-        type: String,
+    location_lat: {
+        type: Number,
+        required: true
+    },
+    location_long: {
+        type: Number,
         required: true
     },
     audience: {

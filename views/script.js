@@ -15,6 +15,20 @@ $(function() {
     });
 });
 
+$(function() {
+    $('.map').locationpicker({
+        location: {
+            latitude: 42.408,
+            longitude: -71.123
+        },
+        radius: 0,
+        inputBinding: {
+            latitudeInput: $('#location_lat'),
+            longitudeInput: $('#location_long')
+        }
+    });
+});
+
 function submitForm(formName, form) {
     var formData = $(form).serializeArray().reduce(function(obj, item) {
         obj[item.name] = item.value;
