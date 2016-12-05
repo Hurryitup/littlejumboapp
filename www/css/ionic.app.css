@@ -9850,9 +9850,6 @@ a.button {
 .event-list .list {
   margin-bottom: 49px !important; }
 
-.platform-ios .event-list .list {
-  padding-bottom: 49px !important; }
-
 .location {
   color: #444 !important;
   font-size: 14px !important; }
