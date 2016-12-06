@@ -73,12 +73,12 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
     }
   })
 
-  .state('tab.favorites', {
-    url: '/favorites',
+  .state('tab.documents', {
+    url: '/documents',
     views: {
-      'tab-favorites': {
-        templateUrl: 'templates/tab-favorites.html',
-        controller: 'FavoritesCtrl'
+      'tab-documents': {
+        templateUrl: 'templates/tab-documents.html',
+        controller: 'DocumentsCtrl'
       }
     }
   });

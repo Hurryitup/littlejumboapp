@@ -147,10 +147,15 @@ angular.module('starter.controllers', ['ngCordova'])
   $scope.event = Events.getEvent($stateParams.eventId);
 })
 
-// Third page controler - name leftover form demo app, currently favorites list
-.controller('FavoritesCtrl', function($scope, Favorites) {
+// Documents controller
+.controller('DocumentsCtrl', ['$scope', '$state', '$ionicScrollDelegate', 'Documents',
+             function($scope, $state, $ionicScrollDelegate, Documents)  {
   $scope.$on('$ionicView.enter', function() {
-    $scope.favs = Array.from(Favorites.get());
+   Documents.get(function(docs) {
+      $scope.docs = docs;
+    });
+
+    //$scope.docs = Array.from(Documents.get());
   });
-});
+}]);
 

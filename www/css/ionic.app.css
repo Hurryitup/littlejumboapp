@@ -9880,15 +9880,14 @@ a.button {
   font-size: 12px !important;
   color: #4d4d4e !important; }
 
-.locationButton {
-  font-family: "Karla", sans-serif;
+button {
   background: none !important;
   border: none;
   padding: 0 !important;
+  font: inherit;
+  border-bottom: 1px solid #3366BB;
   cursor: pointer;
-  color: blue;
-  cursor: pointer;
-  text-decoration: underline; }
+  color: #3366BB; }
 
 .scroll {
   height: 100%; }
@@ -9908,3 +9907,30 @@ a.button {
 
 .tab-item.active, .tab-item.activated, .tab-item-active {
   font-family: "Karla", sans-serif; }
+
+.left_column {
+  padding-top: 0px !important; }
+
+.right_column {
+  padding-top: 0px !important;
+  padding-left: 0px !important; }
+
+.item_title {
+  font-size: 16px !important;
+  font-weight: 600 !important;
+  color: #231f20 !important; }
+
+.item_subtitle {
+  font-size: 12px !important;
+  color: #4d4d4e !important;
+  line-height: 15px; }
+
+.header_title {
+  font-size: 16px !important;
+  font-weight: 600 !important;
+  color: #54a4db !important; }
+
+.header_info {
+  font-size: 12px !important;
+  color: #231f20 !important;
+  line-height: 15px; }

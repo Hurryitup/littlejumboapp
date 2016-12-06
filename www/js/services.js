@@ -61,4 +61,25 @@ angular.module('starter.services', [])
       return favorites.has(event);
     }
   }
-});
+})
+
+.factory('Documents', ['$http', function($http) {
+  var docs;
+  return {
+    get: function (callback) {
+      if (docs) {
+        callback(docs);
+      } else {
+
+        $http.get('documents.json').success(function(d) {
+          callback(d);
+        });
+      }
+    },
+    getDocument: function(id) {
+      if (docs) {
+        return docs[id - 1];
+      }
+    }
+  };
+}])
