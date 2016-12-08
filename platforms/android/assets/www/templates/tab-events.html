@@ -1,50 +1,77 @@
-<ion-view title="Events">
-  <ion-nav-title>
-    Events
-  </ion-nav-title>
-  <ion-content>
-    <ion-list>
-      <div ng-repeat="event in events">
-        <ion-item class="item-stable" 
-                  ng-click="toggleGroup(event)" 
-                  ng-class="{active: isGroupShown(event)}">
-          <div class="row"> 
-            <div class="col-40 left_column" ng-click="showAlert(event)"> 
-              <div class="row responsive-sm item-text-wrap">
-                <p class="time">{{event.time_start}} - {{event.time_end}}</p>
-                <p class="location">{{event.location}}</p>
+<ion-view view-title="SubTabs">
+  <ion-pane>
+    <ion-tabs class="tabs-top tabs-assertive subtabs" ng-click="refreshFavorites()">
+
+      <ion-tab title="ALL" href="#/subtab/all">
+        <ion-nav-view name="subtab-all" delegate-handle="scrollview">
+          <ion-content delegate-handle="scrollview">
+            <ion-list class="event-list">
+              <div ng-repeat="event in events" >
+                <ion-item class="item-stable" 
+                          ng-click="toggleGroup(event)" 
+                          ng-class="{active: isGroupShown(event)}"
+                          id="item_{{event.id}}">
+                  <div class="row"> 
+                    <div class="col-40 left_column" ng-click="showAlert(event)"> 
+                      <div class="row responsive-sm item-text-wrap">
+                        <p class="time">{{event.time_start}} - {{event.time_end}}</p>
+                        <p class="location">{{event.location}}</p>
+                      </div>
+                    </div> 
+                    <div class="col col-50 right_column" ng-click="showAlert(event)"> 
+                      <div class="row responsive-sm item-text-wrap">
+                        <h3 class="item_title">{{event.title}}</h3> 
+                        <p class="item_subtitle" ng-class="{'expandable': event.subevents}">{{event.subtitle}} &nbsp;
+                        <i ng-if="event.type == 'composite'" class="icon" 
+                                                             ng-class="(isGroupShown(event)) ? 'ion-chevron-up' : 'ion-chevron-down' "></i>
+                        </p>
+                      </div>
+                    </div>
+                    <span ng-if="event.type == 'standalone'" ng-click="toggleFavorite(event, event.id)" 
+                                                             class="item-icon-right">
+                      <i id="fav_icon_{{event.id}}" class="icon ion-android-star-outline icon-accessory star"></i>
+                    </span>
+                  </div> 
+                </ion-item>
+                <ion-item class="item-accordion" 
+                          ng-repeat="subevent in event.subevents"
+                          ng-show="isGroupShown(event)">
+                  <div  ng-click="showAlert(subevent)">
+                    <div class="subevent_item">
+                    <p class="subevent_title">{{subevent.title}}</p>
+                    <p class="subevent_location">{{subevent.location}}</p>
+                    <p class="subevent_professor">{{subevent.professor}} </p>
+                    </div>
+                  </div>
+                  <span ng-click="toggleFavorite(subevent, subevent.id)" class="item-icon-right">
+                    <i id="fav_icon_{{subevent.id}}" class="icon ion-android-star-outline icon-accessory star"></i>
+                  </span>
+                </ion-item>
               </div>
-            </div> 
-            <div class="col col-50 right_column" ng-click="showAlert(event)"> 
-              <div class="row responsive-sm item-text-wrap">
-                <h3 class="item_title">{{event.title}}</h3> 
-                <p class="item_subtitle" ng-class="{'expandable': event.subevents}">{{event.subtitle}} &nbsp;
-                  <i ng-if="event.type == 'composite'" class="icon" 
-                     ng-class="(isGroupShown(event)) ? 'ion-chevron-up' : 'ion-chevron-down' "></i>
-                </p>
-              </div>
-            </div>
-            <span ng-if="event.type == 'standalone'" ng-click="toggleFavorite(event, event.id)" 
-                  class="item-icon-right">
-              <i id="fav_icon_{{event.id}}" class="icon ion-android-star-outline icon-accessory star"></i>
-            </span>
-          </div> 
-        </ion-item>
-        <ion-item class="item-accordion" 
-                  ng-repeat="subevent in event.subevents"
-                  ng-show="isGroupShown(event)">
-          <div  ng-click="showAlert(subevent)">
-            <p class="subevent_item">
-              <div class="subevent_title">{{subevent.title}}</div>
-              <div class="subevent_location">{{subevent.location}}</div>
-              <div class="subevent_professor">{{subevent.professor}} </div>
-            </p>
-          </div>
-          <span ng-click="toggleFavorite(subevent, subevent.id)" class="item-icon-right">
-            <i id="fav_icon_{{subevent.id}}" class="icon ion-android-star-outline icon-accessory star"></i>
-          </span>
-        </ion-item>
-      </div>
-    </ion-list>
-  </ion-content>
+            </ion-list>
+          </ion-content>
+        </ion-nav-view>
+      </ion-tab>
+
+      <ion-tab title="FAVORITES" href="#/subtab/favorites">
+        <ion-nav-view name="subtab-favorites">
+          <ion-content>
+            <ion-list class="fav-list">
+              <ion-item class="fav_item" ng-repeat="event in favs">
+                <div  ng-click="showAlert(event)">
+                  <div class="subevent_item">
+                  <p ng-if="event.title" class="subevent_title">{{event.title}}</p>
+                  <p ng-if="event.location" class="subevent_location">{{event.location}}</p>
+                  <p ng-if="event.professor" class="subevent_professor">{{event.professor}} </p>
+                  </div>
+                </div>
+              </ion-item>
+            </ion-list>
+          </ion-content>
+        </ion-nav-view>
+      </ion-tab>
+
+    </ion-tabs>
+  </ion-pane>
 </ion-view>
+

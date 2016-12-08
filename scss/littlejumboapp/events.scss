@@ -1,16 +1,55 @@
+/* Accoridan list animation */
+
 .list .item.item-accordion {
   line-height: 15px;
   padding-top: 0;
   padding-bottom: 0;
-  transition: 0.09s all linear;
+  transition: 0.07s all linear;
 }
+
 .list .item.item-accordion.ng-hide {
   line-height: 0px !important;
 }
+
 .list .item.item-accordion.ng-hide-add,
 .list .item.item-accordion.ng-hide-remove {
   display: block !important;
 }
+
+/* Favorites 
+ */
+
+.platform-ios .fav-list .list {
+  padding-top: 20px !important;
+}
+
+.subtabs {
+  background-color: $positivelight !important;
+  font-size: 300px !important;
+  color: white !important;
+}
+
+.fav_item {
+  line-height: 15px !important;
+  font-size: 12px !important;
+  padding: 15px !important;
+  padding-top: 0px !important;
+}
+
+/* Events list
+ */
+
+.event-list .list {
+  margin-bottom: 49px !important;
+}
+
+.platform-ios .event-list .list {
+  margin-top: 20px !important;
+  padding-bottom: 69px !important;
+}
+
+/* List item
+ */
 
 .time {
     color: $balanced !important;
@@ -74,14 +113,4 @@
 .subevent_professor {
   font-size: 12px !important;
   color: $subtitlecolor !important;
-}
-
-button {
-  background:none!important;
-  border:none; 
-  padding:0!important;
-  font: inherit;
-  border-bottom:1px solid #3366BB; 
-  cursor: pointer; 
-  color: #3366BB;
 }

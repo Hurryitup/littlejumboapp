@@ -1,0 +1,6 @@
+" .lvimrc Local Config TEMPLATE
+let g:INDENT_SIZE = 2          " Default indent size
+set expandtab                  " Use spaces instead of tabs
+let &shiftwidth = INDENT_SIZE  " One (auto)indent is INDENT_SIZE spaces
+let &softtabstop = INDENT_SIZE " Effective width of <Tab> is INDENT_SIZE
+set autoindent                 " Keep same indent on new line

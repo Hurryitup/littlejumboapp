@@ -15,31 +15,36 @@
           .catch(err => console.log('Error', err));
       }
     </script>-->
-    
-
 
     <!-- compiled css output -->
     <link href="css/ionic.app.css" rel="stylesheet">
 
     <!-- ionic/angularjs js -->
     <script src="lib/ionic/js/ionic.bundle.js"></script>
+    <script data-require="jquery@2.0.1" data-semver="2.0.1" src="http://code.jquery.com/jquery-2.0.1.min.js"></script>
 
     <!-- cordova script (this will be a 404 during development) -->
+    <script src="lib/ngCordova/dist/ng-cordova.js"></script>
     <script src="cordova.js"></script>
 
     <!-- your app's js -->
     <script src="js/app.js"></script>
     <script src="js/controllers.js"></script>
     <script src="js/services.js"></script>
+
+    <script src="http://maps.google.com/maps/api/js?key=AIzaSyDHElT9785oXO0UK9wNu7Y_aADWUHowbS0&sensor=true"></script>
   </head>
-  <body ng-app="starter">
+  <body ng-app="starter" class="platform-ios platform-cordova platform-webview">
     <!--
-      The nav bar that will be updated as we navigate between views.
+    The nav bar that will be updated as we navigate between views.
     -->
-    <ion-nav-bar class="bar-positive">
-      <ion-nav-back-button>
-      </ion-nav-back-button>
-    </ion-nav-bar>
+    <ion-header-bar class="bar-positive" ng-controller="NavCtrl">
+      <h1 class="title">{{currentDate.name}}</h1>
+      <div class="buttons">
+        <button class="button button-icon ion-chevron-down" ng-click="modal.show()">
+        </button>
+      </div> 
+    </ion-header-bar>
     <!--
       The views will be rendered in the <ion-nav-view> directive below
       Templates are in the /templates folder (but you could also
