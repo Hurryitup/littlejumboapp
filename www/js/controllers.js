@@ -154,8 +154,6 @@ angular.module('starter.controllers', ['ngCordova'])
    Documents.get(function(docs) {
       $scope.docs = docs;
     });
-
-    //$scope.docs = Array.from(Documents.get());
   });
 }]);
 
