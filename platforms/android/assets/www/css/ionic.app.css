@@ -10714,6 +10714,9 @@ a.button {
 
 /* Favorites 
  */
+.platform-ios .fav-list .list {
+  padding-top: 20px !important; }
+
 .subtabs {
   background-color: #54a4db !important;
   font-size: 300px !important;
@@ -10800,15 +10803,6 @@ a.button {
 
 .tab-item.active, .tab-item.activated, .tab-item-active {
   font-family: "Karla", sans-serif; }
-
-.date-chooser {
-  height: 100px !important; }
-
-.date-chooser-content {
-  height: 100px !important; }
-
-.date-chooser-list {
-  height: 100px !important; }
 
 .date-item {
   color: #444; }

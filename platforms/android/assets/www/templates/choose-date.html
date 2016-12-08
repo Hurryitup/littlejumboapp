@@ -1,13 +1,15 @@
-<ion-modal-view class="date-chooser">
-  <ion-header-bar class="bar bar-header bar-positive">
-    <h1 class="title">Choose Date</h1>
-    <button class="button button-icon ion-chevron-up" ng-click="modal.hide()"></button>
-  </ion-header-bar>
-  <ion-content class="date-chooser-content">
-    <ion-list ng-repeat="date in dates" class="date-chooser-list">
-      <ion-item class="date-item" ng-click="changeDate(date)">
-        {{date.name}}
-      </ion-item>
-    </ion-list>
-  </ion-content>
-</ion-modal-view>
+<div class="modal-wrapper">
+  <ion-modal-view class="date-chooser">
+    <ion-header-bar class="bar bar-header bar-positive">
+      <h1 class="title">Choose Date</h1>
+      <button class="button button-icon ion-chevron-up" ng-click="modal.hide()"></button>
+    </ion-header-bar>
+    <ion-content class="date-chooser-content">
+      <ion-list ng-repeat="date in dates" class="date-chooser-list">
+        <ion-item class="date-item" ng-click="changeDate(date)">
+          {{date.name}}
+        </ion-item>
+      </ion-list>
+    </ion-content>
+  </ion-modal-view>
+</div>
