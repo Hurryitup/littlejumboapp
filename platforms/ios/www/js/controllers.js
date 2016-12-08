@@ -145,10 +145,9 @@ angular.module('starter.controllers', [])
       $scope.currentDate = Events.getCurrDate();
     });
 
-    console.log(ionic.Platform.platform());
 
     if (ionic.Platform.isAndroid()) {
-      $scope.animation = 'slide-in-right'; // Will disable Android animations (intentional)
+      $scope.animation = null; // Will disable Android animations (intentional)
     } else {
       $scope.animation = 'am-slide-top';
     }
