@@ -41,18 +41,40 @@ angular.module('starter.controllers', [])
    *
    */
   .controller('EventsCtrl',
-    ['$scope', '$ionicPopup', '$ionicScrollDelegate', '$timeout', '$ionicPosition', 'Events', 'Favorites', 'location', 
-      function($scope, $ionicPopup, $ionicScrollDelegate,  $timeout, $ionicPosition, Events, Favorites, location) {
+    ['$scope', '$rootScope', '$ionicPopup', '$ionicScrollDelegate', '$timeout', '$ionicPosition', 'Events', 'Favorites', 'location', 
+      function($scope, $rootScope, $ionicPopup, $ionicScrollDelegate,  $timeout, $ionicPosition, Events, Favorites, location) {
 
-        // Makes http request if data is not already downloaded
-        Events.get(function(data) {
+        // Find first date to fetch if needed and populate list of events
+        var dateID = Events.getCurrDateID();
+        $scope.date = null;
+
+        if (dateID == null) {
+          var dates = Events.getDates();
+          $scope.date = dates[0];
+          dateID = $scope.date.event_id;
+        } else {
+          $scope.date = Events.getCurrDate();
+        }
+
+        Events.get($scope.date, function(data) {
           $scope.events = data;
+          $rootScope.$broadcast('gotEvents');
+        });
+
+        // Receive dateChanged event, repopulate event list
+        $scope.$on('dateChanged', function(event, date) {
+          console.log("felt the click");
+          Events.get(date, function(data) {
+            $scope.events = data;
+            $rootScope.$broadcast('gotEvents');
+          });
         });
 
         $scope.jumptoEvent = function (event) {
           var eventPosition = $ionicPosition.position(angular.element(document.getElementById('item_' + event.id)));
           $ionicScrollDelegate.$getByHandle('scrollview').scrollTo(eventPosition.left, eventPosition.top, true);
-        }
+        };
+
         // Make dynamic accordian list
         $scope.toggleGroup = function(group) {
           if (group.type != 'composite') {
@@ -66,6 +88,7 @@ angular.module('starter.controllers', [])
             $scope.shownGroup = group;
           }
         };
+
         $scope.isGroupShown = function(group) {
           if ($scope.shownGroup === group && $scope.shownGroup.subevents) {
             return true;
@@ -86,14 +109,10 @@ angular.module('starter.controllers', [])
             document.getElementById(html_id).className = "icon ion-android-star icon-accessory star";
             Favorites.add(event);
           }
-        }
+        };
 
         // Display event info pop-up
         $scope.showAlert = function(event) {
-          // $timeout(function(){
-          //   console.log("handle_" + event.id.toString());
-          //   $ionicScrollDelegate.$getByHandle("handle_" + event.id.toString()).scrollTop(); 
-          // },10)
           if (event.type == 'composite') 
             return;
           var alertPopup = $ionicPopup.alert({
@@ -103,13 +122,13 @@ angular.module('starter.controllers', [])
             buttons: [{text: 'CLOSE',
               type: 'button-positive'}]
           });
-        }
+        };
       }])
 
   /*
    * Navigation Controller - manages navigation bar date chooser
    */
-  .controller('NavCtrl', function($scope, $rootScope, $ionicPopover, Events) {
+  .controller('NavCtrl', function($scope, $rootScope, $ionicPopover, $ionicModal, Events) {
 
     Events.getDates(function(data) {
       $scope.dates = data;
@@ -117,14 +136,29 @@ angular.module('starter.controllers', [])
 
     // Select new date
     $scope.changeDate = function(date) {
-      console.log(date);
+      $scope.modal.hide();
+      $rootScope.$broadcast('dateChanged', date);
     }
 
-    // Generate popover list
-    $ionicPopover.fromTemplateUrl('templates/choose-date.html', {
+    // When event list is populated, get the date and display it's name
+    $scope.$on('gotEvents', function(event) {
+      $scope.currentDate = Events.getCurrDate();
+    });
+
+    console.log(ionic.Platform.platform());
+
+    if (ionic.Platform.isAndroid()) {
+      $scope.animation = 'slide-in-right'; // Will disable Android animations (intentional)
+    } else {
+      $scope.animation = 'am-slide-top';
+    }
+
+    // Generate modal date chooser
+    $ionicModal.fromTemplateUrl('templates/choose-date.html', {
       scope: $scope,
-    }).then(function(popover) {
-      $scope.popover = popover;
+      animation: $scope.animation
+    }).then(function(modal) {
+      $scope.modal = modal;
     });
   })
 

@@ -136,7 +136,6 @@ angular.module('starter.controllers', [])
 
     // Select new date
     $scope.changeDate = function(date) {
-      console.log("sent a click");
       $scope.modal.hide();
       $rootScope.$broadcast('dateChanged', date);
     }
@@ -146,9 +145,18 @@ angular.module('starter.controllers', [])
       $scope.currentDate = Events.getCurrDate();
     });
 
+    console.log(ionic.Platform.platform());
+
+    if (ionic.Platform.isAndroid()) {
+      $scope.animation = null; // Will disable Android animations (intentional)
+    } else {
+      $scope.animation = 'am-slide-top';
+    }
+
     // Generate modal date chooser
     $ionicModal.fromTemplateUrl('templates/choose-date.html', {
-      scope: $scope
+      scope: $scope,
+      animation: $scope.animation
     }).then(function(modal) {
       $scope.modal = modal;
     });

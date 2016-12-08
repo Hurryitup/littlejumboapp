@@ -39,9 +39,9 @@
     The nav bar that will be updated as we navigate between views.
     -->
     <ion-header-bar class="bar-positive" ng-controller="NavCtrl">
-      <h1 class="title">Current Date</h1>
+      <h1 class="title">{{currentDate.name}}</h1>
       <div class="buttons">
-        <button class="button button-icon ion-chevron-down" ng-click="popover.show($event)">
+        <button class="button button-icon ion-chevron-down" ng-click="modal.show()">
         </button>
       </div> 
     </ion-header-bar>
