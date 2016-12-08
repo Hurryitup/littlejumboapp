@@ -10801,9 +10801,6 @@ a.button {
 .tab-item.active, .tab-item.activated, .tab-item-active {
   font-family: "Karla", sans-serif; }
 
-.date-chooser {
-  height: 100px !important; }
-
 .date-chooser-content {
   height: 100px !important; }
 

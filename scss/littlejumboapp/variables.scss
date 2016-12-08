@@ -8,3 +8,11 @@ $titlecolor: #231f20 !default;
 $starorange: #fbb03b !default;
 $subtabcolor: #82b9e4 !default;
 $assertive: $subtabcolor !default;
+
+// If we can figure out how to animate a smaller modal - use this to resize it
+// $modal-inset-mode-break-point:    0px;  // modals are ALWAYS windowed
+// $modal-inset-mode-top:            2% !default;
+// $modal-inset-mode-right:          0% !default;
+// $modal-inset-mode-bottom:         62% !default;
+// $modal-inset-mode-left:           0% !default;
+// $modal-inset-mode-min-height:     240px !default;

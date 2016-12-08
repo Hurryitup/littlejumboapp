@@ -147,7 +147,7 @@ angular.module('starter.controllers', [])
 
 
     if (ionic.Platform.isAndroid()) {
-      $scope.animation = null; // Will disable Android animations (intentional)
+      $scope.animation = 'slide-in-right'; // Will disable Android animations (intentional)
     } else {
       $scope.animation = 'am-slide-top';
     }
