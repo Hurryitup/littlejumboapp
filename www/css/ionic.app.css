@@ -10734,7 +10734,7 @@ a.button {
   margin-bottom: 49px !important; }
 
 .platform-ios .event-list .list {
-  padding-top: 20px !important;
+  margin-top: 20px !important;
   padding-bottom: 49px !important; }
 
 /* List item

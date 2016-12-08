@@ -75,7 +75,7 @@ angular.module('starter.controllers', [])
           $ionicScrollDelegate.$getByHandle('scrollview').scrollTo(eventPosition.left, eventPosition.top, true);
         };
 
-        // Make dynamic accordian list
+        // Make dynamic accordion list
         $scope.toggleGroup = function(group) {
           if (group.type != 'composite') {
             return; 
@@ -84,7 +84,7 @@ angular.module('starter.controllers', [])
           } else {
             setTimeout(function () {
               $scope.jumptoEvent(group);
-            }, 0160);
+            }, 0170);
             $scope.shownGroup = group;
           }
         };
