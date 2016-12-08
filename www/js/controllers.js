@@ -97,8 +97,8 @@ angular.module('starter.controllers', ['ngCordova'])
    *
    */
   .controller('EventsCtrl',
-    ['$scope', '$rootScope', '$ionicPopup', '$ionicScrollDelegate', '$timeout', '$ionicPosition', 'Events', 'Favorites', 'location', 
-      function($scope, $rootScope, $ionicPopup, $ionicScrollDelegate,  $timeout, $ionicPosition, Events, Favorites, location) {
+    ['$scope', '$rootScope', '$state', '$ionicPopup', '$ionicScrollDelegate', '$timeout', '$ionicPosition', 'Events', 'Favorites', 'location', 
+      function($scope, $rootScope, $state, $ionicPopup, $ionicScrollDelegate,  $timeout, $ionicPosition, Events, Favorites, location) {
 
         // Find first date to fetch if needed and populate list of events
         var dateID = Events.getCurrDateID();

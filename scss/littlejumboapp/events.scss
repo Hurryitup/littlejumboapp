@@ -114,3 +114,13 @@
   font-size: 12px !important;
   color: $subtitlecolor !important;
 }
+
+button {
+  background:none!important;
+  border:none; 
+  padding:0!important;
+  font: inherit;
+  border-bottom:1px solid #3366BB; 
+  cursor: pointer; 
+  color: #3366BB;
+}

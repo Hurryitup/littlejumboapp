@@ -1,47 +1,46 @@
 <ion-view title="Documents">
-  <ion-nav-title>
-    Documents
-  </ion-nav-title>
-  <ion-content>
-  <div class="card">
-  <div class="item item-text-wrap">
-        <h3 class="header_title">Receive 10% off your meal at the following restaurants!</h3> 
-        <p class="header_info"> If you wear your Tufts Jumbo Days t-shirt to any
-                                  of these restaurants this weekend! &nbsp; </p>  
-  </div>
-  </div>
-    <ion-list>
-      <div ng-repeat="document in docs">
-        <ion-item class="item-borderless" >
-          <div class="row"> 
-            <div class="col col-70 left_column"> 
-              <div class="row responsive-sm item-text-wrap">
-                <ion-avatar class="image">
-                </ion-avatar>
-                <h3 class="item_title">{{document.title}}</h3> 
-                <p class="item_subtitle"> {{document.address}} &nbsp;
-                </p>
-              </div>
-            </div>
-        </ion-item>
+  <div class="documents-wrapper">
+    <ion-content class="documents-content">
+      <div class="card">
+        <div class="item item-text-wrap">
+          <h3 class="header_title">Receive 10% off your meal at the following restaurants!</h3> 
+          <p class="header_info"> If you wear your Tufts Jumbo Days t-shirt to any
+            of these restaurants this weekend! &nbsp; </p>  
+        </div>
       </div>
-    </ion-list>
-  </ion-content>
-</ion-view>
-<!-- 
-<ion-item class="item-borderless ">
-          <div class="row"> 
-                THIS IS WHERE THE IMAGE WOULD BE ADDED
-           <div class="col-40 left_column"> 
-              <div class="row responsive-sm item-text-wrap">
-                <img ng-src="{{document.image}}">
+      <ion-list>
+        <div ng-repeat="document in docs">
+          <ion-item class="item-borderless" >
+            <div class="row"> 
+              <div class="col col-70 left_column"> 
+                <div class="row responsive-sm item-text-wrap">
+                  <ion-avatar class="image">
+                  </ion-avatar>
+                  <h3 class="item_title">{{document.title}}</h3> 
+                  <p class="item_subtitle"> {{document.address}} &nbsp;
+                  </p>
+                </div>
               </div>
-            </div> 
-            <div class="col col-50 left_column"> 
-              <div class="row responsive-sm item-text-wrap">
-                <h3 class="item_title">{{document.title}}</h3> 
-                <p class="item_subtitle"> {{document.address}} &nbsp;</p>
-              </div>
-            </div>
+            </ion-item>
           </div>
-        </ion-item> -->
+        </ion-list>
+      </ion-content>
+    </div>
+  </ion-view>
+  <!-- 
+  <ion-item class="item-borderless ">
+    <div class="row"> 
+      THIS IS WHERE THE IMAGE WOULD BE ADDED
+      <div class="col-40 left_column"> 
+        <div class="row responsive-sm item-text-wrap">
+          <img ng-src="{{document.image}}">
+        </div>
+      </div> 
+      <div class="col col-50 left_column"> 
+        <div class="row responsive-sm item-text-wrap">
+          <h3 class="item_title">{{document.title}}</h3> 
+          <p class="item_subtitle"> {{document.address}} &nbsp;</p>
+        </div>
+      </div>
+    </div>
+  </ion-item> -->

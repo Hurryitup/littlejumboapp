@@ -10795,8 +10795,13 @@ a.button {
 
 #map {
   width: 106%;
-  height: 110%;
+  height: 106%;
   margin: -10px; }
+
+.bubble_content {
+  font-size: 14px !important;
+  padding: 0px 5px 0px 5px;
+  font-family: "Karla", sans-serif; }
 
 .tab-item {
   font-family: "Karla", sans-serif; }

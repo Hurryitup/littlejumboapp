@@ -8,10 +8,13 @@ angular.module('starter.services', [])
     var location = {};
 
     return {
-        setProperty: function(latitude, longitude){
+        setProperty: function(latitude, longitude, building, wasCalled, address){
         location.lat = latitude;
         location.lng = longitude;
-    },
+        location.building = building;
+        location.wasCalled = wasCalled;
+        location.address = address;
+        },
         getProperty: function(){
         return location;
         }
@@ -76,4 +79,25 @@ angular.module('starter.services', [])
       return favorites.has(event);
     }
   }
-});
+})
+
+.factory('Documents', ['$http', function($http) {
+  var docs;
+  return {
+    get: function (callback) {
+      if (docs) {
+        callback(docs);
+      } else {
+
+        $http.get('documents.json').success(function(d) {
+          callback(d);
+        });
+      }
+    },
+    getDocument: function(id) {
+      if (docs) {
+        return docs[id - 1];
+      }
+    }
+  };
+}])

@@ -1,94 +1,38 @@
-angular.module('starter.controllers', ['ngCordova'])
+angular.module('starter.controllers', [])
 
-  .controller('MapCtrl', function($scope, $state, location, $cordovaGeolocation) {
+  /*
+   * Map Controller
+   *
+   */
+  .controller('MapCtrl', function($scope, $state, location /*, $cordovaGeolocation */) {
     var options = {timeout: 10000, enableHighAccuracy: true};
     var latLng = new google.maps.LatLng(42.4075, -71.1190);
-
-    var posOptions = {
-      enableHighAccuracy: true,
-      timeout: 100000,
-      maximumAge: 0
-    };
     var mapOptions = {
       center: latLng,
-      zoom: 16,
+      zoom: 17,
       mapTypeId: google.maps.MapTypeId.ROADMAP
-    };          
+    };
 
-    var map = new google.maps.Map(document.getElementById("map"), mapOptions);         
-    $scope.map = map;
-
-    var userMarker;
-    var infoWindow = new google.maps.InfoWindow();
-    $scope.makeUserMarker = function(userLatLng) {
-      userMarker = new google.maps.Marker({
-        map: $scope.map,
-        animation: google.maps.Animation.DROP,
-        position: userLatLng
-      });      
-
-      google.maps.event.addListener(userMarker, 'click', function () {
-        infoWindow.setContent('<div class="bubble_content">You are here!</div>');   
-        infoWindow.open($scope.map, userMarker);
-      });
-    }
-
-    $cordovaGeolocation.getCurrentPosition(posOptions).then(function (position) {
-      var userlat  = position.coords.latitude;
-      var userlong = position.coords.longitude;
-
-      userLatLng = new google.maps.LatLng(userlat, userlong);
-
-      $scope.makeUserMarker(userLatLng);
-      google.maps.event.addListener(map, 'click', function() {
-        infoWindow.close();
-      });    
-    }, function(err) {
-      console.log(err);
-    });
-
-    $scope.makeUserMarker = function(userLatLng) {
-      userMarker = new google.maps.Marker({
-        map: $scope.map,
-        animation: google.maps.Animation.DROP,
-        position: userLatLng,
-        icon: '/img/bluecircle.png'
-      });      
-
-      google.maps.event.addListener(userMarker, 'click', function () {
-        infoWindow.setContent('<div id="iw-container">"You are here!"</div>');   
-        infoWindow.open($scope.map, userMarker);
-      });
-    }
-
-    var loc = location.getProperty();
-    var marker;
+    $scope.map = new google.maps.Map(document.getElementById("map"), mapOptions);
     $scope.makeMarker = function() {
-      infoWindow.close();
-      if(marker != null)
-        marker.setMap(null);
-      var newLatLng;
+      //alertPopup.close();
+      var loc = location.getProperty();
+      var newLatLng; 
+      // call getter from factory
       newLatLng = new google.maps.LatLng(loc.lat, loc.lng);
-      marker = new google.maps.Marker({
+      var marker = new google.maps.Marker({
         map: $scope.map,
         animation: google.maps.Animation.DROP,
         position: newLatLng
       });      
-
+      var infoWindow = new google.maps.InfoWindow({
+        content: "yo"
+      });
       google.maps.event.addListener(marker, 'click', function () {
-        infoWindow.setContent("<div class='bubble_content'><strong>"+loc.building+"</strong></br>" + loc.address + "</div>");
         infoWindow.open($scope.map, marker);
       });
-      loc.wasCalled = false;
-      $scope.map.setCenter(newLatLng);
     }
-
-    $scope.$on('$ionicView.enter', function(){
-      if (loc.wasCalled == true) {
-        $scope.makeMarker();
-      }
-      $scope.makeUserMarker();
-    });
+    $scope.makeMarker();
   })
 
 
@@ -167,23 +111,18 @@ angular.module('starter.controllers', ['ngCordova'])
           }
         };
 
-        var alertPopup;
         // Display event info pop-up
         $scope.showAlert = function(event) {
           if (event.type == 'composite') 
             return;
-          alertPopup = $ionicPopup.alert({
+          var alertPopup = $ionicPopup.alert({
             title: event.title,
-            scope: $scope,
-            content: "<button class='locationButton' ng-click='goToMap(" + event.lat + "," + event.lng + ", \"" + event.location +  "\", \"" + event.address + "\")'>" + event.location + "</button><br><br>" + event.description 
+            // factory set lat/lng
+            content: "<a href=\"#/tab/map\" ng-click='location.setProperty("+ event.lat + "," + event.lng + ")'>" + event.location + "</a><br><br>" + event.description ,
+            buttons: [{text: 'CLOSE',
+              type: 'button-positive'}]
           });
-        }
-
-        $scope.goToMap = function(lat, lng, building, address) {
-          alertPopup.close();
-          location.setProperty(lat, lng, building, true, address);
-          $state.go("tab.map");
-        }
+        };
       }])
 
   /*
@@ -222,13 +161,15 @@ angular.module('starter.controllers', ['ngCordova'])
     });
   })
 
+// Leftover from demo app - might revert to full screen event details page, so keeping it for now
+  .controller('EventDetailCtrl', function($scope, $stateParams, Events) {
+    $scope.event = Events.getEvent($stateParams.eventId);
+  })
 
-// Documents controller
-  .controller('DocumentsCtrl', ['$scope', '$state', '$ionicScrollDelegate', 'Documents',
-    function($scope, $state, $ionicScrollDelegate, Documents)  {
-      $scope.$on('$ionicView.enter', function() {
-        Documents.get(function(docs) {
-          $scope.docs = docs;
-        });
-      });
-    }]);
+// To become coupons page controller
+  .controller('FavoritesCtrl', function($scope, Favorites) {
+    $scope.$on('$ionicView.enter', function() {
+      $scope.favs = Array.from(Favorites.get());
+    });
+  });
+
