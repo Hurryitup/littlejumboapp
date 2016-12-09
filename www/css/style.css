@@ -1,0 +1,98 @@
+/* Empty. Add your own CSS if you like */
+
+/*
+ *
+ * Blue: #68a2d5;
+ * Green: ;
+ *
+ */
+:root {
+  --blue: #68a2d5;
+  --green: #36b679;
+}
+
+h6 {
+  font-weight: 400;
+}
+.col {
+  text-align: left;
+}
+
+
+.larger {
+  font-size: 25px !important;
+  padding-right: 10px;
+}
+
+.location {
+  font-size: 13px !important;
+}
+
+.action_bar {
+  background-color: var(--blue) !important;
+  color: white !important;
+}
+
+.tab_bar {
+  background-color: black !important;
+  color: white !important;
+  font-size: 300% !important;
+}
+
+#event_time {
+  font-size: 13px !important; 
+}
+
+.col-33 {
+  padding-left: 0px !important;
+  padding-right: 0px !important;
+}
+
+.title {
+  font-size: 17px !important;
+  font-weight: 400!important;
+}
+
+/*#event_time {
+  font-weight: 600;
+}
+*/
+/*#subevent_title {
+  font-weight: 500;
+}
+*/
+
+#class_list_title {
+  padding-top: 25px;
+  white-space: normal;
+}
+
+
+.ion-item-right {
+  font-size: 80px;
+}
+
+
+.list .item.item-accordion {
+  line-height: 25px;
+  padding-top: 0;
+  padding-bottom: 0;
+  transition: 0.09s all linear;
+}
+.list .item.item-accordion.ng-hide {
+  line-height: 0px !important;
+}
+.list .item.item-accordion.ng-hide-add,
+.list .item.item-accordion.ng-hide-remove {
+  display: block !important;
+}
+
+.bubble_content {
+  text-shadow: 0 -1px 0 #000;
+  color: #fff;
+  font-family: Helvetica Neue, Helvetica, arial;
+  font-size: 16px;
+  line-height: 25px;
+  padding: 4px 45px 4px 15px;
+  font-weight: bold;
+}

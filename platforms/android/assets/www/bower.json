@@ -1,0 +1,25 @@
+{
+	"name": "ion-drawer-vertical",
+	"version": "1.7.0",
+	"homepage": "https://github.com/bramus/ion-drawer-vertical",
+	"authors": [
+		"Bramus! <bramus@bram.us>"
+	],
+	"description": "A vertical slide-out panel (toggle panel)",
+	"main": [
+		"src/ionic.contrib.drawer.vertical.js",
+		"src/ionic.contrib.drawer.vertical.css"
+	],
+	"keywords": [
+		"ionic",
+		"drawer"
+	],
+	"license": "MIT",
+	"ignore": [
+		"**/.*",
+		"node_modules",
+		"bower_components",
+		"test",
+		"tests"
+	]
+}
