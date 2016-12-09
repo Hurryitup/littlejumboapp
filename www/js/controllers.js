@@ -196,6 +196,7 @@ angular.module('starter.controllers', ['ngCordova'])
             return;
           alertPopup = $ionicPopup.alert({
             title: event.title,
+            buttons: [{text: 'Close'}],
             scope: $scope,
             content: "<button class='locationButton' ng-click='goToMap(" + event.lat + "," + event.lng + ", \"" + event.location +  "\", \"" + event.address + "\")'>" + event.location + "</button><br><br>" + event.description 
           });
