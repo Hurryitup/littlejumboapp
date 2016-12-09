@@ -6,7 +6,7 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
+angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', 'ngCordova'])
 
 .run(function($ionicPlatform)  {
 
@@ -78,12 +78,12 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
     }
   })
 
-  .state('tab.favorites', {
-    url: '/favorites',
+  .state('tab.documents', {
+    url: '/documents',
     views: {
-      'tab-favorites': {
-        templateUrl: 'templates/tab-favorites.html',
-        controller: 'FavoritesCtrl'
+      'tab-documents': {
+        templateUrl: 'templates/tab-documents.html',
+        controller: 'DocumentsCtrl'
       }
     }
   });
