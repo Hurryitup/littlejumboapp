@@ -88,7 +88,6 @@ angular.module('starter.services', [])
       if (docs) {
         callback(docs);
       } else {
-
         $http.get('documents.json').success(function(d) {
           callback(d);
         });

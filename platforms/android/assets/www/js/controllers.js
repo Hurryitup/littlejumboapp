@@ -1,38 +1,116 @@
-angular.module('starter.controllers', [])
+angular.module('starter.controllers', ['ngCordova'])
 
-  /*
-   * Map Controller
-   *
-   */
-  .controller('MapCtrl', function($scope, $state, location /*, $cordovaGeolocation */) {
+  .controller('MapCtrl', function($scope, $state, location, $cordovaGeolocation) {
     var options = {timeout: 10000, enableHighAccuracy: true};
     var latLng = new google.maps.LatLng(42.4075, -71.1190);
+
+    var posOptions = {
+      enableHighAccuracy: false,
+      timeout: 100000,
+      maximumAge: 0
+    };
     var mapOptions = {
       center: latLng,
-      zoom: 17,
+      zoom: 16,
       mapTypeId: google.maps.MapTypeId.ROADMAP
-    };
+    };          
 
-    $scope.map = new google.maps.Map(document.getElementById("map"), mapOptions);
+    var map = new google.maps.Map(document.getElementById("map"), mapOptions);         
+    $scope.map = map;
+
+    var userMarker;
+    var infoWindow = new google.maps.InfoWindow();
+    $scope.makeUserMarker = function(userLatLng) {
+      userMarker = new google.maps.Marker({
+        map: $scope.map,
+        animation: google.maps.Animation.DROP,
+        position: userLatLng
+      });      
+
+      google.maps.event.addListener(userMarker, 'click', function () {
+        infoWindow.setContent('<div class="bubble_content">You are here!</div>');   
+        infoWindow.open($scope.map, userMarker);
+      });
+    }
+
+    $cordovaGeolocation.getCurrentPosition(posOptions).then(function (position) {
+      console.log("GotPosition");
+      var userlat  = position.coords.latitude;
+      var userlong = position.coords.longitude;
+      console.log("Position: ", userlat, ", ", userlong);
+
+      userLatLng = new google.maps.LatLng(userlat, userlong);
+
+      $scope.makeUserMarker(userLatLng);
+      google.maps.event.addListener(map, 'click', function() {
+        infoWindow.close();
+      });    
+    }, function(err) {
+      console.log(JSON.stringify(err));
+    });
+
+    // var watchOptions = {timeout : 3000, enableHighAccuracy: false};
+    // var watch = $cordovaGeolocation.watchPosition(watchOptions);
+    // watch.then(
+    //   null,
+    //   function(err) {
+    //     console.log(err)
+    //   },
+    //   function(position) {
+    //     var userlat  = position.coords.latitude
+    //     var userlong = position.coords.longitude
+    //     userLatLng = new google.maps.LatLng(userlat, userlong);
+
+    //     $scope.makeUserMarker(userLatLng);
+    //     google.maps.event.addListener(map, 'click', function() {
+    //       infoWindow.close();
+    //     });    
+    //   }
+    // );
+    // watch.clearWatch();
+
+    $scope.makeUserMarker = function(userLatLng) {
+      userMarker = new google.maps.Marker({
+        map: $scope.map,
+        animation: google.maps.Animation.DROP,
+        position: userLatLng,
+        icon: '/img/bluecircle.png'
+      });      
+
+      google.maps.event.addListener(userMarker, 'click', function () {
+        infoWindow.setContent('<div id="iw-container">"You are here!"</div>');   
+        infoWindow.open($scope.map, userMarker);
+      });
+    }
+
+    var loc = location.getProperty();
+    var marker;
     $scope.makeMarker = function() {
-      //alertPopup.close();
-      var loc = location.getProperty();
-      var newLatLng; 
-      // call getter from factory
+      infoWindow.close();
+      if(marker != null)
+        marker.setMap(null);
+      var newLatLng;
       newLatLng = new google.maps.LatLng(loc.lat, loc.lng);
-      var marker = new google.maps.Marker({
+      marker = new google.maps.Marker({
         map: $scope.map,
         animation: google.maps.Animation.DROP,
         position: newLatLng
       });      
-      var infoWindow = new google.maps.InfoWindow({
-        content: "yo"
-      });
+
       google.maps.event.addListener(marker, 'click', function () {
+        infoWindow.setContent("<div class='bubble_content'><strong>"+loc.building+"</strong></br>" + loc.address + "</div>");
         infoWindow.open($scope.map, marker);
       });
+      loc.wasCalled = false;
+      $scope.map.setCenter(newLatLng);
     }
-    $scope.makeMarker();
+
+    $scope.$on('$ionicView.enter', function(){
+      if (loc.wasCalled == true) {
+        $scope.makeMarker();
+      }
+      $scope.makeUserMarker();
+    });
   })
 
 
@@ -41,8 +119,8 @@ angular.module('starter.controllers', [])
    *
    */
   .controller('EventsCtrl',
-    ['$scope', '$rootScope', '$ionicPopup', '$ionicScrollDelegate', '$timeout', '$ionicPosition', 'Events', 'Favorites', 'location', 
-      function($scope, $rootScope, $ionicPopup, $ionicScrollDelegate,  $timeout, $ionicPosition, Events, Favorites, location) {
+    ['$scope', '$rootScope', '$state', '$ionicPopup', '$ionicScrollDelegate', '$timeout', '$ionicPosition', 'Events', 'Favorites', 'location', 
+      function($scope, $rootScope, $state, $ionicPopup, $ionicScrollDelegate,  $timeout, $ionicPosition, Events, Favorites, location) {
 
         // Find first date to fetch if needed and populate list of events
         var dateID = Events.getCurrDateID();
@@ -75,7 +153,7 @@ angular.module('starter.controllers', [])
           $ionicScrollDelegate.$getByHandle('scrollview').scrollTo(eventPosition.left, eventPosition.top, true);
         };
 
-        // Make dynamic accordian list
+        // Make dynamic accordion list
         $scope.toggleGroup = function(group) {
           if (group.type != 'composite') {
             return; 
@@ -84,7 +162,7 @@ angular.module('starter.controllers', [])
           } else {
             setTimeout(function () {
               $scope.jumptoEvent(group);
-            }, 0160);
+            }, 0170);
             $scope.shownGroup = group;
           }
         };
@@ -111,18 +189,23 @@ angular.module('starter.controllers', [])
           }
         };
 
+        var alertPopup;
         // Display event info pop-up
         $scope.showAlert = function(event) {
           if (event.type == 'composite') 
             return;
-          var alertPopup = $ionicPopup.alert({
+          alertPopup = $ionicPopup.alert({
             title: event.title,
-            // factory set lat/lng
-            content: "<a href=\"#/tab/map\" ng-click='location.setProperty("+ event.lat + "," + event.lng + ")'>" + event.location + "</a><br><br>" + event.description ,
-            buttons: [{text: 'CLOSE',
-              type: 'button-positive'}]
+            scope: $scope,
+            content: "<button class='locationButton' ng-click='goToMap(" + event.lat + "," + event.lng + ", \"" + event.location +  "\", \"" + event.address + "\")'>" + event.location + "</button><br><br>" + event.description 
           });
-        };
+        }
+
+        $scope.goToMap = function(lat, lng, building, address) {
+          alertPopup.close();
+          location.setProperty(lat, lng, building, true, address);
+          $state.go("tab.map");
+        }
       }])
 
   /*
@@ -161,15 +244,13 @@ angular.module('starter.controllers', [])
     });
   })
 
-// Leftover from demo app - might revert to full screen event details page, so keeping it for now
-  .controller('EventDetailCtrl', function($scope, $stateParams, Events) {
-    $scope.event = Events.getEvent($stateParams.eventId);
-  })
 
-// To become coupons page controller
-  .controller('FavoritesCtrl', function($scope, Favorites) {
-    $scope.$on('$ionicView.enter', function() {
-      $scope.favs = Array.from(Favorites.get());
-    });
-  });
-
+// Documents controller
+  .controller('DocumentsCtrl', ['$scope', '$state', '$ionicScrollDelegate', 'Documents',
+    function($scope, $state, $ionicScrollDelegate, Documents)  {
+      $scope.$on('$ionicView.enter', function() {
+        Documents.get(function(docs) {
+          $scope.docs = docs;
+        });
+      });
+    }]);

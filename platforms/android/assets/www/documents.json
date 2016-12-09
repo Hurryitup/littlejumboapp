@@ -1,0 +1,18 @@
+[ {"id":"1",
+    "type": "standalone",
+    "title": "Boston Burger Company",
+    "address": "37 Davis Square, Somerville, MA 02144"
+    },
+
+    {"id":"2",
+    "type": "standalone",
+    "title": "Redbones Barbeque",
+    "address": "55 Chester Street, Somerville, MA 02144"
+    },
+
+    {"id":"3",
+    "type": "standalone",
+    "title": "Flatbread Company",
+    "address": "45 Day Street, Somerville, MA 02144"
+   }
+]
