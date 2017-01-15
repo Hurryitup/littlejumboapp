@@ -1,32 +1,64 @@
 extends layout
 
 block content
-	.container
-		.row
-			.col-md-6.col-md-offset-0
-				h1 Visiting Days
-				- var hasContent = days.length > 0
-				if hasContent
-					each value, day in days
-						.alert.alert-info
-							strong #{value.name}
-							-function prettyDate(dateString){
-							-var date = new Date(dateString);
-							-var d = date.getDate();
-							-var monthNames = [ "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" ];
-							-var m = monthNames[date.getMonth()];
-							-var y = date.getFullYear();
-							-return d+' '+m+' '+y;
-							-}
-							p #{prettyDate(value.date)}
-							p #{value._id}   #{value.__v}
-							form(method='POST', action='/api/delete_item', onsubmit="return deleteItem('" +"Visiting Day"+ "', this)")
-								button.btn.btn-danger.btn-primary.pull-right(type='button')
-									i.glyphicon.glyphicon-trash
-							button.btn.btn-default.btn-space.pull-right(type='button') Edit
-							if value.__v >= 0
-								input(type='checkbox', checked, data-toggle='toggle', data-on='Published', data-off='Unpublished')
-							else
-								input(type='checkbox', data-toggle='toggle', data-on='Published', data-off='Unpublished')
-				else
-					h1 Add some cool Visiting Days!
+    .container
+        -
+            function cleanName(name) {
+                // name = name.split('_').map(function (str) {return (str[0].toUpperCase() + str.slice(1))  }).join(' ');
+                name = name.replace('_', ' ');
+                return name;
+
+            }
+        .row
+            .page-header
+                h1.text-left Visiting Days
+        .row
+            .col-md-3
+            .col-md-9.col-md-offset-0
+                - var hasContent = days.length > 0
+                if hasContent
+                    each value, day in days
+                        .panel.panel-default
+                            .panel-body
+                                -function prettyDate(dateString){
+                                -var date = new Date(dateString);
+                                -var d = date.getDate();
+                                -var monthNames = [ "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" ];
+                                -var m = monthNames[date.getMonth()];
+                                -var y = date.getFullYear();
+                                -return d+' '+m+' '+y;
+                                -}
+                                each val, field in value
+                                    -var hidden = field[0] == '_'
+                                    if !hidden
+                                        .form-group
+                                            if val
+                                                case field
+                                                    when "name"
+                                                        h1
+                                                            strong
+                                                                input.editable(value=val)
+                                                    when "date"
+                                                        h3 
+                                                            input.editable(class="form-control", value=prettyDate(val))
+                                                    default
+                                                        label.text-capitalize #{cleanName(field)}
+                                                        each e, index in val
+                                                            .panel.panel-default
+                                                                .panel-body
+                                                                    h4= e.title
+                                                                    - console.log(e)
+                                                        else
+                                                            input.form-control.editable(name=field, value=val)
+                                    else 
+                                        input(type='hidden', name=field, value=val)
+                                form(method='POST', action='/api/delete_item', onsubmit="return deleteItem('" +"Visiting Day"+ "', this)")
+                                    button.btn.btn-danger.btn-primary.pull-right(type='button')
+                                        i.glyphicon.glyphicon-trash
+                                button.btn.btn-default.btn-space.pull-right(type='button') Edit
+                                if value.version >= 0
+                                    input(type='checkbox', checked, data-toggle='toggle', data-on='Published', data-off='Unpublished')
+                                else
+                                    input(type='checkbox', data-toggle='toggle', data-on='Published', data-off='Unpublished')
+                else
+                    h1 Add some cool Visiting Days!

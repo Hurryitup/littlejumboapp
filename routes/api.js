@@ -27,7 +27,7 @@ router.get('/visiting_days', function(req, res) {
             res.status(500).send('Database Error');
         }
         else {
-            res.json(days);
+            return res.json(days);
         }
     });
 });

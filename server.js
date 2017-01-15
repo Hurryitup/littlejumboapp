@@ -16,7 +16,7 @@ app.set('view engine', 'pug');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.use(express.static('./public'));
+app.use(express.static(__dirname + '/public'));
 
 app.use('/api', api);
 app.use('/backoffice', backoffice);
