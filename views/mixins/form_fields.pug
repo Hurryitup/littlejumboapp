@@ -24,10 +24,15 @@ mixin form_fields(schema)
           input.form-control(name=field, type='text', value='#3af')
           span.input-group-addon
             i
+    else if field == 'location_lat'
+      .form-group
+        .map(style='width: 500px; height: 400px')
+        input(type='hidden', name=field, id=field, data-format='Date')
+        input(type='hidden', name='location_long', id='location_long')
     else if value.type == 'String'
       .form-group
         label(for=field)= field_readable
-        input.form-control(type='text', name=field, id=field)
+        div.form-control(type='text', name=field, id=field)
     else if value.type == 'Date'
       .form-group
         label(for=field)= field_readable
