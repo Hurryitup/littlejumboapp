@@ -18,7 +18,11 @@ block content
                 - var hasContent = days.length > 0
                 if hasContent
                     each value, day in days
-                        .panel.panel-default
+                        .panel.panel-default(onclick="toggleExpand(this)")
+                            .panel-heading
+                                    h1
+                                        strong
+                                            input.editable(value=value.name)
                             .panel-body
                                 -function prettyDate(dateString){
                                 -var date = new Date(dateString);
@@ -35,9 +39,6 @@ block content
                                             if val
                                                 case field
                                                     when "name"
-                                                        h1
-                                                            strong
-                                                                input.editable(value=val)
                                                     when "date"
                                                         h3 
                                                             input.editable(class="form-control", value=prettyDate(val))

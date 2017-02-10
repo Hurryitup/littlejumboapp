@@ -68,3 +68,9 @@ function deleteItem(formName, form) {
 
     return false;
 }
+
+
+function toggleExpand (current) {
+    console.log(current);
+    $(current).next().slideDown();
+}
