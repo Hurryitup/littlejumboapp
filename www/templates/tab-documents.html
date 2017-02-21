@@ -10,18 +10,19 @@
       </div>
       <ion-list>
         <div ng-repeat="document in docs">
-          <ion-item class="item-borderless" >
-            <div class="row"> 
-              <div class="col col-70 left_column"> 
-                <div class="row responsive-sm item-text-wrap">
-                  <ion-avatar class="image">
-                  </ion-avatar>
-                  <h3 class="item_title">{{document.title}}</h3> 
-                  <p class="item_subtitle"> {{document.address}} &nbsp;
+          <!-- <ion-item class="list" > -->
+            <!-- <div class="row">  -->
+              <!-- <div class="col col-70 left_column">  -->
+                <!-- <div class="row responsive-sm item-text-wrap"> -->
+                  <a class="item item-thumbnail-left">
+                    <img src={{document.img}}>
+                    <h3 class="item_title">{{document.title}}</h3> 
+                    <p class="item_subtitle"> {{document.address}} &nbsp;
                   </p>
-                </div>
-              </div>
-            </ion-item>
+                  </a>
+                <!-- </div> -->
+              <!-- </div> -->
+            <!-- </ion-item> -->
           </div>
         </ion-list>
       </ion-content>

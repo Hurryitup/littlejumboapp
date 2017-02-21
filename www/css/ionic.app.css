@@ -10698,6 +10698,9 @@ a.button {
     -webkit-transform: translateX(-100%);
     transform: translateX(-100%); } }
 
+.card {
+  margin: 25px 10px !important; }
+
 .left_column {
   padding-top: 0px !important; }
 
@@ -10711,12 +10714,14 @@ a.button {
 .item_title {
   font-size: 16px !important;
   font-weight: 600 !important;
-  color: #231f20 !important; }
+  color: #231f20 !important;
+  vertical-align: middle; }
 
 .item_subtitle {
   font-size: 12px !important;
   color: #4d4d4e !important;
-  line-height: 15px; }
+  line-height: 15px;
+  vertical-align: middle; }
 
 .header_title {
   font-size: 16px !important;

@@ -1,3 +1,7 @@
+.card {
+  margin: 25px 10px !important;
+}
+
 .left_column {
   padding-top: 0px !important;
 }
@@ -15,12 +19,14 @@
   font-size: 16px !important;
   font-weight: 600 !important;
   color: $titlecolor !important;
+  vertical-align: middle;
 }
 
 .item_subtitle {
   font-size: 12px !important;
   color: $subtitlecolor !important;
   line-height: 15px;
+  vertical-align: middle;
 }
 
 .header_title {
