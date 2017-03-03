@@ -9,7 +9,7 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('polls', '0001_initial'),
+        ('backoffice', '0001_initial'),
     ]
 
     operations = [
@@ -42,6 +42,6 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='standardevent',
             name='visiting_day',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='polls.VisitingDay'),
+            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='backoffice.VisitingDay'),
         ),
     ]

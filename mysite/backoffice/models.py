@@ -13,12 +13,20 @@ class VisitingDay(models.Model):
     date = models.DateTimeField('date of event')
     def __str__(self):
         return self.name
+
+class Coupon(models.Model):
+    name = models.CharField(max_length=50)
+    description = models.CharField(max_length=255)
+    image = models.ImageField(upload_to="coupons")
+    def __str__(self):
+        return self.name
+
 class Event(models.Model):
     name = models.CharField(max_length=25)
     description = models.CharField(max_length = 255)
     start = models.DateTimeField()
     end = models.DateTimeField()
-    class Meta : 
+    class Meta :
         abstract = True
     def __str__(self):
         return self.name
@@ -56,11 +64,11 @@ class SingleEvent(Event):
         choices = COLORS
         """
     balloon_color = RGBColorField(blank=True, null=True)
-    address = models.CharField(max_length=255) 
+    address = models.CharField(max_length=255)
     location = PlainLocationField(based_fields=['address'], zoom=7)
     """
     visiting_day = models.ForeignKey(
-        VisitingDay, 
+        VisitingDay,
         on_delete=models.CASCADE,
     )
     """
@@ -79,11 +87,9 @@ class CompositeEvent (Event):
         VisitingDay,
         on_delete = models.CASCADE,
     )
-    
+
 class SubEvent(SingleEvent):
     composite_event = models.ForeignKey(
         CompositeEvent,
         on_delete = models.CASCADE,
     )
-    
-

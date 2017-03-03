@@ -9,7 +9,7 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('polls', '0007_auto_20170218_1404'),
+        ('backoffice', '0007_auto_20170218_1404'),
     ]
 
     operations = [

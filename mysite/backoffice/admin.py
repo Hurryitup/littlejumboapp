@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import VisitingDay, StandaloneEvent, CompositeEvent, SubEvent
+from .models import VisitingDay, StandaloneEvent, CompositeEvent, SubEvent, Coupon
 import nested_admin
 # Register your models here.
 
@@ -27,3 +27,4 @@ class VisitingDayAdmin(nested_admin.NestedModelAdmin):
 admin.site.register(VisitingDay, VisitingDayAdmin)
 admin.site.register(StandaloneEvent)
 admin.site.register(CompositeEvent, CompositeEventAdmin)
+admin.site.register(Coupon)

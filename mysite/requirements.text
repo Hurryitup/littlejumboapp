@@ -1,0 +1,11 @@
+appdirs==1.4.2
+Django==1.10.6
+django-colorful==1.2
+django-location-field==2.0.2
+django-nested-admin==3.0.13
+olefile==0.44
+packaging==16.8
+Pillow==4.0.0
+pyparsing==2.1.10
+python-monkey-business==1.0.0
+six==1.10.0

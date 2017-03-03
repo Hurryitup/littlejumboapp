@@ -34,7 +34,7 @@ INSTALLED_APPS = [
     'nested_admin',
     'colorful',
     'location_field.apps.DefaultConfig',
-    'polls.apps.PollsConfig',
+    'backoffice.apps.BackOfficeConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -122,3 +122,11 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
 
 STATIC_URL = '/static/'
+
+
+
+
+#GoogleMapsAPI
+
+from location_field import settings
+settings.LOCATION_FIELD['provider.google.api_key'] = 'AIzaSyCp0GNF8euqXxdbPgziuz_Up74ydS8cdS0'

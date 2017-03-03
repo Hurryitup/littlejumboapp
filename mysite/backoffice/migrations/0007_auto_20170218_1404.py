@@ -11,7 +11,7 @@ import location_field.models.plain
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('polls', '0006_auto_20170217_1737'),
+        ('backoffice', '0006_auto_20170217_1737'),
     ]
 
     operations = [
@@ -23,7 +23,7 @@ class Migration(migrations.Migration):
                 ('description', models.CharField(max_length=255)),
                 ('start', models.DateTimeField()),
                 ('end', models.DateTimeField()),
-                ('visiting_day', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='polls.VisitingDay')),
+                ('visiting_day', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='backoffice.VisitingDay')),
             ],
             options={
                 'abstract': False,
@@ -42,7 +42,7 @@ class Migration(migrations.Migration):
                 ('balloon_color', colorful.fields.RGBColorField()),
                 ('address', models.CharField(max_length=255)),
                 ('location', location_field.models.plain.PlainLocationField(max_length=63)),
-                ('visiting_day', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='polls.VisitingDay')),
+                ('visiting_day', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='backoffice.VisitingDay')),
             ],
             options={
                 'abstract': False,
@@ -61,7 +61,7 @@ class Migration(migrations.Migration):
                 ('balloon_color', colorful.fields.RGBColorField()),
                 ('address', models.CharField(max_length=255)),
                 ('location', location_field.models.plain.PlainLocationField(max_length=63)),
-                ('composite_event', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='polls.CompositeEvent')),
+                ('composite_event', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='backoffice.CompositeEvent')),
             ],
             options={
                 'abstract': False,

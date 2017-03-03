@@ -1,1 +1,9 @@
 platforms/android/.gradle/*
+*.pyc
+
+.DS_Store
+
+mysite/*.pyc
+mysite/*.pyc
+backoffice/*.pyc
+mysite/polls
