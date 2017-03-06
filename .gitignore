@@ -3,7 +3,4 @@ platforms/android/.gradle/*
 
 .DS_Store
 
-mysite/*.pyc
-mysite/*.pyc
-backoffice/*.pyc
-mysite/polls
+__pycache__

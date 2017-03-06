@@ -79,17 +79,20 @@ class SingleEvent(Event):
 class StandaloneEvent(SingleEvent):
     visiting_day = models.ForeignKey(
         VisitingDay,
+        related_name='standalone_events',
         on_delete = models.CASCADE,
     )
 
 class CompositeEvent (Event):
     visiting_day = models.ForeignKey(
         VisitingDay,
+        related_name='composite_events',
         on_delete = models.CASCADE,
     )
 
 class SubEvent(SingleEvent):
     composite_event = models.ForeignKey(
         CompositeEvent,
+        related_name='sub_events',
         on_delete = models.CASCADE,
     )

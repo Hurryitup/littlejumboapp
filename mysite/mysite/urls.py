@@ -20,5 +20,5 @@ urlpatterns = [
     url(r'^backoffice/', include('backoffice.urls')),
     url(r'^admin/', admin.site.urls),
     url(r'^nested_admin/', include('nested_admin.urls')),
-
+    url(r'^api/', include('api.urls')),
 ]
