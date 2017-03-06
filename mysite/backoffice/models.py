@@ -3,6 +3,8 @@ from colorful.fields import RGBColorField
 from django.db import models
 from django.utils import timezone
 from location_field.models.plain import PlainLocationField
+from django.conf.urls.static import static
+from django.conf import settings
 
 
 from django.db import models
@@ -17,7 +19,7 @@ class VisitingDay(models.Model):
 class Coupon(models.Model):
     name = models.CharField(max_length=50)
     description = models.CharField(max_length=255)
-    image = models.ImageField(upload_to="coupon_images")
+    image = models.ImageField(upload_to='coupon_images/')
     def __str__(self):
         return self.name
 
