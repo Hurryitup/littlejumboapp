@@ -1,6 +1,6 @@
 {
-  "name": "myApp",
-  "app_id": "0e9fdcb1",
+  "name": "Jumbo-Days-App",
+  "app_id": "81a30d64",
   "gulpStartupTasks": [
     "sass",
     "watch"
