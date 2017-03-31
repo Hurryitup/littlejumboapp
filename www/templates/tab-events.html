@@ -14,8 +14,8 @@
                   <div class="row"> 
                     <div class="col-40 left_column" ng-click="showAlert(event)"> 
                       <div class="row responsive-sm item-text-wrap">
-                        <p class="time">{{event.start}} - {{event.end}}</p>
-                        <p class="location">{{event.name}}</p>
+                        <p class="time">{{event.start_time}} - {{event.end_time}}</p>
+                        <p class="location">{{event.address}}</p>
                       </div>
                     </div> 
                     <div class="col col-50 right_column" ng-click="showAlert(event)"> 
@@ -29,7 +29,7 @@
                     </div>
                     <span ng-if="event.type == 'standalone'" ng-click="toggleFavorite(event, event.pk)" 
                                                              class="item-icon-right">
-                      <i id="fav_icon_{{event.pk}}" class="icon ion-android-star-outline icon-accessory star"></i>
+                      <i id="fav_icon_{{event.name}}_{{event.pk}}" class="icon ion-android-star-outline icon-accessory star"></i>
                     </span>
                   </div> 
                 </ion-item>
@@ -44,7 +44,7 @@
                     </div>
                   </div>
                   <span ng-click="toggleFavorite(subevent, subevent.pk)" class="item-icon-right">
-                    <i id="fav_icon_{{subevent.pk}}" class="icon ion-android-star-outline icon-accessory star"></i>
+                    <i id="fav_icon_{{subevent.name}}_{{subevent.pk}}" class="icon ion-android-star-outline icon-accessory star"></i>
                   </span>
                 </ion-item>
               </div>

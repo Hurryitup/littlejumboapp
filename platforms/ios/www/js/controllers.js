@@ -63,6 +63,7 @@ angular.module('starter.controllers', ['ngCordova'])
              
   $scope.makeMarker = function() {
     infoWindow.close();
+    console.log("in makeMarker");
     if(marker != null)
       marker.setMap(null);
     var newLatLng;
@@ -74,12 +75,12 @@ angular.module('starter.controllers', ['ngCordova'])
     });
 
     google.maps.event.addListener(marker, 'click', function () {
-      infoWindow.setContent("<div class='bubble_content'><strong>"+loc.building+"</strong></br>" + loc.address + "</div>");
+      infoWindow.setContent("<div class='bubble_content'><strong><a href='comgooglemaps://?center="+loc.lat + "," + loc.lng + "&zoom=16'>" + loc.address + "</a></strong></br></div>");
       infoWindow.open($scope.map, marker);
     });
              
     loc.wasCalled = false;
-             
+    
     $scope.map.setCenter(newLatLng);
   }
 
@@ -100,21 +101,21 @@ angular.module('starter.controllers', ['ngCordova'])
   function($scope, $rootScope, $state, $ionicPopup, $ionicScrollDelegate,  $timeout, $ionicPosition, Events, Favorites, location) {
 
   // Find the date to fetch if no date has been selected yet
-  var dateID = Events.getCurrDateID();
-  $scope.date = null;
-  if (dateID == null) {
-    var dates = Events.getDates();
-    $scope.date = dates[0];
-    dateID = $scope.date.event_id;
-  } else {
-    $scope.date = Events.getCurrDate();
-  }
+  if ($scope.dates == undefined) {
+    Events.getDates(function (dates) {
 
-  // Broadcast gotEvents to rootScope when event list populated
-  Events.get($scope.date, function(data) {
-    $scope.events = data;
-    $rootScope.$broadcast('gotEvents');
-  });
+      $scope.dates = dates;
+      $scope.date = undefined;
+      $scope.date = $scope.dates[0];
+
+      // Broadcast gotEvents to rootScope when event list populated
+      Events.get($scope.date, function(data) {
+        $scope.events = data;
+        $rootScope.$broadcast('gotEvents');
+      });
+    });
+  }
+  
 
   // Receive dateChanged event, repopulate event list
   // Broadcast gotEvents to rootScope when event list populated
@@ -128,28 +129,37 @@ angular.module('starter.controllers', ['ngCordova'])
 
   // On expandable item click - scroll list item to top
   $scope.jumptoEvent = function (event) {
-    var eventPosition = $ionicPosition.position(angular.element(document.getElementById('item_' + event.id)));
+    console.log("in jumptoEvent");
+    console.log(event)
+    var element = document.getElementById("item_" + event.pk);
+    console.log(element);
+    var eventPosition = $ionicPosition.position(angular.element(element));
     $ionicScrollDelegate.$getByHandle('scrollview').scrollTo(eventPosition.left, eventPosition.top, true);
   };
 
   // Make dynamic accordion list
   $scope.toggleGroup = function(group) {
+    console.log("in toggleGroup");
     if (group.type != 'composite') {
       return; 
     } else if ($scope.isGroupShown(group)) {
+      console.log("group was shown, changing to null");
       $scope.shownGroup = null;
     } else {
       // Delay to allow expanding animation to finish
       // Ideally they would happen at the same time but it gets buggy and the scroll doesnt work
+      console.log("no group shown, jumping to event, and setting shownGroup");
+      console.log(group);
       setTimeout(function () {
         $scope.jumptoEvent(group); 
+        console.log("should have jumped");
       }, 0170);
       $scope.shownGroup = group;
     }
   };
 
   $scope.isGroupShown = function(group) {
-    if ($scope.shownGroup === group && $scope.shownGroup.subevents) {
+    if ($scope.shownGroup === group && $scope.shownGroup.sub_events) {
       return true;
     }
   };
@@ -161,7 +171,7 @@ angular.module('starter.controllers', ['ngCordova'])
 
   // On star click - change in data and html
   $scope.toggleFavorite = function(event, event_id) {
-    html_id = "fav_icon_" + event_id;
+    html_id = "fav_icon_" + event.name + "_" + event_id;
     if (Favorites.has(event)) {
       // Could replace with jQuery
       document.getElementById(html_id).className = "icon ion-android-star-outline icon-accessory star";
@@ -178,17 +188,17 @@ angular.module('starter.controllers', ['ngCordova'])
     if (event.type == 'composite') 
       return;
     alertPopup = $ionicPopup.alert({
-      title: event.title,
+      title: event.name,
       buttons: [{text: 'Close'}],
       scope: $scope,
-      content: "<button class='locationButton' ng-click='goToMap(" + event.lat + "," + event.lng + ", \"" + event.location +  "\", \"" + event.address + "\")'>" + event.location + "</button><br><br>" + event.description 
+      content: "<button class='locationButton' ng-click='goToMap(" + event.lat + "," + event.lng + ", \"" + event.address + "\")'>" + event.address + "</button><br><br>" + event.description 
     });
   }
 
   // On click pop-up window location link
-  $scope.goToMap = function(lat, lng, building, address) {
+  $scope.goToMap = function(lat, lng, address) {
     alertPopup.close();
-    location.setProperty(lat, lng, building, true, address);
+    location.setProperty(lat, lng, address, true, address);
     $state.go("tab.map");
   }
 }])
