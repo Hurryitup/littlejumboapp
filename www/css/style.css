@@ -14,6 +14,12 @@
 h6 {
   font-weight: 400;
 }
+
+.separater {
+  width: 100px !important;
+  background-color: #EBEBEB;
+}
+
 .col {
   text-align: left;
 }

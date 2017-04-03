@@ -10854,3 +10854,19 @@ button {
   border-bottom: 1px solid #3366BB;
   cursor: pointer;
   color: #3366BB !important; }
+
+.scroll {
+  height: 100%; }
+
+#minimap {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 106%;
+  height: 32%; }
+
+.separater {
+  height: 2px;
+  width: 100%;
+  background-color: #E0E0E0;
+  margin-bottom: 3px; }

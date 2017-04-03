@@ -1,6 +1,48 @@
 angular.module('starter.controllers', ['ngCordova'])
 
 /*
+ * Event Detail Controller
+ */
+
+ .controller('EventDetailCtrl', ["$scope", "$state", "$stateParams", "$ionicHistory", "Favorites", "location", function($scope, $state, $stateParams, $ionicHistory, Favorites, location) {
+    var event = $stateParams.cEvent;
+    console.log(event);
+    $scope.event = event;
+    //var latLng = new google.maps.LatLng(event.lat, event.lng);        
+    var map = document.getElementById("minimap");
+    map.src = "https://maps.googleapis.com/maps/api/staticmap?center=" + event.lat + ","+  event.lng + "&zoom=16&size=" + map.width + "x" + map.height + "&style=element:labels|visibility:on&style=element:geometry.stroke&markers=color:blue|" + event.lat + "," + event.lng + "&key=AIzaSyCp0GNF8euqXxdbPgziuz_Up74ydS8cdS0";
+    $scope.goBack = function() {
+      $ionicHistory.goBack();
+      $scope.favs = Array.from(Favorites.get());
+    }
+
+    // On star click - change in data and html
+    $scope.toggleFavorite = function(event, event_id) {
+      html_id = "fav_icon_detail_" + event_id;
+      if (Favorites.has(event)) {
+        // Could replace with jQuery
+        document.getElementById(html_id).className = "icon ion-android-star-outline icon-accessory star";
+        Favorites.remove(event);
+      } else {
+        document.getElementById(html_id).className = "icon ion-android-star icon-accessory star";
+        Favorites.add(event);
+      }
+    };
+
+      $scope.isFavorited = function(event) {
+      var returned = Favorites.has(event);
+      console.log(returned);
+      return returned;
+    }
+    // On click pop-up window location link
+      $scope.goToMap = function() {
+        console.log("Going");
+        location.setProperty(event.lat, event.lng, event.location, true, event.address);
+        $state.go("tab.map");
+      }
+
+}])
+/*
  * Map Controller
  */
  .controller('MapCtrl', function($scope, $state, location, $cordovaGeolocation) {
@@ -15,6 +57,7 @@ angular.module('starter.controllers', ['ngCordova'])
   var mapOptions = {
     center: latLng,
     zoom: 16,
+    streetViewControl: false,
     mapTypeId: google.maps.MapTypeId.ROADMAP
   };          
 
@@ -101,8 +144,14 @@ angular.module('starter.controllers', ['ngCordova'])
  * Events Controller
  */
  .controller('EventsCtrl',
-  ['$scope', '$rootScope', '$state', '$ionicPopup', '$ionicScrollDelegate', '$timeout', '$ionicPosition', 'Events', 'Favorites', 'location', 
-  function($scope, $rootScope, $state, $ionicPopup, $ionicScrollDelegate,  $timeout, $ionicPosition, Events, Favorites, location) {
+  ['$scope', '$rootScope', '$state', '$ionicPopup', '$ionicScrollDelegate', '$timeout', '$ionicPosition', '$window', 'Events', 'Favorites', 'location', 
+  function($scope, $rootScope, $state, $ionicPopup, $ionicScrollDelegate,  $timeout, $ionicPosition, $window, Events, Favorites, location) {
+
+  $scope.isFavorited = function(event) {
+      var returned = Favorites.has(event);
+      console.log(returned);
+      return returned;
+    }
 
   // Find the date to fetch if no date has been selected yet
   var dateID = Events.getCurrDateID();
@@ -182,20 +231,31 @@ angular.module('starter.controllers', ['ngCordova'])
   $scope.showAlert = function(event) {
     if (event.type == 'composite') 
       return;
-    alertPopup = $ionicPopup.alert({
+    /*alertPopup = $ionicPopup.alert({
       title: event.title,
       buttons: [{text: 'Close'}],
       scope: $scope,
-      content: "<button class='locationButton' ng-click='goToMap(" + event.lat + "," + event.lng + ", \"" + event.location +  "\", \"" + event.address + "\")'>" + event.location + "</button><br><br>" + event.description 
-    });
+      content: "<button class='locationButton' ng-click='goToMap(" + event.lat + "," + event.lng + ", \"" + event.location +  "\", \"" + event.address + "\")'>" + event.location + "</button><button class='locationButton' ng-click='goToEvent('+ ')'> Details </button><br><br>" + event.description 
+    });*/
+    $state.go("tab.event-detail", {cEvent: event});
+
+  }
+
+  // On click pop-up window location link
+  $scope.goToEvent = function(event) {
+    alertPopup.close();
+    console.log("Going to event");
+    $state.go("tab.event-detail");
+    console.log("We should be there");
   }
 
   // On click pop-up window location link
   $scope.goToMap = function(lat, lng, building, address) {
-    alertPopup.close();
+    alertPopup.close(); 
     location.setProperty(lat, lng, building, true, address);
     $state.go("tab.map");
   }
+
 }])
 
 /*

@@ -1,0 +1,26 @@
+<ion-view title="Home">
+ <ion-content class="content has-header">
+    <img ng-click="goToMap()" id="minimap" data-tap-disabled="true"/>
+    <button class="button" style="background-color: transparent !important;" ng-click="goBack()">
+      <!-- <i id="fav_icon_1" class="icon ion-android-arrow-back" style="color : black;"></i> -->
+      <i id="fav_icon_1" class="icon ion-android-arrow-dropleft-circle" style="color : cornflowerblue;"></i>
+    </button>
+    <div style="padding: 20px; padding-top: 10px; margin-top: 35%">
+      <div>
+        <span style="float: right;" ng-click="toggleFavorite(event, event.id)">
+          <i id="fav_icon_detail_{{event.id}}" ng-class="(isFavorited(event)) ? 'icon ion-android-star icon-accessory star' : 'icon ion-android-star-outline icon-accessory star'" style="font-size: 35px !important;"></i>
+        </span>
+        <h2 style="margin-bottom: 0px"><strong>{{event.title}}</strong></h2>
+      </div>
+      <h5 style="margin-top: 0px" ng-click="goToMap()">{{event.location}} </h5>    
+      <div class="separater"></div>
+      
+      <p style="text-align:left;">
+      <strong> Today
+        <span style="float: right;">10:00am - 5:00pm</span>
+      </strong>
+      </p>
+      <p>{{event.description}}</p>
+    </div>
+ </ion-content>
+</ion-view>

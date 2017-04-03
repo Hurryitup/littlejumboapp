@@ -38,6 +38,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
   // Each state's controller can be found in controllers.js
   $stateProvider
 
+
   // setup an abstract state for the tabs directive
     .state('tab', {
     url: '/tab',
@@ -46,7 +47,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
   })
 
   // Each tab has its own nav history stack:
-
 
   .state('tab.events', {
       url: '/events',
@@ -58,15 +58,18 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
       }
     })
 
-    .state('tab.event-detail', {
-      url: '/events/:eventId',
+  .state('tab.event-detail', {
+      url: '/event-detail/',
+      params: {
+          cEvent: null
+      },
       views: {
         'tab-events': {
           templateUrl: 'templates/event-detail.html',
           controller: 'EventDetailCtrl'
         }
       }
-    })
+  })
 
   .state('tab.map', {
     url: '/map',
