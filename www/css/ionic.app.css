@@ -10698,8 +10698,16 @@ a.button {
     -webkit-transform: translateX(-100%);
     transform: translateX(-100%); } }
 
+#doc-list {
+  position: relative;
+  padding-top: 40%;
+  padding-bottom: 12% !important; }
+
 .card {
-  margin: 25px 10px !important; }
+  position: fixed;
+  margin: 70px 10px 10px 10px !important;
+  z-index: 1;
+  opacity: 0.9; }
 
 .left_column {
   padding-top: 0px !important; }
@@ -10746,6 +10754,14 @@ a.button {
 
 .tab-item.active, .tab-item.activated, .tab-item-active {
   font-family: "Karla", sans-serif; }
+
+.scroll-content {
+  background-image: url("../img/jumbo_logo.png");
+  background-repeat: no-repeat;
+  background-position: center; }
+
+.list {
+  opacity: 0.9; }
 
 .date-item {
   color: #444; }

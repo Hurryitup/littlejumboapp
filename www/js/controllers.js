@@ -46,9 +46,9 @@ angular.module('starter.controllers', ['ngCordova'])
  * Map Controller
  */
  .controller('MapCtrl', function($scope, $state, location, $cordovaGeolocation) {
+
   var options = {timeout: 10000, enableHighAccuracy: true};
   var latLng = new google.maps.LatLng(42.4075, -71.1190);
-
   var posOptions = {
     enableHighAccuracy: false,
     timeout: 100000,
@@ -61,58 +61,52 @@ angular.module('starter.controllers', ['ngCordova'])
     mapTypeId: google.maps.MapTypeId.ROADMAP
   };          
 
-  var map = new google.maps.Map(document.getElementById("map"), mapOptions);         
-  $scope.map = map;
-
-  var userMarker;
-  var infoWindow = new google.maps.InfoWindow();
-  $scope.makeUserMarker = function(userLatLng) {
-    userMarker = new google.maps.Marker({
-      map: $scope.map,
-      animation: google.maps.Animation.DROP,
-      position: userLatLng
-    });      
-
-    google.maps.event.addListener(userMarker, 'click', function () {
-      infoWindow.setContent('<div class="bubble_content">You are here!</div>');   
-      infoWindow.open($scope.map, userMarker);
-    });
+  if ($scope.map == undefined){
+    var map = new google.maps.Map(document.getElementById("map"), mapOptions);         
+    $scope.map = map;
   }
 
-  $cordovaGeolocation.getCurrentPosition(posOptions).then(function (position) {
-    console.log("GotPosition");
-    var userlat  = position.coords.latitude;
-    var userlong = position.coords.longitude;
-    console.log("Position: ", userlat, ", ", userlong);
-
-    userLatLng = new google.maps.LatLng(userlat, userlong);
-
-    $scope.makeUserMarker(userLatLng);
-    google.maps.event.addListener(map, 'click', function() {
-      infoWindow.close();
-    });    
-  }, function(err) {
-    console.log(JSON.stringify(err));
-  });
-
+  var infoWindow = new google.maps.InfoWindow();
+             
   $scope.makeUserMarker = function(userLatLng) {
     userMarker = new google.maps.Marker({
       map: $scope.map,
       animation: google.maps.Animation.DROP,
       position: userLatLng,
-      icon: '/img/bluecircle.png'
-    });      
-
+      icon: './img/bluecircle.png'
+    });
+          
     google.maps.event.addListener(userMarker, 'click', function () {
-      infoWindow.setContent('<div id="iw-container">"You are here!"</div>');   
+      infoWindow.setContent('<div class="bubble_content">You are here!</div>');   
       infoWindow.open($scope.map, userMarker);
     });
-  }
+                                                          
+    google.maps.event.addListener(map, 'click', function() {
+      infoWindow.close();
+    });    
+
+  };
+
+  $cordovaGeolocation.getCurrentPosition(posOptions).then(function (position) {
+    var userlat  = position.coords.latitude;
+    var userlong = position.coords.longitude;
+                                                          
+    var userLatLng = new google.maps.LatLng(userlat, userlong);
+
+    $scope.makeUserMarker(userLatLng);
+    
+  }, function(err) {
+    console.log(JSON.stringify(err));
+  });
+
+  
 
   var loc = location.getProperty();
   var marker;
+             
   $scope.makeMarker = function() {
     infoWindow.close();
+    console.log("in makeMarker");
     if(marker != null)
       marker.setMap(null);
     var newLatLng;
@@ -121,13 +115,15 @@ angular.module('starter.controllers', ['ngCordova'])
       map: $scope.map,
       animation: google.maps.Animation.DROP,
       position: newLatLng
-    });      
+    });
 
     google.maps.event.addListener(marker, 'click', function () {
-      infoWindow.setContent("<div class='bubble_content'><strong>"+loc.building+"</strong></br>" + loc.address + "</div>");
+      infoWindow.setContent("<div class='bubble_content'><strong><a href='comgooglemaps://?center="+loc.lat + "," + loc.lng + "&zoom=16'>" + loc.address + "</a></strong></br></div>");
       infoWindow.open($scope.map, marker);
     });
+             
     loc.wasCalled = false;
+    
     $scope.map.setCenter(newLatLng);
   }
 
@@ -135,7 +131,7 @@ angular.module('starter.controllers', ['ngCordova'])
     if (loc.wasCalled == true) {
       $scope.makeMarker();
     }
-    $scope.makeUserMarker();
+   // $scope.makeUserMarker();
   });
 })
 
@@ -154,26 +150,26 @@ angular.module('starter.controllers', ['ngCordova'])
     }
 
   // Find the date to fetch if no date has been selected yet
-  var dateID = Events.getCurrDateID();
-  $scope.date = null;
-  if (dateID == null) {
-    var dates = Events.getDates();
-    $scope.date = dates[0];
-    dateID = $scope.date.event_id;
-  } else {
-    $scope.date = Events.getCurrDate();
-  }
+  if ($scope.dates == undefined) {
+    Events.getDates(function (dates) {
 
-  // Broadcast gotEvents to rootScope when event list populated
-  Events.get($scope.date, function(data) {
-    $scope.events = data;
-    $rootScope.$broadcast('gotEvents');
-  });
+      $scope.dates = dates;
+      $scope.date = undefined;
+      $scope.date = $scope.dates[0];
+
+      // Broadcast gotEvents to rootScope when event list populated
+      Events.get($scope.date, function(data) {
+        $scope.events = data;
+        $rootScope.$broadcast('gotEvents');
+      });
+    });
+  }
+  
 
   // Receive dateChanged event, repopulate event list
   // Broadcast gotEvents to rootScope when event list populated
   $scope.$on('dateChanged', function(event, date) {
-    console.log("felt the click");
+    Events.deactivateAllDates(date);
     Events.get(date, function(data) {
       $scope.events = data;
       $rootScope.$broadcast('gotEvents');
@@ -182,12 +178,14 @@ angular.module('starter.controllers', ['ngCordova'])
 
   // On expandable item click - scroll list item to top
   $scope.jumptoEvent = function (event) {
-    var eventPosition = $ionicPosition.position(angular.element(document.getElementById('item_' + event.id)));
+    var element = document.getElementById("item_" + event.pk);
+    var eventPosition = $ionicPosition.position(angular.element(element));
     $ionicScrollDelegate.$getByHandle('scrollview').scrollTo(eventPosition.left, eventPosition.top, true);
   };
 
   // Make dynamic accordion list
   $scope.toggleGroup = function(group) {
+    console.log("in toggleGroup");
     if (group.type != 'composite') {
       return; 
     } else if ($scope.isGroupShown(group)) {
@@ -196,33 +194,37 @@ angular.module('starter.controllers', ['ngCordova'])
       // Delay to allow expanding animation to finish
       // Ideally they would happen at the same time but it gets buggy and the scroll doesnt work
       setTimeout(function () {
-        $scope.jumptoEvent(group); 
+        $scope.jumptoEvent(group);
       }, 0170);
       $scope.shownGroup = group;
     }
   };
 
   $scope.isGroupShown = function(group) {
-    if ($scope.shownGroup === group && $scope.shownGroup.subevents) {
+    if ($scope.shownGroup === group && $scope.shownGroup.sub_events) {
       return true;
     }
   };
 
   // On favorites tab bar clicked
   $scope.refreshFavorites = function() {
-    $scope.favs = Array.from(Favorites.get());
+    var currentVisitingDay = $scope.date.standalone_events[0].visiting_day;
+    console.log("refreshFavorites cvd:" + currentVisitingDay);
+    $scope.favs = Favorites.get(currentVisitingDay);
   };
 
   // On star click - change in data and html
   $scope.toggleFavorite = function(event, event_id) {
-    html_id = "fav_icon_" + event_id;
+    html_id = "fav_icon_" + event.name + "_" + event_id;
     if (Favorites.has(event)) {
       // Could replace with jQuery
       document.getElementById(html_id).className = "icon ion-android-star-outline icon-accessory star";
       Favorites.remove(event);
+      console.log("---------------");
     } else {
       document.getElementById(html_id).className = "icon ion-android-star icon-accessory star";
       Favorites.add(event);
+      console.log("---------------");
     }
   };
 
@@ -231,27 +233,16 @@ angular.module('starter.controllers', ['ngCordova'])
   $scope.showAlert = function(event) {
     if (event.type == 'composite') 
       return;
-    /*alertPopup = $ionicPopup.alert({
-      title: event.title,
-      buttons: [{text: 'Close'}],
-      scope: $scope,
-      content: "<button class='locationButton' ng-click='goToMap(" + event.lat + "," + event.lng + ", \"" + event.location +  "\", \"" + event.address + "\")'>" + event.location + "</button><button class='locationButton' ng-click='goToEvent('+ ')'> Details </button><br><br>" + event.description 
-    });*/
     $state.go("tab.event-detail", {cEvent: event});
-
   }
 
   // On click pop-up window location link
   $scope.goToEvent = function(event) {
-    alertPopup.close();
-    console.log("Going to event");
     $state.go("tab.event-detail");
-    console.log("We should be there");
   }
 
   // On click pop-up window location link
   $scope.goToMap = function(lat, lng, building, address) {
-    alertPopup.close(); 
     location.setProperty(lat, lng, building, true, address);
     $state.go("tab.map");
   }
@@ -272,7 +263,7 @@ angular.module('starter.controllers', ['ngCordova'])
   $scope.changeDate = function(date) {
     $scope.modal.hide();
     $rootScope.$broadcast('dateChanged', date);
-  }
+  };
 
   $scope.$on('gotEvents', function(event) {
     $scope.currentDate = Events.getCurrDate();

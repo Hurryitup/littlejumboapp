@@ -10,41 +10,41 @@
                 <ion-item class="item-stable" 
                           ng-click="toggleGroup(event)" 
                           ng-class="{active: isGroupShown(event)}"
-                          id="item_{{event.id}}">
+                          id="item_{{event.pk}}">
                   <div class="row"> 
                     <div class="col-40 left_column" ng-click="showAlert(event)"> 
                       <div class="row responsive-sm item-text-wrap">
-                        <p class="time">{{event.time_start}} - {{event.time_end}}</p>
-                        <p class="location">{{event.location}}</p>
+                        <p class="time">{{event.start_time}} - {{event.end_time}}</p>
+                        <p class="location">{{event.address}}</p>
                       </div>
                     </div> 
                     <div class="col col-50 right_column" ng-click="showAlert(event)"> 
                       <div class="row responsive-sm item-text-wrap">
-                        <h3 class="item_title">{{event.title}}</h3> 
-                        <p class="item_subtitle" ng-class="{'expandable': event.subevents}">{{event.subtitle}} &nbsp;
+                        <h3 class="item_title">{{event.name}}</h3>
+                        <p class="item_subtitle" ng-class="{'expandable': event.sub_events}">{{event.description}} &nbsp;
                         <i ng-if="event.type == 'composite'" class="icon" 
                                                              ng-class="(isGroupShown(event)) ? 'ion-chevron-up' : 'ion-chevron-down' "></i>
                         </p>
                       </div>
                     </div>
-                    <span ng-if="event.type == 'standalone'" ng-click="toggleFavorite(event, event.id)" 
+                    <span ng-if="event.type == 'standalone'" ng-click="toggleFavorite(event, event.pk)" 
                                                              class="item-icon-right">
-                      <i id="fav_icon_{{event.id}}" class="icon ion-android-star-outline icon-accessory star"></i>
+                      <i id="fav_icon_{{event.name}}_{{event.pk}}" class="icon ion-android-star-outline icon-accessory star"></i>
                     </span>
                   </div> 
                 </ion-item>
                 <ion-item class="item-accordion" 
-                          ng-repeat="subevent in event.subevents"
+                          ng-repeat="subevent in event.sub_events"
                           ng-show="isGroupShown(event)">
                   <div  ng-click="showAlert(subevent)">
                     <div class="subevent_item">
-                    <p class="subevent_title">{{subevent.title}}</p>
-                    <p class="subevent_location">{{subevent.location}}</p>
-                    <p class="subevent_professor">{{subevent.professor}} </p>
+                    <p class="subevent_title">{{subevent.name}}</p>
+                    <p class="subevent_location">{{subevent.address}}</p>
+                    <p class="subevent_professor">{{subevent.coordinator}} </p>
                     </div>
                   </div>
-                  <span ng-click="toggleFavorite(subevent, subevent.id)" class="item-icon-right">
-                    <i id="fav_icon_{{subevent.id}}" class="icon ion-android-star-outline icon-accessory star"></i>
+                  <span ng-click="toggleFavorite(subevent, subevent.pk)" class="item-icon-right">
+                    <i id="fav_icon_{{subevent.name}}_{{subevent.pk}}" class="icon ion-android-star-outline icon-accessory star"></i>
                   </span>
                 </ion-item>
               </div>
@@ -60,9 +60,9 @@
               <ion-item class="fav_item" ng-repeat="event in favs">
                 <div  ng-click="showAlert(event)">
                   <div class="subevent_item">
-                  <p ng-if="event.title" class="subevent_title">{{event.title}}</p>
-                  <p ng-if="event.location" class="subevent_location">{{event.location}}</p>
-                  <p ng-if="event.professor" class="subevent_professor">{{event.professor}} </p>
+                  <p ng-if="event.name" class="subevent_title">{{event.name}}</p>
+                  <p ng-if="event.address" class="subevent_location">{{event.address}}</p>
+                  <p ng-if="event.coordinator" class="subevent_professor">{{event.coordinator}} </p>
                   </div>
                 </div>
               </ion-item>
