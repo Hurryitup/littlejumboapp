@@ -190,6 +190,8 @@ angular.module('starter.services', [])
 
   function has (favorites, event) {
     for (i in favorites) {
+      console.log(i);
+      console.log(favorites[i]);
       if (event_equals(favorites[i], event)) {
         return true;
       }
@@ -197,13 +199,14 @@ angular.module('starter.services', [])
     return false;
   }
 
-  function add (favorites, event) {
+  function add_favorite (favorites, event) {
     if (has(favorites, event)) {
       return;
     }
     else {
       favorites.push(event);
     }
+    window.localStorage.setItem(currentVisitingDay, favorites);
   }
 
   function delete_favorite(favorites, event) {
@@ -224,7 +227,8 @@ angular.module('starter.services', [])
   return {
     get: function(requestedDay) {
       console.log("in get");
-      currentVisitingDay = requestedDay
+      currentVisitingDay = requestedDay;
+      console.log(window.localStorage.getItem(currentVisitingDay));
       if (window.localStorage.getItem(currentVisitingDay)) {
         favorites = JSON.parse(window.localStorage.getItem(currentVisitingDay));
         console.log("favs existed");
@@ -233,41 +237,38 @@ angular.module('starter.services', [])
         console.log("favs didn't exist");
         favorites = [];
       }
+      console.log(favorites);
       return favorites;
     },
 
     add: function(event) {
       var event_to_add = makeParedEvent(event);
       console.log("in add");
-      if (currentVisitingDay == event.visiting_day) {
-        console.log("in currentVisitingDay");
-        console.log("adding to favs set");
-        console.log(favorites);
-        // console.log(favorites.delete_favorite(event)  );
-        if (window.localStorage.getItem(event.visiting_day)) {
-          console.log("favs existed");
-          favorites = JSON.parse(window.localStorage.getItem(event.visiting_day));
-        }
-        else {
-          console.log("favs didn't exist");
-          favorites = [];
-        }
-        console.log(has(favorites, event_to_add));
-        add(favorites, event_to_add);
-      }
-      else {
-        if (window.localStorage.getItem(event.visiting_day)) {
-          console.log("favs existed");
-          favorites = JSON.parse(window.localStorage.getItem(event.visiting_day));
-        }
-        else {
-          console.log("favs didn't exist");
-          favorites = []
-        }
-        add(favorites, event_to_add);
+      console.log("favorites: " + favorites);
+      console.log(event);
+      if (currentVisitingDay != event.visiting_day) {
+        console.log("not in currentVisitingDay, saving and changing from " + currentVisitingDay + "to " + event.visiting_day);
+        window.localStorage.setItem(currentVisitingDay, favorites)
         currentVisitingDay = event.visiting_day;
       }
+      //
+      else {
+        console.log("already in currentVisitingDay: " + currentVisitingDay);
+      }
+      //
+      if (window.localStorage.getItem(currentVisitingDay)) {
+        console.log("persisted favs existed = " + window.localStorage.getItem(currentVisitingDay));
+        favorites = JSON.parse(window.localStorage.getItem(currentVisitingDay));
+      }
+      else {
+        console.log("favs didn't exist");
+        favorites = [];
+      }
+      console.log(has(favorites, event_to_add));
+      add_favorite(favorites, event_to_add);
+      console.log("cvd: " + currentVisitingDay + " favorites: " + JSON.stringify(favorites));
       window.localStorage.setItem(currentVisitingDay, JSON.stringify(favorites));
+      console.log("saved favorites, leaving add");
       return true;
     },
 

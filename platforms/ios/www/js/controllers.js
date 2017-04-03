@@ -129,10 +129,7 @@ angular.module('starter.controllers', ['ngCordova'])
 
   // On expandable item click - scroll list item to top
   $scope.jumptoEvent = function (event) {
-    console.log("in jumptoEvent");
-    console.log(event)
     var element = document.getElementById("item_" + event.pk);
-    console.log(element);
     var eventPosition = $ionicPosition.position(angular.element(element));
     $ionicScrollDelegate.$getByHandle('scrollview').scrollTo(eventPosition.left, eventPosition.top, true);
   };
@@ -143,16 +140,12 @@ angular.module('starter.controllers', ['ngCordova'])
     if (group.type != 'composite') {
       return; 
     } else if ($scope.isGroupShown(group)) {
-      console.log("group was shown, changing to null");
       $scope.shownGroup = null;
     } else {
       // Delay to allow expanding animation to finish
       // Ideally they would happen at the same time but it gets buggy and the scroll doesnt work
-      console.log("no group shown, jumping to event, and setting shownGroup");
-      console.log(group);
       setTimeout(function () {
-        $scope.jumptoEvent(group); 
-        console.log("should have jumped");
+        $scope.jumptoEvent(group);
       }, 0170);
       $scope.shownGroup = group;
     }
@@ -166,7 +159,8 @@ angular.module('starter.controllers', ['ngCordova'])
 
   // On favorites tab bar clicked
   $scope.refreshFavorites = function() {
-    $scope.favs = Array.from(Favorites.get());
+    var currentVisitingDay = $scope.date.standalone_events[0].visiting_day;
+    $scope.favs = Favorites.get(currentVisitingDay);
   };
 
   // On star click - change in data and html
@@ -176,9 +170,11 @@ angular.module('starter.controllers', ['ngCordova'])
       // Could replace with jQuery
       document.getElementById(html_id).className = "icon ion-android-star-outline icon-accessory star";
       Favorites.remove(event);
+      console.log("---------------");
     } else {
       document.getElementById(html_id).className = "icon ion-android-star icon-accessory star";
       Favorites.add(event);
+      console.log("---------------");
     }
   };
 

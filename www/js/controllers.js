@@ -160,6 +160,7 @@ angular.module('starter.controllers', ['ngCordova'])
   // On favorites tab bar clicked
   $scope.refreshFavorites = function() {
     var currentVisitingDay = $scope.date.standalone_events[0].visiting_day;
+    console.log("refreshFavorites cvd:" + currentVisitingDay);
     $scope.favs = Favorites.get(currentVisitingDay);
   };
 

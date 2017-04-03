@@ -164,24 +164,162 @@ angular.module('starter.services', [])
  * Favorites factory
  */
 .factory('Favorites', function() {
-  var favorites = new Set();
+  var favorites = [];
+
+  function makeParedEvent (event) {
+    return {
+      "name" : event.name,
+      "address" : event.address,
+      "coordinator": event.coordinator,
+      "type": event.type,
+      "lat": event.lat,
+      "lng": event.lng,
+      "description": event.description
+    };
+  }
+
+  function event_equals(e1, e2) {
+    return e1.name === e2.name 
+           && e1.address === e2.address
+           && e1.coordinator === e2.coordinator
+           && e1.type === e2.type
+           && e1.lat === e2.lat
+           && e1.lng === e2.lng
+           && e1.description === e2.description;
+  }
+
+  function has (favorites, event) {
+    for (i in favorites) {
+      if (event_equals(favorites[i], event)) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  function add (favorites, event) {
+    if (has(favorites, event)) {
+      return;
+    }
+    else {
+      favorites.push(event);
+    }
+  }
+
+  function delete_favorite(favorites, event) {
+    for (var i = favorites.length - 1; i >= 0; i--) {
+      if(event_equals(favorites[i], event)) {
+        favorites.splice(i, 1);
+        return;
+      }
+    };
+  }
+
+  // remove later
+  window.localStorage.clear();
+  //
+
+  var currentVisitingDay;
+
   return {
-    get: function() {
+    get: function(requestedDay) {
+      console.log("in get");
+      currentVisitingDay = requestedDay
+      if (window.localStorage.getItem(currentVisitingDay)) {
+        favorites = JSON.parse(window.localStorage.getItem(currentVisitingDay));
+        console.log("favs existed");
+      }
+      else {
+        console.log("favs didn't exist");
+        favorites = [];
+      }
       return favorites;
     },
 
     add: function(event) {
-      favorites.add(event);
+      var event_to_add = makeParedEvent(event);
+      console.log("in add");
+      if (currentVisitingDay == event.visiting_day) {
+        console.log("in currentVisitingDay");
+        console.log("adding to favs set");
+        console.log(favorites);
+        // console.log(favorites.delete_favorite(event)  );
+        if (window.localStorage.getItem(event.visiting_day)) {
+          console.log("favs existed");
+          favorites = JSON.parse(window.localStorage.getItem(event.visiting_day));
+        }
+        else {
+          console.log("favs didn't exist");
+          favorites = [];
+        }
+        console.log(has(favorites, event_to_add));
+        add(favorites, event_to_add);
+      }
+      else {
+        if (window.localStorage.getItem(event.visiting_day)) {
+          console.log("favs existed");
+          favorites = JSON.parse(window.localStorage.getItem(event.visiting_day));
+        }
+        else {
+          console.log("favs didn't exist");
+          favorites = []
+        }
+        add(favorites, event_to_add);
+        currentVisitingDay = event.visiting_day;
+      }
+      window.localStorage.setItem(currentVisitingDay, JSON.stringify(favorites));
       return true;
     },
 
     remove: function(event) {
-      favorites.delete(event);
+      var event_to_remove = makeParedEvent(event);
+      if (currentVisitingDay == event.visiting_day) {
+        delete_favorite(favorites, event_to_remove);
+        window.localStorage.setItem(currentVisitingDay, JSON.stringify([...favorites]));
+      }
+      else {
+        if (window.localStorage.getItem(event.visiting_day)) {
+          favorites = JSON.parse(window.localStorage.getItem(event.visiting_day));
+          delete_favorite(favorites, event_to_remove);
+          window.localStorage.setItem(currentVisitingDay, JSON.stringify(favorites));
+        }
+      }
+      currentVisitingDay = event.visiting_day;
       return true;
     },
 
     has: function(event) {
-      return favorites.has(event);
+      var event_to_check = makeParedEvent(event);
+      console.log("in has");
+      if (currentVisitingDay == event.visiting_day) {
+        console.log("on currentVisitingDay");
+        if (window.localStorage.getItem(currentVisitingDay)) {
+          console.log("favs existed");
+          favorites = JSON.parse(window.localStorage.getItem(currentVisitingDay));
+        }
+        else {
+          console.log("favs didn't exist");
+          console.log("---------------");
+          return false;
+        }
+      }
+      else {
+        currentVisitingDay = event.visiting_day;
+        console.log("changed currentVisitingDay")
+        if (window.localStorage.getItem(event.visiting_day)) {
+          console.log("favs existed")
+          favorites = JSON.parse(window.localStorage.getItem(event.visiting_day));
+        }
+        else {
+          console.log("favs didn't exist");
+          console.log("---------------");
+          return false;
+        }
+      }
+      console.log(favorites);
+      console.log(has(favorites, event_to_check));
+      console.log("---------------");
+      return has(favorites, event_to_check);
     }
   }
 })
