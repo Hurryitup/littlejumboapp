@@ -44,6 +44,29 @@ angular.module('starter.services', [])
     event["lng"] = parseFloat(latlong[1]);
   }
 
+  function enrich_shownTime(event, dayDiff) {
+    var now = new Date();
+    time_string_arr = event["start"].split(":");
+    parsed_hour = parseInt(time_string_arr[0]);
+    var hours_diff = parsed_hour - now.getHours();
+    if (dayDiff == 0) {
+      //Today
+      if (hours_diff < 0) {
+      event["shownTime"] = "Already Started";
+      } else if (hours_diff <= 2) {
+        event["shownTime"] = "Starting Soon";
+      } else {
+        event["shownTime"] = "Today";
+      }
+    } else if (dayDiff == 1) {
+      event["shownTime"] = "Tomorrow";
+    } else if (dayDiff < 0) {
+      event["shownTime"] = (-1*dayDiff).toString() + " days ago";
+    } else {
+      event["shownTime"] = "In " + dayDiff.toString() + " days";
+    }
+  }
+
   function conditionally_add_am_pm(event, start_or_end) {
     time_string_arr = event[start_or_end].split(":");
     parsed_hour = parseInt(time_string_arr[0]);
@@ -67,10 +90,14 @@ angular.module('starter.services', [])
   }
 
   function enrich(date) {
+    var today = new Date();
+    var day = new Date(Date.parse(date.date)); //Sorry
+    var dayDiff = Math.ceil((day - today)/(86400000)); //get difference in days
     for (var i = 0; i < date["events"].length; i++) {
       event = (date["events"])[i];
       // format time for front end
       enrich_event_times(event);
+      enrich_shownTime(event, dayDiff);
 
       // populate 'type' field
       if (event["sub_events"]) {
@@ -88,6 +115,7 @@ angular.module('starter.services', [])
         nested = event["sub_events"];
         nested.forEach(function (sub_event) {
           enrich_lat_long(sub_event);
+          enrich_shownTime(sub_event, dayDiff);
         });
       }
     }
@@ -174,7 +202,8 @@ angular.module('starter.services', [])
       "type": event.type,
       "lat": event.lat,
       "lng": event.lng,
-      "description": event.description
+      "description": event.description,
+      "visiting_day" : event.visiting_day
     };
   }
 
@@ -190,8 +219,6 @@ angular.module('starter.services', [])
 
   function has (favorites, event) {
     for (i in favorites) {
-      console.log(i);
-      console.log(favorites[i]);
       if (event_equals(favorites[i], event)) {
         return true;
       }
@@ -291,16 +318,13 @@ angular.module('starter.services', [])
 
     has: function(event) {
       var event_to_check = makeParedEvent(event);
-      console.log("in has");
       if (currentVisitingDay == event.visiting_day) {
-        console.log("on currentVisitingDay");
         if (window.localStorage.getItem(currentVisitingDay)) {
           console.log("favs existed");
           favorites = JSON.parse(window.localStorage.getItem(currentVisitingDay));
         }
         else {
           console.log("favs didn't exist");
-          console.log("---------------");
           return false;
         }
       }
@@ -313,13 +337,12 @@ angular.module('starter.services', [])
         }
         else {
           console.log("favs didn't exist");
-          console.log("---------------");
           return false;
         }
       }
-      console.log(favorites);
-      console.log(has(favorites, event_to_check));
-      console.log("---------------");
+      // console.log(favorites);
+      // console.log(has(favorites, event_to_check));
+      // console.log("---------------");
       return has(favorites, event_to_check);
     }
   }

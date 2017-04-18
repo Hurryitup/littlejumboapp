@@ -29,7 +29,7 @@
                     </div>
                     <span ng-if="event.type == 'standalone'" ng-click="toggleFavorite(event, event.pk)" 
                                                              class="item-icon-right">
-                      <i id="fav_icon_{{event.name}}_{{event.pk}}" class="icon ion-android-star-outline icon-accessory star"></i>
+                      <i id="fav_icon_{{event.name}}_{{event.pk}}" ng-class="(!isFavorited(event)) ? 'icon ion-android-star-outline icon-accessory star' : 'icon ion-android-star icon-accessory star'"></i>
                     </span>
                   </div> 
                 </ion-item>
@@ -44,7 +44,7 @@
                     </div>
                   </div>
                   <span ng-click="toggleFavorite(subevent, subevent.pk)" class="item-icon-right">
-                    <i id="fav_icon_{{subevent.name}}_{{subevent.pk}}" class="icon ion-android-star-outline icon-accessory star"></i>
+                    <i id="fav_icon_{{subevent.name}}_{{subevent.pk}}" ng-class="(!isFavorited(subevent)) ? 'icon ion-android-star-outline icon-accessory star' : 'icon ion-android-star icon-accessory star'"></i>
                   </span>
                 </ion-item>
               </div>
@@ -67,6 +67,7 @@
                 </div>
               </ion-item>
             </ion-list>
+            <h5 ng-if="!favs.length" style="text-align: center;">Your favourite events appear here!</h5>
           </ion-content>
         </ion-nav-view>
       </ion-tab>

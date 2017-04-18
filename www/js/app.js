@@ -68,7 +68,8 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
           templateUrl: 'templates/event-detail.html',
           controller: 'EventDetailCtrl'
         }
-      }
+      },
+      cache: false,
   })
 
   .state('tab.map', {
