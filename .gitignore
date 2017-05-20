@@ -1,2 +1,7 @@
-platforms/android/.gradle/*
+platforms/
+node_modules/
+plugins/
+resources/ios/
+resources/android/
+www/lib
 .DS_Store
