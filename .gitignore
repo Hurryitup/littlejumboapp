@@ -5,3 +5,4 @@ resources/ios/
 resources/android/
 www/lib
 .DS_Store
+bower_components
